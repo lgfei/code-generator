@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 公用接口 -->
+<mapper namespace="com.lgfei.code.generator.core.mapper.CommonMapper">
+	
+	<resultMap type="com.lgfei.code.generator.model.MysqlTableInfo" id="MysqlTableInfoMap"></resultMap>
+	
+	<select id="selectMysqlTables" parameterType="java.util.Map" resultMap="MysqlTableInfoMap">
+	SELECT
+		TABLE_SCHEMA as tableSchema,
+		TABLE_NAME as tableName,
+		TABLE_TYPE as tableType,
+		CASE TABLE_COMMENT WHEN '' THEN TABLE_NAME ELSE TABLE_COMMENT END as tableComment
+	FROM
+		information_schema.`TABLES`
+	WHERE 1=1
+	<if test="null != params">
+		<if test="null != params.tableSchema and '' != params.tableSchema">
+		AND table_schema = #{params.tableSchema}
+		</if>
+		<if test="null == params.tableSchema or '' == params.tableSchema">
+		AND 1=2
+		</if>
+		<if test="null != params.tableName and '' != params.tableName">
+		AND (table_name LIKE #{params.tableName} OR table_comment LIKE #{params.tableName})
+		</if>
+	</if>
+	</select>
+	
+</mapper>
