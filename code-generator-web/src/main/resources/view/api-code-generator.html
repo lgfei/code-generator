@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<form class="form-horizontal" role="form">
+  <br/>
+  
+  <div class="form-group">
+    <label for="isInit" class="col-sm-1 control-label">isInit</label>
+    <div class="col-sm-5">
+	  <select class="form-control" id="isInit">
+        <option value="1">是</option>
+        <option value="0" selected="selected">否</option>
+      </select>    
+    </div>
+    <label for="moduleName" class="col-sm-1 control-label">moduleName</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="moduleName" placeholder="请输入moduleName"/>
+    </div>      
+  </div>
+  
+  <div class="form-group">
+    <label for="groupId" class="col-sm-1 control-label">groupId</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="groupId" placeholder="请输入groupId"/>
+    </div> 
+    <label for="artifactId" class="col-sm-1 control-label">artifactId</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="artifactId" placeholder="请输入artifactId"/>
+    </div>       
+  </div>
+  
+  <div class="form-group">
+    <label for="dbServer" class="col-sm-1 control-label">dbServer</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="dbServer" placeholder="请输入dbServer"/>
+    </div>
+    <label for="dbPort" class="col-sm-1 control-label">dbPort</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="dbPort" placeholder="请输入dbPort"/>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="dbUserName" class="col-sm-1 control-label">dbUserName</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="dbUserName" placeholder="请输入dbUserName"/>
+    </div>
+    <label for="dbPassword" class="col-sm-1 control-label">dbPassword</label>
+    <div class="col-sm-5">
+      <input type="text" class="form-control" id="dbPassword" placeholder="请输入dbPassword"/>
+    </div>    
+  </div>
+  
+  <div class="form-group">
+    <label for="dbName" class="col-sm-1 control-label">dbName</label>
+    <div class="col-sm-11">
+      <select class="form-control selectpicker" id="dbName"></select>
+    </div>
+  </div> 
+  
+  <div class="form-group">
+    <label for="tableNames" class="col-sm-1 control-label">tableNames</label>
+    <div class="col-sm-11">
+      <select class="form-control selectpicker" id="tableNames" multiple="multiple"></select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="projectPath" class="col-sm-1 control-label">projectPath</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="projectPath" placeholder="请输入projectPath"/>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-default" onclick="browseFolder('path')">选择</button>
+    </div>
+  </div>
+  
+  <div class="form-group" align="center">
+    <button type="button" class="btn btn-primary btn-lg btn-block">生成</button>
+  </div>    
+</form>
+
+<script>
+$(function(){
+    $('#dbName').bootstrapSelect({
+	    url:'common/showDatabases',
+	    valueField: 'dbName',
+	    textField: 'dbDesc',
+	     options: {
+	    	liveSearch: true
+	    }, 
+	    onChange: function(value){
+	        $('#tableNames').bootstrapSelect({
+	    	    url:'common/selectMysqlTables',
+	    	    param:{"tableSchema":value},
+	    	    valueField: 'tableName',
+	    	    textField: 'tableComment',
+	    	     options: {
+	    	    	liveSearch: true
+	    	    } 
+	    	});	    	
+	    }
+	});	
+});
+
+function browseFolder(path) {
+    try {
+        var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+        var Shell = new ActiveXObject("Shell.Application");
+        var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+        //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+        if (Folder != null) {
+            Folder = Folder.items(); // 返回 FolderItems 对象
+            Folder = Folder.item(); // 返回 Folderitem 对象
+            Folder = Folder.Path; // 返回路径
+            if (Folder.charAt(Folder.length - 1) != "\\") {
+                Folder = Folder + "\\";
+            }
+            document.getElementById(path).value = Folder;
+            return Folder;
+        }
+    }catch (e) {
+        console.error(e);
+    }
+}
+</script>	
+</body>
+</html>
