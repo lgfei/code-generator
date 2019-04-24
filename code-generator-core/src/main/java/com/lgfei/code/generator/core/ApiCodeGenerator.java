@@ -37,10 +37,9 @@ public class ApiCodeGenerator implements ICodeGenerator
     public void generate()
     {
         // 组装参数
-        String projectPath = "E:\\Code\\betterme\\dev\\betterme-admin\\code";
+        String projectPath = "E:\\Test\\code_generator";
         //String projectPath = "F:\\temp\\CodeGenerator";
-        String moduleName = "admin";
-        String groupId = "com.lgfei.betterme";
+        String groupId = "com.lgfei";
         String artifactId = "betterme-admin";
         boolean isInit = true;
         String dbServer = "47.106.134.165";
@@ -50,14 +49,16 @@ public class ApiCodeGenerator implements ICodeGenerator
         String dbPassword = "Betterme#1234";
         
         Map<String, String> myConfig = new HashMap<>();
-        myConfig.put("groupId", "com.lgfei.betterme");
-        myConfig.put("artifactId", "betterme-admin");
+        myConfig.put("groupId", groupId);
+        myConfig.put("artifactId", artifactId);
+        myConfig.put("parentPackage", FileOutConfigUtil.getParentPackage(groupId, artifactId));
         myConfig.put("superManagerClass", "IBaseManager");
         myConfig.put("superManagerClassPackage", "com.lgfei.betterme.framework.core.manager.IBaseManager");
         myConfig.put("superManagerImplClass", "BaseManagerImpl");
         myConfig.put("superManagerImplClassPackage", "com.lgfei.betterme.framework.core.manager.impl.BaseManagerImpl");
         myConfig.put("entityIdClass", "Long");
-        myConfig.put("upperCaseModuleName", StringUtil.toUpperCaseFirstOne(moduleName));
+        myConfig.put("upperCaseModuleName",
+            StringUtil.toUpperCaseFirstOne(FileOutConfigUtil.getMouldeName(artifactId)));
         myConfig.put("dbServer", dbServer);
         myConfig.put("dbPort", dbPort);
         myConfig.put("dbName", dbName);
@@ -118,25 +119,21 @@ public class ApiCodeGenerator implements ICodeGenerator
         
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setModuleName(moduleName);
-        pc.setParent("com.lgfei.betterme");
+        pc.setModuleName(FileOutConfigUtil.getMouldeName(artifactId));
+        pc.setParent(FileOutConfigUtil.getParentPackage(groupId, artifactId));
         pc.setEntity("model.entity");
         pc.setMapper("core.mapper");
         pc.setService("core.service");
         pc.setServiceImpl("core.service.impl");
         pc.setController("api.controller");
         Map<String, String> pathInfo = new HashMap<>();
-        pathInfo.put(ConstVal.ENTITY_PATH,
-            FileOutConfigUtil.getEntityPath(projectPath, moduleName, groupId, artifactId));
-        pathInfo.put(ConstVal.MAPPER_PATH,
-            FileOutConfigUtil.getMapperPath(projectPath, moduleName, groupId, artifactId));
+        pathInfo.put(ConstVal.ENTITY_PATH, FileOutConfigUtil.getEntityPath(projectPath, groupId, artifactId));
+        pathInfo.put(ConstVal.MAPPER_PATH, FileOutConfigUtil.getMapperPath(projectPath, groupId, artifactId));
         pathInfo.put(ConstVal.XML_PATH, FileOutConfigUtil.getMapperXmlPath(projectPath, artifactId));
-        pathInfo.put(ConstVal.SERVICE_PATH,
-            FileOutConfigUtil.getServicePath(projectPath, moduleName, groupId, artifactId));
+        pathInfo.put(ConstVal.SERVICE_PATH, FileOutConfigUtil.getServicePath(projectPath, groupId, artifactId));
         pathInfo.put(ConstVal.SERVICE_IMPL_PATH,
-            FileOutConfigUtil.getServiceImplPath(projectPath, moduleName, groupId, artifactId));
-        pathInfo.put(ConstVal.CONTROLLER_PATH,
-            FileOutConfigUtil.getControllerPath(projectPath, moduleName, groupId, artifactId));
+            FileOutConfigUtil.getServiceImplPath(projectPath, groupId, artifactId));
+        pathInfo.put(ConstVal.CONTROLLER_PATH, FileOutConfigUtil.getControllerPath(projectPath, groupId, artifactId));
         pc.setPathInfo(pathInfo);
         
         // 配置模板
@@ -188,17 +185,11 @@ public class ApiCodeGenerator implements ICodeGenerator
         // 自定义输出配置(自定义配置会被优先输出)
         List<FileOutConfig> focList = new ArrayList<>();
         // 自定义manager的代码模板
-        focList.add(FileOutConfigUtil.getManagerFileOutConfig(projectPath,
-            moduleName,
-            groupId,
-            artifactId,
-            TEMPLATE_PATH + "/manager.java.ftl"));
+        focList.add(FileOutConfigUtil
+            .getManagerFileOutConfig(projectPath, groupId, artifactId, TEMPLATE_PATH + "/manager.java.ftl"));
         // 自定义managerImpl的代码模板
-        focList.add(FileOutConfigUtil.getManagerImplFileOutConfig(projectPath,
-            moduleName,
-            groupId,
-            artifactId,
-            TEMPLATE_PATH + "/managerImpl.java.ftl"));
+        focList.add(FileOutConfigUtil
+            .getManagerImplFileOutConfig(projectPath, groupId, artifactId, TEMPLATE_PATH + "/managerImpl.java.ftl"));
         // 初始化项目
         if (isInit)
         {
@@ -215,19 +206,16 @@ public class ApiCodeGenerator implements ICodeGenerator
                 .getModelPomFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/pom-model.xml.ftl"));
             // 自定义ApiApplication的代码模板
             focList.add(FileOutConfigUtil.getApiApplicationFileOutConfig(projectPath,
-                moduleName,
                 groupId,
                 artifactId,
                 TEMPLATE_PATH + "/ApiApplication.java.ftl"));
             // 自定义MybatisPlusConfig的代码模板
             focList.add(FileOutConfigUtil.getMybatisPlusConfigFileOutConfig(projectPath,
-                moduleName,
                 groupId,
                 artifactId,
                 TEMPLATE_PATH + "/MybatisPlusConfig.java.ftl"));
             // 自定义Swagger2Config的代码模板
             focList.add(FileOutConfigUtil.getSwagger2ConfigFileOutConfig(projectPath,
-                moduleName,
                 groupId,
                 artifactId,
                 TEMPLATE_PATH + "/Swagger2Config.java.ftl"));
@@ -240,8 +228,8 @@ public class ApiCodeGenerator implements ICodeGenerator
                 artifactId,
                 TEMPLATE_PATH + "/application-dev.properties.ftl"));
             // 自定义mybatis-config.xml的代码模板
-            focList.add(FileOutConfigUtil
-                .getMybatisConfigXmlFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/mybatis-config.xml.ftl"));
+            // focList.add(FileOutConfigUtil
+            //     .getMybatisConfigXmlFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/mybatis-config.xml.ftl"));
         }
         cfg.setFileOutConfigList(focList);
         

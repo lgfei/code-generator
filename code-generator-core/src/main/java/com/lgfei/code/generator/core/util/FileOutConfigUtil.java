@@ -9,43 +9,111 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
 public final class FileOutConfigUtil
 {
-    private static String parentPackage = "com/xxx/project";
-    
-    private static String handleGroupId(String groupId)
+    public static String getParentPackage(String groupId, String artifactId)
     {
+        StringBuilder sb = new StringBuilder();
+        // 处理groupId
         if (StringUtils.isEmpty(groupId))
         {
-            return "com.xxx.project";
+            groupId = "group";
         }
-        parentPackage = groupId.replace(".", "/");
-        return groupId;
+        sb.append(groupId);
+        // 处理artifactId
+        if (StringUtils.isEmpty(artifactId))
+        {
+            artifactId = "project-module";
+        }
+        String[] arr = artifactId.split("-");
+        if (arr.length > 1)
+        {
+            sb.append('.').append(arr[0]);
+        }
+        return sb.toString();
     }
     
-    public static String getEntityPath(String projectPath, String moduleName, String groupId, String artifactId)
+    public static String getParentPath(String groupId, String artifactId)
     {
-        groupId = handleGroupId(groupId);
+        StringBuilder sb = new StringBuilder();
+        // 处理groupId
+        if (StringUtils.isEmpty(groupId))
+        {
+            groupId = "group";
+        }
+        String[] groupIdArr = groupId.split("\\.");
+        for (String str : groupIdArr)
+        {
+            sb.append(str).append('/');
+        }
+        // 处理artifactId
+        if (StringUtils.isEmpty(artifactId))
+        {
+            artifactId = "project-module";
+        }
+        String[] artifactIdArr = artifactId.split("-");
+        int count = 0;
+        for (String str : artifactIdArr)
+        {
+            count++;
+            if (count < artifactIdArr.length)
+            {
+                sb.append(str).append('/');
+            }
+            else
+            {
+                sb.append(str);
+            }
+        }
+        
+        return sb.toString();
+    }
+    
+    public static String getMouldeName(String artifactId)
+    {
+        if (StringUtils.isEmpty(artifactId))
+        {
+            artifactId = "project-module";
+        }
+        String[] arr = artifactId.split("-");
+        if (arr.length == 1)
+        {
+            return arr[0];
+        }
+        else if (arr.length == 2)
+        {
+            return arr[1];
+        }
+        else
+        {
+            StringBuilder tmp = new StringBuilder();
+            for (int i = 2; i < arr.length; i++)
+            {
+                tmp.append(arr[i]);
+            }
+            return tmp.toString();
+        }
+    }
+    
+    public static String getEntityPath(String projectPath, String groupId, String artifactId)
+    {
+        String parentPackage = getParentPath(groupId, artifactId);
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-model")
             .append("/src/main/java/")
             .append(parentPackage)
-            .append('/')
-            .append(moduleName)
             .append("/model")
             .append("/entity");
         return path.toString();
     }
     
-    public static String getMapperPath(String projectPath, String moduleName, String groupId, String artifactId)
+    public static String getMapperPath(String projectPath, String groupId, String artifactId)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-core")
             .append("/src/main/java/")
             .append(parentPackage)
-            .append('/')
-            .append(moduleName)
             .append("/core")
             .append("/mapper");
         return path.toString();
@@ -61,56 +129,50 @@ public final class FileOutConfigUtil
         return path.toString();
     }
     
-    public static String getServicePath(String projectPath, String moduleName, String groupId, String artifactId)
+    public static String getServicePath(String projectPath, String groupId, String artifactId)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-core")
             .append("/src/main/java/")
             .append(parentPackage)
-            .append('/')
-            .append(moduleName)
             .append("/core")
             .append("/service");
         return path.toString();
     }
     
-    public static String getServiceImplPath(String projectPath, String moduleName, String groupId, String artifactId)
+    public static String getServiceImplPath(String projectPath, String groupId, String artifactId)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-core")
             .append("/src/main/java/")
             .append(parentPackage)
-            .append('/')
-            .append(moduleName)
             .append("/core")
             .append("/service")
             .append("/impl");
         return path.toString();
     }
     
-    public static String getControllerPath(String projectPath, String moduleName, String groupId, String artifactId)
+    public static String getControllerPath(String projectPath, String groupId, String artifactId)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-api")
             .append("/src/main/java/")
             .append(parentPackage)
-            .append('/')
-            .append(moduleName)
             .append("/api")
             .append("/controller");
         return path.toString();
     }
     
-    public static FileOutConfig getManagerFileOutConfig(String projectPath, String moduleName, String groupId,
-        String artifactId, String templatePath)
+    public static FileOutConfig getManagerFileOutConfig(String projectPath, String groupId, String artifactId,
+        String templatePath)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         if (StringUtils.isEmpty(templatePath))
         {
             templatePath = "/template/manager.java.ftl";
@@ -125,8 +187,6 @@ public final class FileOutConfigUtil
                     .append("-core")
                     .append("/src/main/java/")
                     .append(parentPackage)
-                    .append('/')
-                    .append(moduleName)
                     .append("/core")
                     .append("/manager")
                     .append(File.separator)
@@ -138,10 +198,10 @@ public final class FileOutConfigUtil
         };
     }
     
-    public static FileOutConfig getManagerImplFileOutConfig(String projectPath, String moduleName, String groupId,
-        String artifactId, String templatePath)
+    public static FileOutConfig getManagerImplFileOutConfig(String projectPath, String groupId, String artifactId,
+        String templatePath)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         if (StringUtils.isEmpty(templatePath))
         {
             templatePath = "/template/managerImpl.java.ftl";
@@ -156,8 +216,6 @@ public final class FileOutConfigUtil
                     .append("-core")
                     .append("/src/main/java/")
                     .append(parentPackage)
-                    .append('/')
-                    .append(moduleName)
                     .append("/core")
                     .append("/manager")
                     .append("/impl")
@@ -248,10 +306,10 @@ public final class FileOutConfigUtil
         };
     }
     
-    public static FileOutConfig getApiApplicationFileOutConfig(String projectPath, String moduleName, String groupId,
-        String artifactId, String templatePath)
+    public static FileOutConfig getApiApplicationFileOutConfig(String projectPath, String groupId, String artifactId,
+        String templatePath)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         if (StringUtils.isEmpty(templatePath))
         {
             templatePath = "/template/ApiApplication.java.ftl";
@@ -266,21 +324,19 @@ public final class FileOutConfigUtil
                     .append("-api")
                     .append("/src/main/java/")
                     .append(parentPackage)
-                    .append('/')
-                    .append(moduleName)
                     .append("/api")
                     .append(File.separator)
-                    .append(StringUtil.toUpperCaseFirstOne(moduleName))
+                    .append(StringUtil.toUpperCaseFirstOne(getMouldeName(artifactId)))
                     .append("ApiApplication.java")
                     .toString();
             }
         };
     }
     
-    public static FileOutConfig getMybatisPlusConfigFileOutConfig(String projectPath, String moduleName, String groupId,
-        String artifactId, String templatePath)
+    public static FileOutConfig getMybatisPlusConfigFileOutConfig(String projectPath, String groupId, String artifactId,
+        String templatePath)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         if (StringUtils.isEmpty(templatePath))
         {
             templatePath = "/template/MybatisPlusConfig.java.ftl";
@@ -295,8 +351,6 @@ public final class FileOutConfigUtil
                     .append("-api")
                     .append("/src/main/java/")
                     .append(parentPackage)
-                    .append('/')
-                    .append(moduleName)
                     .append("/api/config")
                     .append(File.separator)
                     .append("MybatisPlusConfig.java")
@@ -305,10 +359,10 @@ public final class FileOutConfigUtil
         };
     }
     
-    public static FileOutConfig getSwagger2ConfigFileOutConfig(String projectPath, String moduleName, String groupId,
-        String artifactId, String templatePath)
+    public static FileOutConfig getSwagger2ConfigFileOutConfig(String projectPath, String groupId, String artifactId,
+        String templatePath)
     {
-        groupId = handleGroupId(groupId);
+        String parentPackage = getParentPath(groupId, artifactId);
         if (StringUtils.isEmpty(templatePath))
         {
             templatePath = "/template/Swagger2Config.java.ftl";
@@ -323,8 +377,6 @@ public final class FileOutConfigUtil
                     .append("-api")
                     .append("/src/main/java/")
                     .append(parentPackage)
-                    .append('/')
-                    .append(moduleName)
                     .append("/api/config")
                     .append(File.separator)
                     .append("Swagger2Config.java")

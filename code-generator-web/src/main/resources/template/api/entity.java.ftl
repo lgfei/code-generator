@@ -57,7 +57,15 @@ public class ${entity} implements Serializable
 
     <#if field.comment!?length gt 0>
     <#if swagger2>
+        <#if field.propertyType == "int"
+        || field.propertyType == "Integer"
+        || field.propertyType == "long"
+        || field.propertyType == "Long"
+        || field.propertyType == "BigDecimal">
+    @ApiModelProperty(value = "${field.comment}", example = "1")
+        <#else>
     @ApiModelProperty(value = "${field.comment}")
+        </#if>
     <#else>
     /**
      * ${field.comment}

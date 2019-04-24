@@ -1,14 +1,12 @@
 package com.lgfei.code.generator.web;
 
-import org.junit.Test;
+import com.lgfei.code.generator.core.ApiCodeGenerator;
 
 public class ApiCodeGeneratorTest
 {
-    @Test
-    public void testSplit()
+    public static void main(String[] args)
     {
-        String str = "com.lgfei.betterme.admin.model.entity";
-        String[] arr = str.split("\\.");
-        System.err.println(arr.length);
+        ApiCodeGenerator acg = new ApiCodeGenerator();
+        acg.generate();
     }
 }

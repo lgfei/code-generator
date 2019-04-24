@@ -1,4 +1,4 @@
-package ${my.groupId}.${package.ModuleName}.api;
+package ${my.parentPackage}.${package.ModuleName}.api;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ import com.lgfei.betterme.framework.api.ApiApplication;
  * @since ${date}
  */
 @SpringBootApplication
-@ComponentScan("${my.groupId}.${package.ModuleName}")
+@ComponentScan("${my.parentPackage}.${package.ModuleName}")
 @MapperScan("${package.Mapper}")
 public class ${my.upperCaseModuleName}ApiApplication extends ApiApplication
 {
@@ -24,6 +24,6 @@ public class ${my.upperCaseModuleName}ApiApplication extends ApiApplication
     {
         SpringApplication app = new SpringApplication(${my.upperCaseModuleName}ApiApplication.class);
         app.run(args);
-        System.err.println("http://localhost:8080/swagger-ui.html");
+        System.err.println("http://127.0.0.1:8080/${my.artifactId}-api/swagger-ui.html");
     }
 }

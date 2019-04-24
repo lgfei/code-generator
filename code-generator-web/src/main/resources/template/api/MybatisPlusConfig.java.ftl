@@ -1,4 +1,4 @@
-package ${my.groupId}.${package.ModuleName}.api.config;
+package ${my.parentPackage}.${package.ModuleName}.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
