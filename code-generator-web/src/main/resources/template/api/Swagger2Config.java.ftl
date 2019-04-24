@@ -1,4 +1,4 @@
-package ${my.groupId}.${package.ModuleName}.api.config;
+package ${my.parentPackage}.${package.ModuleName}.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ public class Swagger2Config
     {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("${my.groupId}.${package.ModuleName}.api"))
+            .apis(RequestHandlerSelectors.basePackage("${my.parentPackage}.${package.ModuleName}.api"))
             .paths(PathSelectors.any())
             .build();
     }

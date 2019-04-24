@@ -19,11 +19,6 @@
   <dependencies>
     <dependency>
       <groupId>${my.groupId}</groupId>
-      <artifactId>${my.artifactId}-model</artifactId>
-      <version>${r'${framework-version}'}</version>
-    </dependency>
-    <dependency>
-      <groupId>${my.groupId}</groupId>
       <artifactId>${my.artifactId}-core</artifactId>
       <version>${r'${framework-version}'}</version>
     </dependency> 
