@@ -116,7 +116,11 @@ $(function(){
     	var tableNames = "";
     	if(arr){
     		$.each(arr,function(i,item){
-    			tableNames = tableNames + item;
+    			if(i < arr.length - 1){
+    				tableNames = tableNames + item + ",";
+    			}else{
+    				tableNames = tableNames + item;
+    			}
     		});
     	}
     	var projectPath = $('#projectPath').val();
