@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -20,6 +22,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lgfei.code.generator.core.util.FileOutConfigUtil;
 import com.lgfei.code.generator.core.util.FileUtil;
 import com.lgfei.code.generator.core.util.StringUtil;
+import com.lgfei.code.generator.model.ParamVO;
 
 /**
  * Api代码生成器
@@ -33,20 +36,34 @@ import com.lgfei.code.generator.core.util.StringUtil;
 @Service
 public class ApiCodeGenerator implements ICodeGenerator
 {
+    private static Logger logger = LoggerFactory.getLogger(ApiCodeGenerator.class);
+    
     @Override
-    public void generate()
+    public boolean check(ParamVO paramVO)
     {
+        return true;
+    }
+    
+    @Override
+    public void generate(ParamVO paramVO)
+    {
+        boolean isPass = check(paramVO);
+        if (!isPass)
+        {
+            logger.warn("无效参数");
+            return;
+        }
         // 组装参数
-        String projectPath = "E:\\Test\\code_generator";
-        //String projectPath = "F:\\temp\\CodeGenerator";
-        String groupId = "com.lgfei";
-        String artifactId = "betterme-admin";
-        boolean isInit = true;
-        String dbServer = "47.106.134.165";
-        String dbPort = "3306";
-        String dbName = "betterme_admin";
-        String dbUserName = "betterme";
-        String dbPassword = "Betterme#1234";
+        String projectPath = paramVO.getProjectPath();// E:\\Test\\code_generator
+        String groupId = paramVO.getGroupId();//com.lgfei
+        String artifactId = paramVO.getArtifactId();//betterme-admin
+        boolean isInit = paramVO.getIsInit() == 1 ? true : false;// true
+        String dbServer = paramVO.getDbServer();//"47.106.134.165";
+        String dbPort = paramVO.getDbPort();// "3306";
+        String dbName = paramVO.getDbName();// "betterme_admin";
+        String dbUserName = paramVO.getDbUserName();// "betterme";
+        String dbPassword = paramVO.getDbPassword();// "Betterme#1234";
+        String tableNames = paramVO.getTableNames();// operation_log,user
         
         Map<String, String> myConfig = new HashMap<>();
         myConfig.put("groupId", groupId);
@@ -65,7 +82,6 @@ public class ApiCodeGenerator implements ICodeGenerator
         myConfig.put("dbUserName", dbUserName);
         myConfig.put("dbPassword", dbPassword);
         
-        String tableNames = "operation_log,user";
         String[] tableNameArr = tableNames.split(",");
         List<String> entityList = new ArrayList<>();
         for (String tableName : tableNameArr)

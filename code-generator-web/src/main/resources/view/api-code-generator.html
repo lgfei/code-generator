@@ -16,43 +16,39 @@
         <option value="1">是</option>
         <option value="0" selected="selected">否</option>
       </select>    
-    </div>
-    <label for="moduleName" class="col-sm-1 control-label">moduleName</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" id="moduleName" placeholder="请输入moduleName"/>
-    </div>      
+    </div>     
   </div>
   
   <div class="form-group">
     <label for="groupId" class="col-sm-1 control-label">groupId</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="groupId" placeholder="请输入groupId"/>
+      <input type="text" class="form-control" id="groupId" placeholder="请输入groupId" value="com.lgfei"/>
     </div> 
     <label for="artifactId" class="col-sm-1 control-label">artifactId</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="artifactId" placeholder="请输入artifactId"/>
+      <input type="text" class="form-control" id="artifactId" placeholder="请输入artifactId" value="betterme-yzh"/>
     </div>       
   </div>
   
   <div class="form-group">
     <label for="dbServer" class="col-sm-1 control-label">dbServer</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="dbServer" placeholder="请输入dbServer"/>
+      <input type="text" class="form-control" id="dbServer" placeholder="请输入dbServer" value="47.106.134.165"/>
     </div>
     <label for="dbPort" class="col-sm-1 control-label">dbPort</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="dbPort" placeholder="请输入dbPort"/>
+      <input type="text" class="form-control" id="dbPort" placeholder="请输入dbPort" value="3306"/>
     </div>
   </div>
   
   <div class="form-group">
     <label for="dbUserName" class="col-sm-1 control-label">dbUserName</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="dbUserName" placeholder="请输入dbUserName"/>
+      <input type="text" class="form-control" id="dbUserName" placeholder="请输入dbUserName" value="yzh"/>
     </div>
     <label for="dbPassword" class="col-sm-1 control-label">dbPassword</label>
     <div class="col-sm-5">
-      <input type="text" class="form-control" id="dbPassword" placeholder="请输入dbPassword"/>
+      <input type="text" class="form-control" id="dbPassword" placeholder="请输入dbPassword" value="Yzh#1234"/>
     </div>    
   </div>
   
@@ -73,7 +69,7 @@
   <div class="form-group">
     <label for="projectPath" class="col-sm-1 control-label">projectPath</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="projectPath" placeholder="请输入projectPath"/>
+      <input type="text" class="form-control" id="projectPath" placeholder="请输入projectPath" value="E:\Test\code_generator"/>
     </div>
     <div class="col-sm-2">
       <button type="button" class="btn btn-default" onclick="browseFolder('path')">选择</button>
@@ -81,7 +77,7 @@
   </div>
   
   <div class="form-group" align="center">
-    <button type="button" class="btn btn-primary btn-lg btn-block">生成</button>
+    <button type="button" class="btn btn-primary btn-lg btn-block" id="btnGenerator">生成</button>
   </div>    
 </form>
 
@@ -106,6 +102,43 @@ $(function(){
 	    	});	    	
 	    }
 	});	
+    
+    $("#btnGenerator").on('click',function(e){
+    	var isInit = $('#isInit').val();
+    	var groupId = $('#groupId').val();
+    	var artifactId = $('#artifactId').val();
+    	var dbServer = $('#dbServer').val();
+    	var dbPort = $('#dbPort').val();
+    	var dbUserName = $('#dbUserName').val();
+    	var dbPassword = $('#dbPassword').val();
+    	var dbName = $('#dbName').val();
+    	var arr = $('#tableNames').val();
+    	var tableNames = "";
+    	if(arr){
+    		$.each(arr,function(i,item){
+    			tableNames = tableNames + item;
+    		});
+    	}
+    	var projectPath = $('#projectPath').val();
+    	
+    	var params = {'isInit':isInit,'groupId':groupId,'artifactId':artifactId,
+    			'dbServer':dbServer,'dbPort':dbPort,'dbUserName':dbUserName,
+    			'dbPassword':dbPassword,'dbName':dbName,'tableNames':tableNames,
+    			'projectPath':projectPath};
+    	$.ajax({
+    		type:'POST',
+    		url:'common/generateApiCode',
+    		data:params,
+    		dataType:"json",
+    		success:function(json){
+    			if(json && json.rsCode == 0){
+    				alert(json.rsMsg);
+    			}else{
+    				alert(json.rsMsg);
+    			}
+    		}
+    	});
+    });
 });
 
 function browseFolder(path) {
