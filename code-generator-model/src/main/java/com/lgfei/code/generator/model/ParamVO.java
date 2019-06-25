@@ -1,5 +1,14 @@
 package com.lgfei.code.generator.model;
 
+/**
+ * 页面参数对象
+ * <功能详细描述>
+ * 
+ * @author  lgfei
+ * @version  [版本号, 2019年5月12日]
+ * @see  [相关类/方法]
+ * @since  [产品/模块版本]
+ */
 public class ParamVO
 {
     private Integer isInit;

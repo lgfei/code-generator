@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lgfei.code.generator.model.DatabaseInfo;
 import com.lgfei.code.generator.model.MysqlTableInfo;
+import com.lgfei.code.generator.model.ParamVO;
 
 public interface ICommonManager
 {
@@ -11,5 +12,9 @@ public interface ICommonManager
     
     List<MysqlTableInfo> selectMysqlTables(MysqlTableInfo vo);
     
+    List<MysqlTableInfo> getMysqlTables(MysqlTableInfo vo);
+    
     List<DatabaseInfo> showDatabases();
+    
+    List<DatabaseInfo> getDatabase(ParamVO paramVO);
 }

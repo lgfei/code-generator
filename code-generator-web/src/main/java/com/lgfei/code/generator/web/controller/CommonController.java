@@ -30,7 +30,7 @@ public class CommonController
     @Autowired
     private ApiCodeGenerator apiCodeGenerator;
     
-    @ApiOperation("查询表")
+    @ApiOperation("查询表（数据源来源于后台配置）")
     @ResponseBody
     @RequestMapping(value = "/selectMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
     public List<MysqlTableInfo> selectMysqlTables(String tableSchema, String tableName)
@@ -41,12 +41,31 @@ public class CommonController
         return manager.selectMysqlTables(vo);
     }
     
-    @ApiOperation("查询库")
+    @ApiOperation("查询库（数据源来源于后台配置）")
     @ResponseBody
     @RequestMapping(value = "/showDatabases", method = {RequestMethod.POST, RequestMethod.GET})
     public List<DatabaseInfo> showDatabases()
     {
         return manager.showDatabases();
+    }
+    
+    @ApiOperation("查询库")
+    @ResponseBody
+    @RequestMapping(value = "/getDatabase", method = {RequestMethod.POST, RequestMethod.GET})
+    public List<DatabaseInfo> getDatabase(ParamVO paramVO)
+    {
+        return manager.getDatabase(paramVO);
+    }
+    
+    @ApiOperation("查询表")
+    @ResponseBody
+    @RequestMapping(value = "/getMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
+    public List<MysqlTableInfo> getMysqlTables(String tableSchema, String tableName)
+    {
+        MysqlTableInfo vo = new MysqlTableInfo();
+        vo.setTableSchema(tableSchema);
+        vo.setTableName(tableName);
+        return manager.selectMysqlTables(vo);
     }
     
     @ApiOperation("生成Api代码")
