@@ -124,8 +124,9 @@ public final class FileOutConfigUtil
         StringBuilder path = new StringBuilder(projectPath).append('/')
             .append(artifactId)
             .append("-core")
-            .append("/src/main/resources/")
-            .append("/mapper");
+            .append("/src/main/resources")
+            .append("/mapper")
+            .append("/default");
         return path.toString();
     }
     

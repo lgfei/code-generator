@@ -22,7 +22,7 @@ import ${superControllerClassPackage};
  */
 @Api(tags = {"${table.comment!}"})
 @Controller
-@RequestMapping("<#if my.artifactId??>/${my.artifactId}-api</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
+@RequestMapping("/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 public class  ${table.controllerName} 
 	extends ${superControllerClass}<${my.managerName},${entity}, ${my.entityIdClass}> 
 {
