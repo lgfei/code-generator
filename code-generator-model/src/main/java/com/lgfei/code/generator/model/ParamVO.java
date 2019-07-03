@@ -1,13 +1,14 @@
 package com.lgfei.code.generator.model;
 
 /**
- * Ò³Ãæ²ÎÊı¶ÔÏó
- * <¹¦ÄÜÏêÏ¸ÃèÊö>
+ * 
+ * é¡µé¢å‚æ•°å¯¹è±¡
+ * <åŠŸèƒ½è¯¦ç»†æè¿°>
  * 
  * @author  lgfei
- * @version  [°æ±¾ºÅ, 2019Äê5ÔÂ12ÈÕ]
- * @see  [Ïà¹ØÀà/·½·¨]
- * @since  [²úÆ·/Ä£¿é°æ±¾]
+ * @version  [ç‰ˆæœ¬å·, 2019å¹´7æœˆ3æ—¥]
+ * @see  [ç›¸å…³ç±»/æ–¹æ³•]
+ * @since  [äº§å“/æ¨¡å—ç‰ˆæœ¬]
  */
 public class ParamVO
 {
@@ -30,6 +31,8 @@ public class ParamVO
     private String tableNames;
     
     private String projectPath;
+    
+    private String tableSchema;
     
     public Integer getIsInit()
     {
@@ -129,6 +132,16 @@ public class ParamVO
     public void setProjectPath(String projectPath)
     {
         this.projectPath = projectPath;
+    }
+    
+    public String getTableSchema()
+    {
+        return tableSchema;
+    }
+    
+    public void setTableSchema(String tableSchema)
+    {
+        this.tableSchema = tableSchema;
     }
     
 }

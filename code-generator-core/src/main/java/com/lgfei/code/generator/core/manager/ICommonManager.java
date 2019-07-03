@@ -12,7 +12,7 @@ public interface ICommonManager
     
     List<MysqlTableInfo> selectMysqlTables(MysqlTableInfo vo);
     
-    List<MysqlTableInfo> getMysqlTables(MysqlTableInfo vo);
+    List<MysqlTableInfo> getMysqlTables(ParamVO paramVO);
     
     List<DatabaseInfo> showDatabases();
     

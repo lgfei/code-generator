@@ -60,12 +60,9 @@ public class CommonController
     @ApiOperation("查询表")
     @ResponseBody
     @RequestMapping(value = "/getMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableInfo> getMysqlTables(String tableSchema, String tableName)
+    public List<MysqlTableInfo> getMysqlTables(ParamVO paramVO)
     {
-        MysqlTableInfo vo = new MysqlTableInfo();
-        vo.setTableSchema(tableSchema);
-        vo.setTableName(tableName);
-        return manager.selectMysqlTables(vo);
+        return manager.getMysqlTables(paramVO);
     }
     
     @ApiOperation("生成Api代码")
