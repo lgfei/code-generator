@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lgfei.code.generator.core.util.FileOutConfigUtil;
 import com.lgfei.code.generator.core.util.FileUtil;
 import com.lgfei.code.generator.core.util.StringUtil;
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.model.vo.ParamVO;
 
 /**
  * Api代码生成器

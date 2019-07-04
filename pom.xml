@@ -76,13 +76,6 @@
 			<version>2.2.5</version>
 		</dependency>
 
-		<!-- json -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.29</version>
-		</dependency>
-
 		<!-- 加解密 -->
 		<dependency>
 			<groupId>com.github.ulisesbocchio</groupId>

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.model.vo.ParamVO;
 
 /**
  * JDBC处理工具类

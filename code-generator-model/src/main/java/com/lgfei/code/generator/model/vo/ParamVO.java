@@ -1,4 +1,4 @@
-package com.lgfei.code.generator.model;
+package com.lgfei.code.generator.model.vo;
 
 /**
  * 

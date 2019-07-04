@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lgfei.code.generator.core.ApiCodeGenerator;
-import com.lgfei.code.generator.core.manager.ICommonManager;
-import com.lgfei.code.generator.model.DatabaseInfo;
-import com.lgfei.code.generator.model.MysqlTableInfo;
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.core.service.ICommonService;
+import com.lgfei.code.generator.model.dto.DatabaseDTO;
+import com.lgfei.code.generator.model.dto.MysqlTableDTO;
+import com.lgfei.code.generator.model.vo.ParamVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 public class CommonController
 {
     @Autowired
-    private ICommonManager manager;
+    private ICommonService service;
     
     @Autowired
     private ApiCodeGenerator apiCodeGenerator;
@@ -33,36 +33,36 @@ public class CommonController
     @ApiOperation("查询表（数据源来源于后台配置）")
     @ResponseBody
     @RequestMapping(value = "/selectMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableInfo> selectMysqlTables(String tableSchema, String tableName)
+    public List<MysqlTableDTO> selectMysqlTables(String tableSchema, String tableName)
     {
-        MysqlTableInfo vo = new MysqlTableInfo();
+        MysqlTableDTO vo = new MysqlTableDTO();
         vo.setTableSchema(tableSchema);
         vo.setTableName(tableName);
-        return manager.selectMysqlTables(vo);
+        return service.selectMysqlTables(vo);
     }
     
     @ApiOperation("查询库（数据源来源于后台配置）")
     @ResponseBody
     @RequestMapping(value = "/showDatabases", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseInfo> showDatabases()
+    public List<DatabaseDTO> showDatabases()
     {
-        return manager.showDatabases();
+        return service.showDatabases();
     }
     
     @ApiOperation("查询库")
     @ResponseBody
     @RequestMapping(value = "/getDatabase", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseInfo> getDatabase(ParamVO paramVO)
+    public List<DatabaseDTO> getDatabase(ParamVO paramVO)
     {
-        return manager.getDatabase(paramVO);
+        return service.getDatabase(paramVO);
     }
     
     @ApiOperation("查询表")
     @ResponseBody
     @RequestMapping(value = "/getMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableInfo> getMysqlTables(ParamVO paramVO)
+    public List<MysqlTableDTO> getMysqlTables(ParamVO paramVO)
     {
-        return manager.getMysqlTables(paramVO);
+        return service.getMysqlTables(paramVO);
     }
     
     @ApiOperation("生成Api代码")

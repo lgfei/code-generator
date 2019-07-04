@@ -1,8 +1,8 @@
-package com.lgfei.code.generator.model;
+package com.lgfei.code.generator.model.dto;
 
 import java.io.Serializable;
 
-public class MysqlTableInfo implements Serializable
+public class MysqlTableDTO implements Serializable
 {
     private static final long serialVersionUID = 1L;
     

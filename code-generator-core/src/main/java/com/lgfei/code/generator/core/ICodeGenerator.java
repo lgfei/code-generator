@@ -1,6 +1,6 @@
 package com.lgfei.code.generator.core;
 
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.model.vo.ParamVO;
 
 public interface ICodeGenerator
 {

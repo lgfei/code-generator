@@ -104,13 +104,6 @@ public class DBParams
         paramList.add(entity);
     }
     
-    //  public void removeParam(int index){  
-    //      paramList.remove(index);  
-    //  }  
-    //    
-    //  public void clearParams(){  
-    //      paramList.clear();  
-    //  }  
     /***  
      * @param pst  
      * @param startIndex 由于sql语句设置的参数有多个，注意默认是从1开始  
