@@ -1,56 +1,123 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-select CSS-->
-    <link href="css/bootstrap-select.min.css" rel="stylesheet"/>
-
-    <title>Code Generator</title>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	  <title>Code Generator</title>
+	  <link rel="stylesheet" href="http://lgfei.com/lgfei-static/layui/css/layui.css">
   </head>
-  <body>
-    <div class="container-fluid">
-    	<h4 align="center">欢迎使用代码生成工具</h4>
-    	<hr/>
-    	<div class="row">
-    		<div class="col-md-2">
-				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="javascript:createTab('api-code-generator','api-code-generator','api-code-generator',1)">api-code-generator</a></li>
-					<li class="disabled"><a href="#">Disabled link</a></li>
-				</ul>				   		
-    		</div>
-            <div class="col-md-10">
-                <ul class="nav nav-tabs" role="tablist">
-		        </ul>
-		        <div class="tab-content" style="width:100%;">
-		        </div>
-			</div>
-    	</div>
+  
+  <body layadmin-themealias="default" class="layui-layout-body">
+  <div class="layui-container">
+    <div class="layui-row">
+	    <div class="layui-col-md12">
+		  <div class="layui-logo" lay-href=""> 
+		    <h1 class="site-h1">Code Generator</h1> 
+		  </div>    
+	    </div>
+    </div>
+    
+	<div class="layui-row layui-col-space10">
+	  <div class="layui-col-md2">
+		<ul class="layui-nav layui-nav-tree" lay-filter="test" style="width: 100%;height: 100%">
+		  <li class="layui-nav-item layui-nav-itemed">
+		    <a href="javascript:;">主数据</span></a>
+		    <dl class="layui-nav-child">
+		      <dd><a href="javascript:;">数据源管理</a></dd>
+		    </dl>
+		  </li>
+		  <li class="layui-nav-item">
+		    <a href="javascript:;">设置</span></a>
+		    <dl class="layui-nav-child">
+		      <dd><a href="">基本资料</a></dd>
+		      <dd><a href="">修改密码</a></dd>
+		    </dl>
+		  </li>
+		</ul>
+	  </div>
+	  <div class="layui-col-md10">
+	    <div class="layui-tab" lay-allowClose="true" lay-filter="mainTab">
+	      <ul class="layui-tab-title">
+	        <li lay-id="1">首页</li>
+	        <li class="layui-this" lay-id="2">数据源管理</li>
+	      </ul>
+	      <div class="layui-tab-content">
+	        <div class="layui-tab-item">
+	          <span>首页</span>
+	        </div>
+	        <div class="layui-tab-item layui-show">
+	          <table id="tbDatasource" lay-filter="datasource"></table>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 	</div>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-    <!-- bootstrap-select JS-->
-    <script src="js/lib/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="js/lib/bootstrap-select/defaults-zh_CN.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script>
-	    $(function(){
-			var item = {'id':'main','name':'Home','url':'main','closable':false};
-			closableTab.addTab(item);
-			//createTab('api-code-generator','api-code-generator','api-code-generator',1);
-		});
-		function createTab(id,name,url,closable){
-			var item = {'id':id,'name':name,'url':url,'closable':closable==1?true:false};
-			closableTab.addTab(item);
-		}    
-    </script>
+  </div>
+  <div class="layui-layer-move"></div>
   </body>
+  <script src="http://lgfei.com/lgfei-static/layui/layui.js"></script>
+  <script type="text/javascript">
+    layui.use(['layer','jquery','element','table'], function(){
+      var layer = layui.layer;
+      var element = layui.element;
+   	  var table = layui.table;
+   	  //一些事件监听
+   	  element.on('tab(mainTab)', function(data){
+   	    console.log(data);
+   	  });
+   	  element.on('tabDelete(mainTab)', function(data){
+   	    console.log(this); //当前Tab标题所在的原始DOM元素
+   	    console.log(data.index); //得到当前Tab的所在下标
+   	    console.log(data.elem); //得到当前的Tab大容器
+   	  });
+   	  
+      const rootUrl = '[[${rootUrl}]]';
+   	  // 数据源管理表格
+   	  table.render({
+   	    elem: '#tbDatasource',
+   	    cellMinWidth: 100,
+   	    height: 312,
+   	    url: rootUrl + '/datasource/page/',
+   	    page: true,
+   	    toolbar: '#barDatasource',
+   	    defaultToolbar: ['filter', 'exports'],
+   	    cols: [
+   	      [
+   	    	{field: 'dsNo', title: '编码', sort: true},
+   	        {field: 'name', title: '名称', sort: true},
+   	        {field: 'dbType', title: '数据库类型'},
+   	        {field: 'type', title: '数据源类型'},
+   	        {field: 'driver', title: '数据驱动'},
+   	        {field: 'server', title: 'ip:port'},
+   	        {field: 'username', title: '用户名'},
+   	        {field: 'password', title: '密码'},
+   	        {field: 'createUser', title: '创建人'},
+   	        {field: 'createTime', title: '创建时间', sort: true},
+   	        {field: 'updateUser', title: '修改人'},
+   	        {field: 'updateTime', title: '修改时间', sort: true},
+   	        {field: 'remark', title: '备注'}
+   	      ]
+   	    ]
+   	  });   	  
+	});
+    
+    
+    //监听工具条
+    table.on('tool(datasource)', function(obj){
+      var data = obj.data;
+      var layEvent = obj.event;
+      var tr = obj.tr;
+     
+      if(layEvent === 'detail'){ //查看
+    	layer.msg("查看");
+      } else if(layEvent === 'generate'){ //生成代码
+    	  layer.msg("生成代码");
+      }
+    });    
+  </script>
+  
+  <script type="text/html" id="barDatasource">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="generate">生成代码</a>
+  </script>  
 </html>

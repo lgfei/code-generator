@@ -3,17 +3,17 @@ package com.lgfei.code.generator.model.vo;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResultVO<T> implements Serializable{
+public class ResponseVO<T> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private String code = "1";
+	private String code = "0";
 	
 	private String msg = "success";
 	
-	private T data;
+	private List<T> data;
 	
-	private List<T> list;
+	private T entity;
 	
 	private Object obj;
 
@@ -33,20 +33,20 @@ public class ResultVO<T> implements Serializable{
 		this.msg = msg;
 	}
 
-	public T getData() {
+	public List<T> getData() {
 		return data;
 	}
 
-	public void setData(T data) {
+	public void setData(List<T> data) {
 		this.data = data;
 	}
 
-	public List<T> getList() {
-		return list;
+	public T getEntity() {
+		return entity;
 	}
 
-	public void setList(List<T> list) {
-		this.list = list;
+	public void setEntity(T entity) {
+		this.entity = entity;
 	}
 
 	public Object getObj() {
@@ -56,5 +56,5 @@ public class ResultVO<T> implements Serializable{
 	public void setObj(Object obj) {
 		this.obj = obj;
 	}
-	
+
 }
