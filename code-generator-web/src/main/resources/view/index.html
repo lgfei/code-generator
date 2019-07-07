@@ -4,7 +4,7 @@
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	  <title>Code Generator</title>
-	  <link rel="stylesheet" href="http://lgfei.com/lgfei-static/layui/css/layui.css">
+	  <link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
   </head>
   
   <body layadmin-themealias="default" class="layui-layout-body">
@@ -55,12 +55,14 @@
   </div>
   <div class="layui-layer-move"></div>
   </body>
-  <script src="http://lgfei.com/lgfei-static/layui/layui.js"></script>
+  <script src="http://lgfei.com/layui/layui.js"></script>
   <script type="text/javascript">
-    layui.use(['layer','jquery','element','table'], function(){
+    layui.use(['layer','jquery','element','table','form'], function(){
+      var $ = layui.$;
       var layer = layui.layer;
       var element = layui.element;
    	  var table = layui.table;
+   	  var form = layui.form;
    	  //一些事件监听
    	  element.on('tab(mainTab)', function(data){
    	    console.log(data);
@@ -83,6 +85,7 @@
    	    defaultToolbar: ['filter', 'exports'],
    	    cols: [
    	      [
+   	    	{field: 'ck', title: '', type: 'radio'},
    	    	{field: 'dsNo', title: '编码', sort: true},
    	        {field: 'name', title: '名称', sort: true},
    	        {field: 'dbType', title: '数据库类型'},
@@ -98,26 +101,119 @@
    	        {field: 'remark', title: '备注'}
    	      ]
    	    ]
-   	  });   	  
-	});
-    
-    
-    //监听工具条
-    table.on('tool(datasource)', function(obj){
-      var data = obj.data;
-      var layEvent = obj.event;
-      var tr = obj.tr;
-     
-      if(layEvent === 'detail'){ //查看
-    	layer.msg("查看");
-      } else if(layEvent === 'generate'){ //生成代码
-    	  layer.msg("生成代码");
-      }
-    });    
+   	  }); 
+   	  
+      //监听工具条
+      table.on('toolbar(datasource)', function(obj){
+    	var checkStatus = table.checkStatus(obj.config.id);
+    	var data = checkStatus.data[0];
+    	var layEvent = obj.event;
+        if(layEvent === 'generate'){ //生成代码
+          var exist = $("li[lay-id='"+data.dsNo+"']").length;
+          if(exist==0){
+       	    element.tabAdd('mainTab', {
+           	  id: data.dsNo,
+              title: data.name,
+              content: `<table class="layui-table" lay-skin="row">
+       		      <colgroup>
+ 	   		        <col width="100">
+ 	   		        <col width="200">
+ 	   		        <col width="100">
+ 	   		        <col width="200">
+ 	   		     </colgroup>
+ 	   		     <tbody>
+ 	   		       <tr>
+ 	   		         <td>数据源编码</td>
+ 	   		         <td>${data.dsNo}</td>
+ 	   		         <td>名称</td>
+ 	   		         <td>${data.name}</td>
+ 	   		       </tr>
+ 	   		       <tr>
+ 	   		         <td>数据库类型</td>
+   		             <td>${data.dbType}</td>
+   		             <td>数据源类型</td>
+   		             <td>${data.type}</td>
+ 	   		       </tr>
+ 	   		       <tr>
+   		             <td>数据驱动</td>
+ 		             <td>${data.driver}</td>
+ 		             <td>ip:port</td>
+ 		             <td>${data.server}</td>
+   		           </tr>
+   		           <tr>
+ 		             <td>用户名</td>
+ 	                 <td>${data.username}</td>
+ 	                 <td>密码</td>
+ 	                 <td>${data.password}</td>
+ 		           </tr>
+ 	   		     </tbody>            	  
+               </table>
+               <form class="layui-form" action="">
+                 <div class="layui-form-item">
+                   <label class="layui-form-label">数据库</label>
+                   <div class="layui-input-block">
+                     <select name="interest" lay-filter="aihao">
+                       <option value="0">写作</option>
+                       <option value="1">阅读</option>
+                     </select>
+                   </div>
+                 </div>
+               </form>`
+            });
+       	    element.tabChange('mainTab', data.dsNo);
+          }else{
+        	element.tabChange('mainTab', data.dsNo);
+          }
+        }
+      });
+      
+      //监听行双击事件
+      table.on('rowDouble(datasource)', function(obj){
+    	  var data = obj.data;
+    	  layer.open({
+   		    type: 1,
+   		    area: ['700px', '300px'],
+   		    content: `
+   		    <table class="layui-table">
+   		      <colgroup>
+	   		     <col width="100">
+	   		     <col width="200">
+	   		     <col width="100">
+	   		     <col width="200">
+	   		   </colgroup>
+	   		   <tbody>
+	   		     <tr>
+	   		       <td>数据源编码</td>
+	   		       <td>${data.dsNo}</td>
+	   		       <td>名称</td>
+	   		       <td>${data.name}</td>
+	   		     </tr>
+	   		     <tr>
+	   		       <td>数据库类型</td>
+  		           <td>${data.dbType}</td>
+  		           <td>数据源类型</td>
+  		           <td>${data.type}</td>
+	   		     </tr>
+	   		     <tr>
+  		           <td>数据驱动</td>
+		           <td>${data.driver}</td>
+		           <td>ip:port</td>
+		           <td>${data.server}</td>
+  		         </tr>
+  		         <tr>
+		           <td>用户名</td>
+	               <td>${data.username}</td>
+	               <td>密码</td>
+	               <td>${data.password}</td>
+		         </tr>
+	   		   </tbody>
+	   		 </table>`
+   		  });
+      });
+	});    
   </script>
   
   <script type="text/html" id="barDatasource">
-    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="generate">生成代码</a>
   </script>  
 </html>
