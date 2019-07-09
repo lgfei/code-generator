@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-	  <meta charset="utf-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	  <title>Code Generator</title>
-	  <link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
-  </head>
-  
-  <body layadmin-themealias="default" class="layui-layout-body">
-  <div class="layui-container">
-    <div class="layui-row">
-	    <div class="layui-col-md12">
-		  <div class="layui-logo" lay-href=""> 
-		    <h1 class="site-h1">Code Generator</h1> 
-		  </div>    
-	    </div>
-    </div>
-    
-	<div class="layui-row layui-col-space10">
-	  <div class="layui-col-md2">
-		<ul class="layui-nav layui-nav-tree" lay-filter="test" style="width: 100%;height: 100%">
-		  <li class="layui-nav-item layui-nav-itemed">
-		    <a href="javascript:;">主数据</span></a>
-		    <dl class="layui-nav-child">
-		      <dd><a href="javascript:;">数据源管理</a></dd>
-		    </dl>
-		  </li>
-		  <li class="layui-nav-item">
-		    <a href="javascript:;">设置</span></a>
-		    <dl class="layui-nav-child">
-		      <dd><a href="">基本资料</a></dd>
-		      <dd><a href="">修改密码</a></dd>
-		    </dl>
-		  </li>
-		</ul>
-	  </div>
-	  <div class="layui-col-md10">
-	    <div class="layui-tab" lay-allowClose="true" lay-filter="mainTab">
-	      <ul class="layui-tab-title">
-	        <li lay-id="1">首页</li>
-	        <li class="layui-this" lay-id="2">数据源管理</li>
-	      </ul>
-	      <div class="layui-tab-content">
-	        <div class="layui-tab-item">
-	          <span>首页</span>
-	        </div>
-	        <div class="layui-tab-item layui-show">
-	          <table id="tbDatasource" lay-filter="datasource"></table>
-	        </div>
-	      </div>
-	    </div>
-	  </div>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Code Generator</title>
+<link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
+</head>
+
+<body layadmin-themealias="default" class="layui-layout-body">
+	<div class="layui-container">
+		<div class="layui-row">
+			<div class="layui-col-md12">
+				<div class="layui-logo" lay-href="">
+					<h1 class="site-h1">Code Generator</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md2">
+				<ul class="layui-nav layui-nav-tree" lay-filter="test"
+					style="width: 100%; height: 100%">
+					<li class="layui-nav-item layui-nav-itemed"><a
+						href="javascript:;">主数据</span></a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="javascript:;">数据源管理</a>
+							</dd>
+						</dl></li>
+					<li class="layui-nav-item"><a href="javascript:;">设置</span></a>
+						<dl class="layui-nav-child">
+							<dd>
+								<a href="">基本资料</a>
+							</dd>
+							<dd>
+								<a href="">修改密码</a>
+							</dd>
+						</dl></li>
+				</ul>
+			</div>
+			<div class="layui-col-md10">
+				<div class="layui-tab" lay-allowClose="true" lay-filter="mainTab">
+					<ul class="layui-tab-title">
+						<li lay-id="1">首页</li>
+						<li class="layui-this" lay-id="2">数据源管理</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item">
+							<span>首页</span>
+						</div>
+						<div class="layui-tab-item layui-show">
+							<table id="tbDatasource" lay-filter="datasource"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-  </div>
-  <div class="layui-layer-move"></div>
-  </body>
-  <script src="http://lgfei.com/layui/layui.js"></script>
-  <script type="text/javascript">
+	<div class="layui-layer-move"></div>
+</body>
+<script src="http://lgfei.com/layui/layui.js"></script>
+<script type="text/javascript">
     layui.use(['layer','jquery','element','table','form'], function(){
       var $ = layui.$;
       var layer = layui.layer;
@@ -114,7 +119,8 @@
        	    element.tabAdd('mainTab', {
            	  id: data.dsNo,
               title: data.name,
-              content: `<table class="layui-table" lay-skin="row">
+              content: `
+                <table class="layui-table" lay-skin="row">
        		      <colgroup>
  	   		        <col width="100">
  	   		        <col width="200">
@@ -148,18 +154,76 @@
  		           </tr>
  	   		     </tbody>            	  
                </table>
+               
                <form class="layui-form" action="">
-                 <div class="layui-form-item">
-                   <label class="layui-form-label">数据库</label>
-                   <div class="layui-input-block">
-                     <select name="interest" lay-filter="aihao">
-                       <option value="0">写作</option>
-                       <option value="1">阅读</option>
-                     </select>
+               	<div class="layui-row">
+                  <div class="layui-col-md6">
+                    <div class="layui-inline">
+                       <label class="layui-form-label">isInit</label>
+                       <div class="layui-input-inline">
+                         <input type="checkbox" name="isInit" lay-skin="switch">
+                       </div>
+                     </div>
+                   </div>  
+                   <div class="layui-col-md6">
+                     <div class="layui-inline">
+                       <label class="layui-form-label">groupId</label>
+                       <div class="layui-input-inline">
+                         <input type="text" name="groupId" required  lay-verify="required" placeholder="请输入groupId" autocomplete="off" class="layui-input">
+                       </div>
+                     </div>
                    </div>
                  </div>
-               </form>`
+                 <br/>
+                 <div class="layui-row">
+                   <div class="layui-col-md6">
+                     <div class="layui-inline">
+                       <label class="layui-form-label">artifactId</label>
+                       <div class="layui-input-inline">
+                         <input type="text" name="artifactId" required  lay-verify="required" placeholder="请输入artifactId" autocomplete="off" class="layui-input">
+                       </div>
+                     </div>
+                   </div>  
+                   <div class="layui-col-md6">
+                     <div class="layui-inline">
+                       <label class="layui-form-label">tableSchema</label>
+                       <div class="layui-input-inline">
+                         <select name="tableSchema" lay-verify="required"></select>
+                       </div>
+                     </div>
+                   </div>
+               </div> 
+               <br/>
+               <div class="layui-row">
+                 <div class="layui-col-md6">
+                  <div class="layui-inline">
+                    <label class="layui-form-label">tableNames</label>
+                    <div class="layui-input-inline">
+                      <select name="tableNames" lay-verify="required"></select>
+                    </div>
+                 </div>
+               </div>  
+               <div class="layui-col-md6">
+                 <div class="layui-inline">
+                   <label class="layui-form-label">projectPath</label>
+                   <div class="layui-input-inline">
+                     <input type="text" name="projectPath" required  lay-verify="required" placeholder="请输入projectPath" autocomplete="off" class="layui-input">
+                   </div>
+                 </div>
+               </div>
+           </div>
+           <br/>
+           <div class="layui-row">
+             <div class="layui-form-item">
+               <div class="layui-input-block">
+                 <button class="layui-btn" lay-submit lay-filter="formDemo">生成</button>
+                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+               </div>
+             </div>
+           </div>
+         </form>`
             });
+       	    form.render();
        	    element.tabChange('mainTab', data.dsNo);
           }else{
         	element.tabChange('mainTab', data.dsNo);
@@ -174,7 +238,7 @@
    		    type: 1,
    		    area: ['700px', '300px'],
    		    content: `
-   		    <table class="layui-table">
+   		    <table class="layui-table" lay-skin="row">
    		      <colgroup>
 	   		     <col width="100">
 	   		     <col width="200">
@@ -212,8 +276,8 @@
       });
 	});    
   </script>
-  
-  <script type="text/html" id="barDatasource">
+
+<script type="text/html" id="barDatasource">
     <a class="layui-btn layui-btn-xs" lay-event="generate">生成代码</a>
-  </script>  
+  </script>
 </html>
