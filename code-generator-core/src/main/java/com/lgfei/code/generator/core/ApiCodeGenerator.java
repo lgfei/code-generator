@@ -22,7 +22,8 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lgfei.code.generator.core.util.FileOutConfigUtil;
 import com.lgfei.code.generator.core.util.FileUtil;
 import com.lgfei.code.generator.core.util.StringUtil;
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.model.vo.TableParamVO;
 
 /**
  * Api代码生成器
@@ -39,31 +40,32 @@ public class ApiCodeGenerator implements ICodeGenerator
     private static Logger logger = LoggerFactory.getLogger(ApiCodeGenerator.class);
     
     @Override
-    public boolean check(ParamVO paramVO)
+    public boolean check(Datasource ds, TableParamVO tableParamVO)
     {
         return true;
     }
     
     @Override
-    public void generate(ParamVO paramVO)
+    public void generate(Datasource ds, TableParamVO tableParamVO)
     {
-        boolean isPass = check(paramVO);
+        boolean isPass = check(ds, tableParamVO);
         if (!isPass)
         {
             logger.warn("无效参数");
             return;
         }
         // 组装参数
-        String projectPath = paramVO.getProjectPath();// E:\\Test\\code_generator
-        String groupId = paramVO.getGroupId();//com.lgfei
-        String artifactId = paramVO.getArtifactId();//betterme-admin
-        boolean isInit = paramVO.getIsInit() == 1 ? true : false;// true
-        String dbServer = paramVO.getDbServer();//"47.106.134.165";
-        String dbPort = paramVO.getDbPort();// "3306";
-        String dbName = paramVO.getDbName();// "betterme_admin";
-        String dbUserName = paramVO.getDbUserName();// "betterme";
-        String dbPassword = paramVO.getDbPassword();// "Betterme#1234";
-        String tableNames = paramVO.getTableNames();// operation_log,user
+        String dbServer = ds.getServer();//"47.106.134.165";
+        String dbPort = ds.getServer();// "3306";
+        String dbName = ds.getName();// "betterme_admin";
+        String dbUserName = ds.getUsername();// "betterme";
+        String dbPassword = ds.getPassword();// "Betterme#1234";
+        
+        boolean isInit = tableParamVO.getIsInit() == 1 ? true : false;// true
+        String projectPath = tableParamVO.getProjectPath();// E:\\Test\\code_generator
+        String groupId = tableParamVO.getGroupId();//com.lgfei
+        String artifactId = tableParamVO.getArtifactId();//betterme-admin
+        String tableNames = tableParamVO.getTableNames();// operation_log,user
         
         Map<String, String> myConfig = new HashMap<>();
         myConfig.put("groupId", groupId);

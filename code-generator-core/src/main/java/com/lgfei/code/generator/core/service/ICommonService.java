@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.lgfei.code.generator.model.dto.DatabaseDTO;
 import com.lgfei.code.generator.model.dto.MysqlTableDTO;
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.model.vo.TableParamVO;
 
 public interface ICommonService
 {
@@ -14,7 +15,7 @@ public interface ICommonService
     
     List<DatabaseDTO> showDatabases();
     
-    List<MysqlTableDTO> getMysqlTables(ParamVO paramVO);
+    List<MysqlTableDTO> getMysqlTables(Datasource ds, TableParamVO tableParamVO);
     
-    List<DatabaseDTO> getDatabase(ParamVO paramVO);
+    List<DatabaseDTO> getDatabase(Datasource ds);
 }

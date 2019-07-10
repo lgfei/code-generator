@@ -1,12 +1,13 @@
 package com.lgfei.code.generator.core;
 
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.model.vo.TableParamVO;
 
 public interface ICodeGenerator
 {
     String TEMPLATE_PATH = "/template/api";
     
-    boolean check(ParamVO paramVO);
+    boolean check(Datasource ds, TableParamVO tableParamVO);
     
-    void generate(ParamVO paramVO);
+    void generate(Datasource ds, TableParamVO tableParamVO);
 }

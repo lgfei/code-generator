@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
 
 /**
  * JDBC处理工具类
@@ -17,21 +17,17 @@ import com.lgfei.code.generator.model.vo.ParamVO;
  */
 public final class JdbcUtil
 {
-    private static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
-    
-    public static Connection getConn(ParamVO paramVO)
+    public static Connection getConn(Datasource ds)
     {
-        String url = new StringBuffer("jdbc:mysql://").append(paramVO.getDbServer())
-            .append(':')
-            .append(paramVO.getDbPort())
+        String url = new StringBuffer("jdbc:mysql://").append(ds.getServer())
             .append('/')
-            .append(paramVO.getDbName())
+            .append(ds.getName())
             .toString();
         Connection conn = null;
         try
         {
-            Class.forName(MYSQL_DRIVER);
-            conn = (Connection)DriverManager.getConnection(url, paramVO.getDbUserName(), paramVO.getDbPassword());
+            Class.forName(ds.getDriver());
+            conn = (Connection)DriverManager.getConnection(url, ds.getUsername(), ds.getPassword());
         }
         catch (ClassNotFoundException e)
         {

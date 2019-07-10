@@ -20,7 +20,8 @@ import com.lgfei.code.generator.core.util.DBParams;
 import com.lgfei.code.generator.core.util.JdbcUtil;
 import com.lgfei.code.generator.model.dto.DatabaseDTO;
 import com.lgfei.code.generator.model.dto.MysqlTableDTO;
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.model.vo.TableParamVO;
 
 @Service
 public class CommonServiceImpl implements ICommonService
@@ -57,26 +58,26 @@ public class CommonServiceImpl implements ICommonService
     }
     
     @Override
-    public List<MysqlTableDTO> getMysqlTables(ParamVO paramVO)
+    public List<MysqlTableDTO> getMysqlTables(Datasource ds, TableParamVO tableParamVO)
     {
         List<MysqlTableDTO> list = null;
-        Connection conn = JdbcUtil.getConn(paramVO);
+        Connection conn = JdbcUtil.getConn(ds);
         StringBuilder sql = new StringBuilder(
             "SELECT TABLE_SCHEMA AS tableSchema, TABLE_NAME AS tableName, TABLE_TYPE AS tableType, CASE TABLE_COMMENT WHEN '' THEN TABLE_NAME ELSE TABLE_COMMENT END AS tableComment FROM information_schema.`TABLES` WHERE 1 = 1");
         DBParams params = new DBParams();
-        if (StringUtils.isEmpty(paramVO.getTableSchema()))
+        if (StringUtils.isEmpty(tableParamVO.getTableSchema()))
         {
             sql.append(" AND 1=2");
         }
         else
         {
             sql.append(" AND table_schema = ?");
-            params.addParam(paramVO.getTableSchema());
+            params.addParam(tableParamVO.getTableSchema());
         }
-        if (!StringUtils.isEmpty(paramVO.getTableNames()))
+        if (!StringUtils.isEmpty(tableParamVO.getTableNames()))
         {
             sql.append(" AND (table_name LIKE ? OR table_comment LIKE ?)");
-            params.addParam(paramVO.getTableNames());
+            params.addParam(tableParamVO.getTableNames());
         }
         PreparedStatement pstmt;
         try
@@ -106,10 +107,10 @@ public class CommonServiceImpl implements ICommonService
     }
     
     @Override
-    public List<DatabaseDTO> getDatabase(ParamVO paramVO)
+    public List<DatabaseDTO> getDatabase(Datasource ds)
     {
         List<DatabaseDTO> list = null;
-        Connection conn = JdbcUtil.getConn(paramVO);
+        Connection conn = JdbcUtil.getConn(ds);
         String sql = "show databases";
         PreparedStatement pstmt;
         try

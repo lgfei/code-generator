@@ -14,7 +14,8 @@ import com.lgfei.code.generator.core.ApiCodeGenerator;
 import com.lgfei.code.generator.core.service.ICommonService;
 import com.lgfei.code.generator.model.dto.DatabaseDTO;
 import com.lgfei.code.generator.model.dto.MysqlTableDTO;
-import com.lgfei.code.generator.model.vo.ParamVO;
+import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.model.vo.TableParamVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,28 +53,28 @@ public class CommonController
     @ApiOperation("查询库")
     @ResponseBody
     @RequestMapping(value = "/getDatabase", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseDTO> getDatabase(ParamVO paramVO)
+    public List<DatabaseDTO> getDatabase(Datasource ds)
     {
-        return service.getDatabase(paramVO);
+        return service.getDatabase(ds);
     }
     
     @ApiOperation("查询表")
     @ResponseBody
     @RequestMapping(value = "/getMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableDTO> getMysqlTables(ParamVO paramVO)
+    public List<MysqlTableDTO> getMysqlTables(Datasource ds, TableParamVO tableParamVO)
     {
-        return service.getMysqlTables(paramVO);
+        return service.getMysqlTables(ds, tableParamVO);
     }
     
     @ApiOperation("生成Api代码")
     @ResponseBody
     @RequestMapping(value = "/generateApiCode", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> generateApiCode(ParamVO paramVO)
+    public Map<String, Object> generateApiCode(Datasource ds, TableParamVO tableParamVO)
     {
         Map<String, Object> rs = new HashMap<>();
         try
         {
-            apiCodeGenerator.generate(paramVO);
+            apiCodeGenerator.generate(ds, tableParamVO);
             rs.put("rsCode", 0);
             rs.put("rsMsg", "Success");
         }

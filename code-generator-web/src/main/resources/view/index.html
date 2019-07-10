@@ -112,10 +112,22 @@
       table.on('toolbar(datasource)', function(obj){
     	var checkStatus = table.checkStatus(obj.config.id);
     	var data = checkStatus.data[0];
+    	
+    	var databases = [];
+    	$.ajax({
+    		type: 'POST',
+    		url: rootUrl + '/common/getDatabase',
+    		asyn: false,
+    		data: data,
+    		success: function(resp){
+    			debugger
+    		}
+    	});
+    	
     	var layEvent = obj.event;
         if(layEvent === 'generate'){ //生成代码
           var exist = $("li[lay-id='"+data.dsNo+"']").length;
-          if(exist==0){
+          if(exist === 0){
        	    element.tabAdd('mainTab', {
            	  id: data.dsNo,
               title: data.name,
@@ -188,7 +200,7 @@
                      <div class="layui-inline">
                        <label class="layui-form-label">tableSchema</label>
                        <div class="layui-input-inline">
-                         <select name="tableSchema" lay-verify="required"></select>
+                         <select name="tableSchema" lay-filter="tableSchema" lay-verify="required"></select>
                        </div>
                      </div>
                    </div>
@@ -224,6 +236,7 @@
          </form>`
             });
        	    form.render();
+       	    
        	    element.tabChange('mainTab', data.dsNo);
           }else{
         	element.tabChange('mainTab', data.dsNo);
