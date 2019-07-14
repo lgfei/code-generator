@@ -16,6 +16,8 @@ public class Datasource extends BaseEntity{
 	
 	private String server;
 	
+	private String schemaName;
+	
 	private String username;
 	
 	private String password;
@@ -66,6 +68,14 @@ public class Datasource extends BaseEntity{
 
 	public void setServer(String server) {
 		this.server = server;
+	}
+
+	public String getSchemaName() {
+		return schemaName;
+	}
+
+	public void setSchemaName(String schemaName) {
+		this.schemaName = schemaName;
 	}
 
 	public String getUsername() {

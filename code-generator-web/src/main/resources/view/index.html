@@ -6,6 +6,7 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Code Generator</title>
 <link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
+<link rel="stylesheet" href="css/formSelects-v4.css">
 </head>
 
 <body layadmin-themealias="default" class="layui-layout-body">
@@ -61,236 +62,17 @@
 	<div class="layui-layer-move"></div>
 </body>
 <script src="http://lgfei.com/layui/layui.js"></script>
+<script src="js/lib/formSelects-v4.min.js"></script>
+<script src="js/index.js"></script>
+
 <script type="text/javascript">
-    layui.use(['layer','jquery','element','table','form'], function(){
-      var $ = layui.$;
-      var layer = layui.layer;
-      var element = layui.element;
-   	  var table = layui.table;
-   	  var form = layui.form;
-   	  //一些事件监听
-   	  element.on('tab(mainTab)', function(data){
-   	    console.log(data);
-   	  });
-   	  element.on('tabDelete(mainTab)', function(data){
-   	    console.log(this); //当前Tab标题所在的原始DOM元素
-   	    console.log(data.index); //得到当前Tab的所在下标
-   	    console.log(data.elem); //得到当前的Tab大容器
-   	  });
-   	  
-      const rootUrl = '[[${rootUrl}]]';
-   	  // 数据源管理表格
-   	  table.render({
-   	    elem: '#tbDatasource',
-   	    cellMinWidth: 100,
-   	    height: 312,
-   	    url: rootUrl + '/datasource/page/',
-   	    page: true,
-   	    toolbar: '#barDatasource',
-   	    defaultToolbar: ['filter', 'exports'],
-   	    cols: [
-   	      [
-   	    	{field: 'ck', title: '', type: 'radio'},
-   	    	{field: 'dsNo', title: '编码', sort: true},
-   	        {field: 'name', title: '名称', sort: true},
-   	        {field: 'dbType', title: '数据库类型'},
-   	        {field: 'type', title: '数据源类型'},
-   	        {field: 'driver', title: '数据驱动'},
-   	        {field: 'server', title: 'ip:port'},
-   	        {field: 'username', title: '用户名'},
-   	        {field: 'password', title: '密码'},
-   	        {field: 'createUser', title: '创建人'},
-   	        {field: 'createTime', title: '创建时间', sort: true},
-   	        {field: 'updateUser', title: '修改人'},
-   	        {field: 'updateTime', title: '修改时间', sort: true},
-   	        {field: 'remark', title: '备注'}
-   	      ]
-   	    ]
-   	  }); 
-   	  
-      //监听工具条
-      table.on('toolbar(datasource)', function(obj){
-    	var checkStatus = table.checkStatus(obj.config.id);
-    	var data = checkStatus.data[0];
-    	
-    	var databases = [];
-    	$.ajax({
-    		type: 'POST',
-    		url: rootUrl + '/common/getDatabase',
-    		asyn: false,
-    		data: data,
-    		success: function(resp){
-    			debugger
-    		}
-    	});
-    	
-    	var layEvent = obj.event;
-        if(layEvent === 'generate'){ //生成代码
-          var exist = $("li[lay-id='"+data.dsNo+"']").length;
-          if(exist === 0){
-       	    element.tabAdd('mainTab', {
-           	  id: data.dsNo,
-              title: data.name,
-              content: `
-                <table class="layui-table" lay-skin="row">
-       		      <colgroup>
- 	   		        <col width="100">
- 	   		        <col width="200">
- 	   		        <col width="100">
- 	   		        <col width="200">
- 	   		     </colgroup>
- 	   		     <tbody>
- 	   		       <tr>
- 	   		         <td>数据源编码</td>
- 	   		         <td>${data.dsNo}</td>
- 	   		         <td>名称</td>
- 	   		         <td>${data.name}</td>
- 	   		       </tr>
- 	   		       <tr>
- 	   		         <td>数据库类型</td>
-   		             <td>${data.dbType}</td>
-   		             <td>数据源类型</td>
-   		             <td>${data.type}</td>
- 	   		       </tr>
- 	   		       <tr>
-   		             <td>数据驱动</td>
- 		             <td>${data.driver}</td>
- 		             <td>ip:port</td>
- 		             <td>${data.server}</td>
-   		           </tr>
-   		           <tr>
- 		             <td>用户名</td>
- 	                 <td>${data.username}</td>
- 	                 <td>密码</td>
- 	                 <td>${data.password}</td>
- 		           </tr>
- 	   		     </tbody>            	  
-               </table>
-               
-               <form class="layui-form" action="">
-               	<div class="layui-row">
-                  <div class="layui-col-md6">
-                    <div class="layui-inline">
-                       <label class="layui-form-label">isInit</label>
-                       <div class="layui-input-inline">
-                         <input type="checkbox" name="isInit" lay-skin="switch">
-                       </div>
-                     </div>
-                   </div>  
-                   <div class="layui-col-md6">
-                     <div class="layui-inline">
-                       <label class="layui-form-label">groupId</label>
-                       <div class="layui-input-inline">
-                         <input type="text" name="groupId" required  lay-verify="required" placeholder="请输入groupId" autocomplete="off" class="layui-input">
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-                 <br/>
-                 <div class="layui-row">
-                   <div class="layui-col-md6">
-                     <div class="layui-inline">
-                       <label class="layui-form-label">artifactId</label>
-                       <div class="layui-input-inline">
-                         <input type="text" name="artifactId" required  lay-verify="required" placeholder="请输入artifactId" autocomplete="off" class="layui-input">
-                       </div>
-                     </div>
-                   </div>  
-                   <div class="layui-col-md6">
-                     <div class="layui-inline">
-                       <label class="layui-form-label">tableSchema</label>
-                       <div class="layui-input-inline">
-                         <select name="tableSchema" lay-filter="tableSchema" lay-verify="required"></select>
-                       </div>
-                     </div>
-                   </div>
-               </div> 
-               <br/>
-               <div class="layui-row">
-                 <div class="layui-col-md6">
-                  <div class="layui-inline">
-                    <label class="layui-form-label">tableNames</label>
-                    <div class="layui-input-inline">
-                      <select name="tableNames" lay-verify="required"></select>
-                    </div>
-                 </div>
-               </div>  
-               <div class="layui-col-md6">
-                 <div class="layui-inline">
-                   <label class="layui-form-label">projectPath</label>
-                   <div class="layui-input-inline">
-                     <input type="text" name="projectPath" required  lay-verify="required" placeholder="请输入projectPath" autocomplete="off" class="layui-input">
-                   </div>
-                 </div>
-               </div>
-           </div>
-           <br/>
-           <div class="layui-row">
-             <div class="layui-form-item">
-               <div class="layui-input-block">
-                 <button class="layui-btn" lay-submit lay-filter="formDemo">生成</button>
-                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-               </div>
-             </div>
-           </div>
-         </form>`
-            });
-       	    form.render();
-       	    
-       	    element.tabChange('mainTab', data.dsNo);
-          }else{
-        	element.tabChange('mainTab', data.dsNo);
-          }
-        }
-      });
-      
-      //监听行双击事件
-      table.on('rowDouble(datasource)', function(obj){
-    	  var data = obj.data;
-    	  layer.open({
-   		    type: 1,
-   		    area: ['700px', '300px'],
-   		    content: `
-   		    <table class="layui-table" lay-skin="row">
-   		      <colgroup>
-	   		     <col width="100">
-	   		     <col width="200">
-	   		     <col width="100">
-	   		     <col width="200">
-	   		   </colgroup>
-	   		   <tbody>
-	   		     <tr>
-	   		       <td>数据源编码</td>
-	   		       <td>${data.dsNo}</td>
-	   		       <td>名称</td>
-	   		       <td>${data.name}</td>
-	   		     </tr>
-	   		     <tr>
-	   		       <td>数据库类型</td>
-  		           <td>${data.dbType}</td>
-  		           <td>数据源类型</td>
-  		           <td>${data.type}</td>
-	   		     </tr>
-	   		     <tr>
-  		           <td>数据驱动</td>
-		           <td>${data.driver}</td>
-		           <td>ip:port</td>
-		           <td>${data.server}</td>
-  		         </tr>
-  		         <tr>
-		           <td>用户名</td>
-	               <td>${data.username}</td>
-	               <td>密码</td>
-	               <td>${data.password}</td>
-		         </tr>
-	   		   </tbody>
-	   		 </table>`
-   		  });
-      });
-	});    
-  </script>
+  var AppSetting = AppSetting || {};
+  (function (AppSetting) { 
+	  AppSetting.rootUrl = '[[${rootUrl}]]';
+  })(AppSetting);
+</script>
 
 <script type="text/html" id="barDatasource">
     <a class="layui-btn layui-btn-xs" lay-event="generate">生成代码</a>
-  </script>
+</script>
 </html>

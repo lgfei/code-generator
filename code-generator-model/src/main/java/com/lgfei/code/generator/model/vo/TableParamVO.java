@@ -22,7 +22,7 @@ public class TableParamVO
     
     private String projectPath;
     
-    private String tableSchema;
+    private String schemaName;
 
 	public Integer getIsInit() {
 		return isInit;
@@ -64,12 +64,12 @@ public class TableParamVO
 		this.projectPath = projectPath;
 	}
 
-	public String getTableSchema() {
-		return tableSchema;
+	public String getSchemaName() {
+		return schemaName;
 	}
 
-	public void setTableSchema(String tableSchema) {
-		this.tableSchema = tableSchema;
+	public void setSchemaName(String schemaName) {
+		this.schemaName = schemaName;
 	}
     
 }

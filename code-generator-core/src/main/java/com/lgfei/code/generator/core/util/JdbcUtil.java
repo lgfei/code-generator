@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.springframework.util.StringUtils;
+
 import com.lgfei.code.generator.model.entity.Datasource;
 
 /**
@@ -17,11 +19,17 @@ import com.lgfei.code.generator.model.entity.Datasource;
  */
 public final class JdbcUtil
 {
+	private static final String DEFAULT_SCHEMA = "information_schema";
+	
     public static Connection getConn(Datasource ds)
     {
+    	if(null == ds) {
+    		throw new RuntimeException("数据源信息为空");
+    	}
+    	String schemaName = StringUtils.isEmpty(ds.getSchemaName()) ? DEFAULT_SCHEMA : ds.getSchemaName();
         String url = new StringBuffer("jdbc:mysql://").append(ds.getServer())
             .append('/')
-            .append(ds.getName())
+            .append(schemaName)
             .toString();
         Connection conn = null;
         try

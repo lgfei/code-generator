@@ -21,7 +21,6 @@ import com.lgfei.code.generator.core.util.JdbcUtil;
 import com.lgfei.code.generator.model.dto.DatabaseDTO;
 import com.lgfei.code.generator.model.dto.MysqlTableDTO;
 import com.lgfei.code.generator.model.entity.Datasource;
-import com.lgfei.code.generator.model.vo.TableParamVO;
 
 @Service
 public class CommonServiceImpl implements ICommonService
@@ -45,7 +44,7 @@ public class CommonServiceImpl implements ICommonService
         List<DatabaseDTO> dbs = new LinkedList<>();
         for (String row : rows)
         {
-            if (DEFAULT_DBS.contains(row))
+            if (DEFAULT_SCHEMAS.contains(row))
             {
                 continue;
             }
@@ -58,26 +57,26 @@ public class CommonServiceImpl implements ICommonService
     }
     
     @Override
-    public List<MysqlTableDTO> getMysqlTables(Datasource ds, TableParamVO tableParamVO)
+    public List<MysqlTableDTO> getMysqlTables(Datasource ds, String schemaName, String tableNames)
     {
         List<MysqlTableDTO> list = null;
         Connection conn = JdbcUtil.getConn(ds);
         StringBuilder sql = new StringBuilder(
             "SELECT TABLE_SCHEMA AS tableSchema, TABLE_NAME AS tableName, TABLE_TYPE AS tableType, CASE TABLE_COMMENT WHEN '' THEN TABLE_NAME ELSE TABLE_COMMENT END AS tableComment FROM information_schema.`TABLES` WHERE 1 = 1");
         DBParams params = new DBParams();
-        if (StringUtils.isEmpty(tableParamVO.getTableSchema()))
+        if (StringUtils.isEmpty(schemaName))
         {
             sql.append(" AND 1=2");
         }
         else
         {
             sql.append(" AND table_schema = ?");
-            params.addParam(tableParamVO.getTableSchema());
+            params.addParam(schemaName);
         }
-        if (!StringUtils.isEmpty(tableParamVO.getTableNames()))
+        if (!StringUtils.isEmpty(tableNames))
         {
             sql.append(" AND (table_name LIKE ? OR table_comment LIKE ?)");
-            params.addParam(tableParamVO.getTableNames());
+            params.addParam(tableNames);
         }
         PreparedStatement pstmt;
         try
@@ -121,10 +120,14 @@ public class CommonServiceImpl implements ICommonService
             //int col = rs.getMetaData().getColumnCount();
             while (rs.next())
             {
-                DatabaseDTO info = new DatabaseDTO();
-                info.setDbName(rs.getString(1));
-                info.setDbDesc(rs.getString(1));
-                list.add(info);
+            	String schemaName = rs.getString(1);
+                if (!DEFAULT_SCHEMAS.contains(schemaName))
+                {
+                	DatabaseDTO info = new DatabaseDTO();
+                    info.setDbName(rs.getString(1));
+                    info.setDbDesc(rs.getString(1));
+                    list.add(info);
+                }
             }
         }
         catch (SQLException e)
