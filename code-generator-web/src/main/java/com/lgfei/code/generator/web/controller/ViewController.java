@@ -6,26 +6,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = {"页面接口"})
+@Api(tags = { "页面接口" })
 @Controller
 @RequestMapping("")
-public class ViewController
-{
+public class ViewController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index()
-    {
+    public String index() {
         return "index";
     }
-    
+
     @RequestMapping(value = "/main", method = RequestMethod.GET)
-    public String main()
-    {
+    public String main() {
         return "main";
     }
-    
+
     @RequestMapping(value = "/api-code-generator", method = RequestMethod.GET)
-    public String apiCodeGenerator()
-    {
+    public String apiCodeGenerator() {
         return "api-code-generator";
     }
 }

@@ -10,17 +10,17 @@ import com.lgfei.code.generator.model.entity.UserDsRelation;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = {"用户数据源关系接口"})
+@Api(tags = { "用户数据源关系接口" })
 @Controller
 @RequestMapping("user-ds-relation")
 public class UserDsRelationController extends BaseController<UserDsRelation> {
 
-	@Autowired
-	private IUserDsRelationService service;
-	
-	@Override
-	protected IService<UserDsRelation> getService() {
-		return service;
-	}
+    @Autowired
+    private IUserDsRelationService service;
+
+    @Override
+    protected IService<UserDsRelation> getService() {
+        return service;
+    }
 
 }

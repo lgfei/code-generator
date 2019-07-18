@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import io.swagger.annotations.Api;
 
 import ${package.Entity}.${entity};
-import ${my.Manager}.${my.managerName};
+import ${package.Service}.${table.serviceName};
 
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
@@ -23,8 +23,10 @@ import ${superControllerClassPackage};
 @Api(tags = {"${table.comment!}"})
 @Controller
 @RequestMapping("/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
-public class  ${table.controllerName} 
-	extends ${superControllerClass}<${my.managerName},${entity}, ${my.entityIdClass}> 
-{
-
+public class  ${table.controllerName} extends ${superControllerClass}<${table.serviceName},${entity}, ${my.entityIdClass}> {
+    
+    @Override
+    protected ${entity} newEntity() {
+        return new ${entity}();
+	}
 }

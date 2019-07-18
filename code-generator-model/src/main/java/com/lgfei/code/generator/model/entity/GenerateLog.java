@@ -1,67 +1,67 @@
 package com.lgfei.code.generator.model.entity;
 
-public class GenerateLog extends BaseEntity{
+public class GenerateLog extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String logNo;
-	
-	private String name;
-	
-	private String dsNo;
-	
-	private String userNo;
-	
-	private String content;
-	
-	private Integer status;
+    private String logNo;
 
-	public String getLogNo() {
-		return logNo;
-	}
+    private String name;
 
-	public void setLogNo(String logNo) {
-		this.logNo = logNo;
-	}
+    private String dsNo;
 
-	public String getName() {
-		return name;
-	}
+    private String userNo;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String content;
 
-	public String getDsNo() {
-		return dsNo;
-	}
+    private Integer status;
 
-	public void setDsNo(String dsNo) {
-		this.dsNo = dsNo;
-	}
+    public String getLogNo() {
+        return logNo;
+    }
 
-	public String getUserNo() {
-		return userNo;
-	}
+    public void setLogNo(String logNo) {
+        this.logNo = logNo;
+    }
 
-	public void setUserNo(String userNo) {
-		this.userNo = userNo;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getDsNo() {
+        return dsNo;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public void setDsNo(String dsNo) {
+        this.dsNo = dsNo;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	
+    public String getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 }

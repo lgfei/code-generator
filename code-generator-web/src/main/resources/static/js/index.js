@@ -36,7 +36,8 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	        {field: 'dbType', title: '数据库类型'},
    	        {field: 'type', title: '数据源类型'},
    	        {field: 'driver', title: '数据驱动'},
-   	        {field: 'server', title: 'ip:port'},
+   	        {field: 'server', title: 'IP'},
+   	        {field: 'port', title: '端口'},
    	        {field: 'username', title: '用户名'},
    	        {field: 'password', title: '密码'},
    	        {field: 'createUser', title: '创建人'},
@@ -47,6 +48,56 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	      ]
    	    ]
    	  }); 
+   	  
+      // 监听行双击事件
+      table.on('rowDouble(datasource)', function(obj){
+    	  var data = obj.data;
+    	  layer.open({
+   		    type: 1,
+   		    area: ['700px', '300px'],
+   		    content: `
+   		    <table class="layui-table" lay-skin="row">
+   		      <colgroup>
+	   		     <col width="100">
+	   		     <col width="200">
+	   		     <col width="100">
+	   		     <col width="200">
+	   		   </colgroup>
+	   		   <tbody>
+	   		     <tr>
+	   		       <td>数据源编码</td>
+	   		       <td>${data.dsNo}</td>
+	   		       <td>名称</td>
+	   		       <td>${data.name}</td>
+	   		     </tr>
+	   		     <tr>
+	   		       <td>数据库类型</td>
+  		           <td>${data.dbType}</td>
+  		           <td>数据驱动</td>
+		           <td>${data.driver}</td>
+	   		     </tr>
+	   		     <tr>
+	   		       <td>IP</td>
+		           <td>${data.server}</td>
+		           <td>端口</td>
+		           <td>${data.port}</td>
+  		         </tr>
+  		         <tr>
+		           <td>用户名</td>
+	               <td>${data.username}</td>
+	               <td>密码</td>
+	               <td>${data.password}</td>
+		         </tr>
+		         <tr>
+		           <td>数据源类型</td>
+  		           <td>${data.type}</td>
+  		           <td></td>
+  		           <td></td>
+		         </tr>
+	   		   </tbody>
+	   		 </table>`
+   		  });
+      });
    	  
       // 监听工具条
       table.on('toolbar(datasource)', function(obj){
@@ -62,53 +113,107 @@ layui.use(['layer','jquery','element','table','form'], function(){
            	  id: data.dsNo,
               title: data.name,
               content: `
-              <fieldset class="layui-elem-field">
-                <legend>数据源</legend>
-                <table class="layui-table" lay-skin="row">
-       		      <colgroup>
- 	   		        <col width="100">
- 	   		        <col width="200">
- 	   		        <col width="100">
- 	   		        <col width="200">
- 	   		     </colgroup>
- 	   		     <tbody>
- 	   		       <tr>
- 	   		         <td>数据源编码</td>
- 	   		         <td>${data.dsNo}</td>
- 	   		         <td>名称</td>
- 	   		         <td>${data.name}</td>
- 	   		       </tr>
- 	   		       <tr>
- 	   		         <td>数据库类型</td>
-   		             <td>${data.dbType}</td>
-   		             <td>数据源类型</td>
-   		             <td>${data.type}</td>
- 	   		       </tr>
- 	   		       <tr>
-   		             <td>数据驱动</td>
- 		             <td>${data.driver}</td>
- 		             <td>ip:port</td>
- 		             <td>${data.server}</td>
-   		           </tr>
-   		           <tr>
- 		             <td>用户名</td>
- 	                 <td>${data.username}</td>
- 	                 <td>密码</td>
- 	                 <td>${data.password}</td>
- 		           </tr>
- 	   		     </tbody>            	  
-               </table>
-             </fieldset>
+              <form class="layui-form">
+                <fieldset class="layui-elem-field">
+            	  <legend>数据源</legend>
+            	  
+            	  <div class="layui-row">
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">数据源编码</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="dsNo" autocomplete="off" class="layui-input layui-bg-gray" value="${data.dsNo}" readonly="readonly"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">名称</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="name" autocomplete="off" class="layui-input layui-bg-gray" value="${data.name}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">数据库类型</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="dbType" autocomplete="off" class="layui-input layui-bg-gray" value="${data.dbType}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  </div>
+            	  
+            	  <br/>
+            	  
+            	  <div class="layui-row">
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">数据库驱动</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="driver" autocomplete="off" class="layui-input layui-bg-gray" value="${data.driver}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">IP</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="server" autocomplete="off" class="layui-input layui-bg-gray" value="${data.server}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">端口</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="port" autocomplete="off" class="layui-input layui-bg-gray" value="${data.port}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  </div>
+            	  
+            	  <br/>
+            	  	
+            	  <div class="layui-row">
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">用户名</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="username" autocomplete="off" class="layui-input layui-bg-gray" value="${data.username}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">密码</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="password" autocomplete="off" class="layui-input layui-bg-gray" value="${data.password}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  	<div class="layui-col-md4">
+            	  	  <div class="layui-inline">
+            	  	    <label class="layui-form-label">数据源类型</label>
+            	  	    <div class="layui-input-inline">
+                          <input type="text" name="type" autocomplete="off" class="layui-input layui-bg-gray" value="${data.type}" disabled="disabled"/>
+                        </div>
+            	  	  </div>
+            	  	</div>
+            	  </div>
+            	  
+            	  <br/>
+              </fieldset>
                
-             <form class="layui-form">
               <fieldset class="layui-elem-field">
                 <legend>数据表</legend>
+               	
                	<div class="layui-row">
                   <div class="layui-col-md3">
                     <div class="layui-inline">
                        <label class="layui-form-label">isInit</label>
                        <div class="layui-input-inline">
-                         <input type="checkbox" name="isInit" lay-skin="switch">
+                         <input type="checkbox" name="isInit" lay-skin="switch"/>
                        </div>
                      </div>
                    </div>  
@@ -116,7 +221,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
                      <div class="layui-inline">
                        <label class="layui-form-label">groupId<span style="color:red;">*</span></label>
                        <div class="layui-input-inline">
-                         <input type="text" name="groupId" lay-verify="required" placeholder="请输入groupId" autocomplete="off" class="layui-input">
+                         <input type="text" name="groupId" lay-verify="required" placeholder="请输入groupId" autocomplete="off" class="layui-input"/>
                        </div>
                      </div>
                    </div>
@@ -124,11 +229,12 @@ layui.use(['layer','jquery','element','table','form'], function(){
                      <div class="layui-inline">
                        <label class="layui-form-label">artifactId<span style="color:red;">*</span></label>
                         <div class="layui-input-inline">
-                         <input type="text" name="artifactId" lay-verify="required" placeholder="请输入artifactId" autocomplete="off" class="layui-input">
+                         <input type="text" name="artifactId" lay-verify="required" placeholder="请输入artifactId" autocomplete="off" class="layui-input"/>
                        </div>
                      </div>
                    </div>
                  </div>
+                 
                  <br/>
                  
                  <div class="layui-row">
@@ -136,11 +242,12 @@ layui.use(['layer','jquery','element','table','form'], function(){
                      <div class="layui-form-item">
                        <label class="layui-form-label">tableSchema<span style="color:red;">*</span></label>
                        <div class="layui-input-block">
-                         <select name="tableSchema" lay-verify="required" xm-select="tableSchema" xm-select-radio></select>
+                         <select name="schemaName" lay-verify="required" xm-select="schemaName" xm-select-radio></select>
                        </div>
                      </div>
                    </div>
                </div> 
+               
                <br/>
                
                <div class="layui-row">
@@ -153,20 +260,20 @@ layui.use(['layer','jquery','element','table','form'], function(){
                  </div>
                </div>  
              </div>
-             <br/>
            
+             <br/>
+             
              <div class="layui-row">
                <div class="layui-col-md12">
                  <div class="layui-form-item">
                    <label class="layui-form-label">projectPath<span style="color:red;">*</span></label>
                    <div class="layui-input-block">
-                     <input type="text" name="projectPath" lay-verify="required" placeholder="请输入projectPath" autocomplete="off" class="layui-input">
+                     <input type="text" name="projectPath" lay-verify="required" placeholder="请输入projectPath" autocomplete="off" class="layui-input"/>
                    </div>
                  </div>
                </div>           
              </div>
-             <br/>
-             </fieldset>
+           </fieldset>
              
              <div class="layui-row">
                <div class="layui-form-item">
@@ -176,7 +283,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
                  </div>
                 </div>
               </div>
-           </form>`});
+            </form>`});
        	    
        	    form.render();
        	    
@@ -195,7 +302,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
         				let obj = {"name": item.dbDesc, "value": item.dbName};
        	    			selectData.push(obj);
         			});
-        			formSelects.data('tableSchema', 'local', {
+        			formSelects.data('schemaName', 'local', {
         			    arr: selectData
         			});
         		},
@@ -204,7 +311,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
         		}
         	});      	    
        	    
-        	formSelects.on('tableSchema', function(id, vals, val, isAdd, isDisabled){
+        	formSelects.on('schemaName', function(id, vals, val, isAdd, isDisabled){
         		if(!isAdd){
         			formSelects.data('tableNames', 'local', {
    	    			    arr: []
@@ -239,9 +346,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
         		}
         	    return true;   
         	});
-       	    form.on('select(tableSchema)', function(data){
-
-       	    });
        	    
        	    element.tabChange('mainTab', data.dsNo);
           }else{
@@ -250,52 +354,28 @@ layui.use(['layer','jquery','element','table','form'], function(){
         }
       });
       
-      // 监听行双击事件
-      table.on('rowDouble(datasource)', function(obj){
-    	  var data = obj.data;
-    	  layer.open({
-   		    type: 1,
-   		    area: ['700px', '300px'],
-   		    content: `
-   		    <table class="layui-table" lay-skin="row">
-   		      <colgroup>
-	   		     <col width="100">
-	   		     <col width="200">
-	   		     <col width="100">
-	   		     <col width="200">
-	   		   </colgroup>
-	   		   <tbody>
-	   		     <tr>
-	   		       <td>数据源编码</td>
-	   		       <td>${data.dsNo}</td>
-	   		       <td>名称</td>
-	   		       <td>${data.name}</td>
-	   		     </tr>
-	   		     <tr>
-	   		       <td>数据库类型</td>
-  		           <td>${data.dbType}</td>
-  		           <td>数据源类型</td>
-  		           <td>${data.type}</td>
-	   		     </tr>
-	   		     <tr>
-  		           <td>数据驱动</td>
-		           <td>${data.driver}</td>
-		           <td>ip:port</td>
-		           <td>${data.server}</td>
-  		         </tr>
-  		         <tr>
-		           <td>用户名</td>
-	               <td>${data.username}</td>
-	               <td>密码</td>
-	               <td>${data.password}</td>
-		         </tr>
-	   		   </tbody>
-	   		 </table>`
-   		  });
-      });
-      
       //监听提交
       form.on('submit(formGenerate)', function(data){
-    	  debugger
+    	  var params = {
+    			  'dsNo':data.field.dsNo,
+    			  'isInit':data.field.isInit,
+    			  'groupId':data.field.groupId,
+    			  'artifactId':data.field.artifactId,
+    			  'schemaName':data.field.schemaName,
+    			  'tableNames':data.field.tableNames,
+    			  'projectPath':data.field.projectPath
+    	  		};
+    	  $.ajax({
+      		type:'POST',
+      		url: AppSetting.rootUrl + '/common/generateApiCode',
+      		data:params,
+      		dataType:"json",
+      		success:function(resp){
+      			debugger
+      		},
+      		error: function(e){
+      			console.log(e);
+      		}
+      	});
       });
 }); 

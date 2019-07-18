@@ -6,6 +6,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lgfei.code.generator.model.entity.UserDsRelation;
 
 @Mapper
-public interface UserDsRelationMapper extends BaseMapper<UserDsRelation>{
+public interface UserDsRelationMapper extends BaseMapper<UserDsRelation> {
 
 }

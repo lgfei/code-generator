@@ -1,96 +1,106 @@
 package com.lgfei.code.generator.model.entity;
 
-public class Datasource extends BaseEntity{
+public class Datasource extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String dsNo;
-	
-	private String name;
-	
-	private String dbType;
-	
-	private String type;
-	
-	private String driver;
-	
-	private String server;
-	
-	private String schemaName;
-	
-	private String username;
-	
-	private String password;
+    private String dsNo;
 
-	public String getDsNo() {
-		return dsNo;
-	}
+    private String name;
 
-	public void setDsNo(String dsNo) {
-		this.dsNo = dsNo;
-	}
+    private String dbType;
 
-	public String getName() {
-		return name;
-	}
+    private String type;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String driver;
 
-	public String getDbType() {
-		return dbType;
-	}
+    private String server;
 
-	public void setDbType(String dbType) {
-		this.dbType = dbType;
-	}
+    private Integer port;
 
-	public String getType() {
-		return type;
-	}
+    private String schemaName;
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    private String username;
 
-	public String getDriver() {
-		return driver;
-	}
+    private String password;
 
-	public void setDriver(String driver) {
-		this.driver = driver;
-	}
+    public String getDsNo() {
+        return dsNo;
+    }
 
-	public String getServer() {
-		return server;
-	}
+    public void setDsNo(String dsNo) {
+        this.dsNo = dsNo;
+    }
 
-	public void setServer(String server) {
-		this.server = server;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getSchemaName() {
-		return schemaName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSchemaName(String schemaName) {
-		this.schemaName = schemaName;
-	}
+    public String getDbType() {
+        return dbType;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setDbType(String dbType) {
+        this.dbType = dbType;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public String getSchemaName() {
+        return schemaName;
+    }
+
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

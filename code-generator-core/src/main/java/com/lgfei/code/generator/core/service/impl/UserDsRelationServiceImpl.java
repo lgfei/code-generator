@@ -8,6 +8,7 @@ import com.lgfei.code.generator.core.service.IUserDsRelationService;
 import com.lgfei.code.generator.model.entity.UserDsRelation;
 
 @Service
-public class UserDsRelationServiceImpl extends ServiceImpl<UserDsRelationMapper, UserDsRelation> implements IUserDsRelationService {
+public class UserDsRelationServiceImpl extends ServiceImpl<UserDsRelationMapper, UserDsRelation>
+        implements IUserDsRelationService {
 
 }

@@ -14,8 +14,7 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
  * @since ${date}
  */
 @Configuration
-public class MybatisPlusConfig
-{
+public class MybatisPlusConfig {
     
     /**
      * 分页插件

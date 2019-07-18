@@ -22,27 +22,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class Swagger2Config
-{
-    
+public class Swagger2Config {
+
     @Bean
-    public Docket createRestApi()
-    {
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("com.lgfei.code.generator.web"))
-            .paths(PathSelectors.any())
-            .build();
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
+                .apis(RequestHandlerSelectors.basePackage("com.lgfei.code.generator.web")).paths(PathSelectors.any())
+                .build();
     }
-    
-    private ApiInfo apiInfo()
-    {
-        return new ApiInfoBuilder().title("code-generator APIs")
-            .description("code-generator APIs")
-            .termsOfServiceUrl("http://lgfei.com")
-            .contact(new Contact("lgfei", "http://lgfei.com", "email@xxx.com"))
-            .version("1.0.0")
-            .build();
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().title("code-generator APIs").description("code-generator APIs")
+                .termsOfServiceUrl("http://lgfei.com")
+                .contact(new Contact("lgfei", "http://lgfei.com", "email@xxx.com")).version("1.0.0").build();
     }
-    
+
 }

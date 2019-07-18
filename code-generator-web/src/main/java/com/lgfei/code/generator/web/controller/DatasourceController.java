@@ -10,17 +10,17 @@ import com.lgfei.code.generator.model.entity.Datasource;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = {"数据源信息接口"})
+@Api(tags = { "数据源信息接口" })
 @Controller
 @RequestMapping("datasource")
-public class DatasourceController extends BaseController<Datasource>{
+public class DatasourceController extends BaseController<Datasource> {
 
-	@Autowired
-	private IDatasourceService service;
-	
-	@Override
-	protected IService<Datasource> getService() {
-		return service;
-	}
+    @Autowired
+    private IDatasourceService service;
+
+    @Override
+    protected IService<Datasource> getService() {
+        return service;
+    }
 
 }

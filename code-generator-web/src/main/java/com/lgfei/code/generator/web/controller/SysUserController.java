@@ -10,17 +10,17 @@ import com.lgfei.code.generator.model.entity.SysUser;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = {"用户信息接口"})
+@Api(tags = { "用户信息接口" })
 @Controller
 @RequestMapping("sys-user")
 public class SysUserController extends BaseController<SysUser> {
 
-	@Autowired
-	private ISysUserService service;
-	
-	@Override
-	protected IService<SysUser> getService() {
-		return service;
-	}
+    @Autowired
+    private ISysUserService service;
+
+    @Override
+    protected IService<SysUser> getService() {
+        return service;
+    }
 
 }

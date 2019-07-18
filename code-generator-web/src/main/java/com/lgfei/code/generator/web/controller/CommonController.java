@@ -19,83 +19,75 @@ import com.lgfei.code.generator.core.service.IDatasourceService;
 import com.lgfei.code.generator.model.dto.DatabaseDTO;
 import com.lgfei.code.generator.model.dto.MysqlTableDTO;
 import com.lgfei.code.generator.model.entity.Datasource;
-import com.lgfei.code.generator.model.vo.TableParamVO;
+import com.lgfei.code.generator.model.vo.ApiGeneratorParamVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = {"通用接口"})
+@Api(tags = { "通用接口" })
 @Controller
 @RequestMapping("common")
-public class CommonController
-{
+public class CommonController {
     @Autowired
     private ICommonService service;
-    
+
     @Autowired
     private ApiCodeGenerator apiCodeGenerator;
-    
+
     @Autowired
     private IDatasourceService datasourceService;
-    
+
     @ApiOperation("查询表（数据源来源于后台配置）")
     @ResponseBody
-    @RequestMapping(value = "/selectMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableDTO> selectMysqlTables(String tableSchema, String tableName)
-    {
+    @RequestMapping(value = "/selectMysqlTables", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<MysqlTableDTO> selectMysqlTables(String tableSchema, String tableName) {
         MysqlTableDTO vo = new MysqlTableDTO();
         vo.setTableSchema(tableSchema);
         vo.setTableName(tableName);
         return service.selectMysqlTables(vo);
     }
-    
+
     @ApiOperation("查询库（数据源来源于后台配置）")
     @ResponseBody
-    @RequestMapping(value = "/showDatabases", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseDTO> showDatabases()
-    {
+    @RequestMapping(value = "/showDatabases", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<DatabaseDTO> showDatabases() {
         return service.showDatabases();
     }
-    
+
     @ApiOperation("查询库")
     @ResponseBody
-    @RequestMapping(value = "/getDatabase", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseDTO> getDatabase(@RequestParam(value="dsNo")String dsNo)
-    {
-    	Datasource entity = new Datasource();
-    	entity.setDsNo(dsNo);
-    	Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
-    	Datasource ds = datasourceService.getOne(queryWrapper);
+    @RequestMapping(value = "/getDatabase", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<DatabaseDTO> getDatabase(@RequestParam(value = "dsNo") String dsNo) {
+        Datasource entity = new Datasource();
+        entity.setDsNo(dsNo);
+        Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
+        Datasource ds = datasourceService.getOne(queryWrapper);
         return service.getDatabase(ds);
     }
-    
+
     @ApiOperation("查询表")
     @ResponseBody
-    @RequestMapping(value = "/getMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableDTO> getMysqlTables(@RequestParam(value="dsNo")String dsNo, 
-    		@RequestParam(value="schemaName")String schemaName, @RequestParam(value="tableNames",required=false)String tableNames)
-    {
-    	Datasource entity = new Datasource();
-    	entity.setDsNo(dsNo);
-    	Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
-    	Datasource ds = datasourceService.getOne(queryWrapper);
+    @RequestMapping(value = "/getMysqlTables", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<MysqlTableDTO> getMysqlTables(@RequestParam(value = "dsNo") String dsNo,
+            @RequestParam(value = "schemaName") String schemaName,
+            @RequestParam(value = "tableNames", required = false) String tableNames) {
+        Datasource entity = new Datasource();
+        entity.setDsNo(dsNo);
+        Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
+        Datasource ds = datasourceService.getOne(queryWrapper);
         return service.getMysqlTables(ds, schemaName, tableNames);
     }
-    
+
     @ApiOperation("生成Api代码")
     @ResponseBody
-    @RequestMapping(value = "/generateApiCode", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> generateApiCode(Datasource ds, TableParamVO tableParamVO)
-    {
+    @RequestMapping(value = "/generateApiCode", method = { RequestMethod.POST, RequestMethod.GET })
+    public Map<String, Object> generateApiCode(ApiGeneratorParamVO paramVo) {
         Map<String, Object> rs = new HashMap<>();
-        try
-        {
-            apiCodeGenerator.generate(ds, tableParamVO);
+        try {
+            apiCodeGenerator.generate(paramVo);
             rs.put("rsCode", 0);
             rs.put("rsMsg", "Success");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             rs.put("rsCode", "-1");
             rs.put("rsMsg", e.getMessage());
         }

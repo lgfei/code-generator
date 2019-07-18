@@ -10,17 +10,17 @@ import com.lgfei.code.generator.model.entity.GenerateLog;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = {"生成日志接口"})
+@Api(tags = { "生成日志接口" })
 @Controller
 @RequestMapping("generate-log")
 public class GenerateLogController extends BaseController<GenerateLog> {
 
-	@Autowired
-	private IGenerateLogService service;
-	
-	@Override
-	protected IService<GenerateLog> getService() {
-		return service;
-	}
+    @Autowired
+    private IGenerateLogService service;
+
+    @Override
+    protected IService<GenerateLog> getService() {
+        return service;
+    }
 
 }

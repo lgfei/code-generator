@@ -1,47 +1,47 @@
 package com.lgfei.code.generator.model.entity;
 
-public class SysUser extends BaseEntity{
+public class SysUser extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String userNo;
-	
-	private String name;
-	
-	private String password;
-	
-	private Integer allowNum;
+    private String userNo;
 
-	public String getUserNo() {
-		return userNo;
-	}
+    private String name;
 
-	public void setUserNo(String userNo) {
-		this.userNo = userNo;
-	}
+    private String password;
 
-	public String getName() {
-		return name;
-	}
+    private Integer allowNum;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getUserNo() {
+        return userNo;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getAllowNum() {
-		return allowNum;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAllowNum(Integer allowNum) {
-		this.allowNum = allowNum;
-	}
-	
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getAllowNum() {
+        return allowNum;
+    }
+
+    public void setAllowNum(Integer allowNum) {
+        this.allowNum = allowNum;
+    }
+
 }

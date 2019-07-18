@@ -3,58 +3,58 @@ package com.lgfei.code.generator.model.vo;
 import java.io.Serializable;
 import java.util.List;
 
-public class ResponseVO<T> implements Serializable{
+public class ResponseVO<T> implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String code = "0";
-	
-	private String msg = "success";
-	
-	private List<T> data;
-	
-	private T entity;
-	
-	private Object obj;
+    private String code = "0";
 
-	public String getCode() {
-		return code;
-	}
+    private String msg = "success";
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    private List<T> data;
 
-	public String getMsg() {
-		return msg;
-	}
+    private T entity;
 
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
+    private Object obj;
 
-	public List<T> getData() {
-		return data;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setData(List<T> data) {
-		this.data = data;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public T getEntity() {
-		return entity;
-	}
+    public String getMsg() {
+        return msg;
+    }
 
-	public void setEntity(T entity) {
-		this.entity = entity;
-	}
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
-	public Object getObj() {
-		return obj;
-	}
+    public List<T> getData() {
+        return data;
+    }
 
-	public void setObj(Object obj) {
-		this.obj = obj;
-	}
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
+    public T getEntity() {
+        return entity;
+    }
+
+    public void setEntity(T entity) {
+        this.entity = entity;
+    }
+
+    public Object getObj() {
+        return obj;
+    }
+
+    public void setObj(Object obj) {
+        this.obj = obj;
+    }
 
 }

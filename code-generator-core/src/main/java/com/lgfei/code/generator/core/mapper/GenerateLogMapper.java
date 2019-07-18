@@ -6,6 +6,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lgfei.code.generator.model.entity.GenerateLog;
 
 @Mapper
-public interface GenerateLogMapper extends BaseMapper<GenerateLog>{
+public interface GenerateLogMapper extends BaseMapper<GenerateLog> {
 
 }

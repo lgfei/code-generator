@@ -38,14 +38,11 @@ import lombok.experimental.Accessors;
 </#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<${my.entityIdClass}>
-<#if activeRecord><${entity}></#if> 
-{
+<#if activeRecord><${entity}></#if> {
 <#elseif activeRecord>
-public class ${entity} extends Model<${entity}> 
-{
+public class ${entity} extends Model<${entity}> {
 <#else>
-public class ${entity} implements Serializable 
-{
+public class ${entity} implements Serializable {
 </#if>
 
     private static final long serialVersionUID = 1L;

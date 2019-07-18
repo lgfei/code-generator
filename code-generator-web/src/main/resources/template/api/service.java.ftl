@@ -14,9 +14,7 @@ import ${superServiceClassPackage};
 <#if kotlin>
 interface ${table.serviceName} : ${superServiceClass}<${entity}, ${my.entityIdClass}>
 <#else>
-public interface ${table.serviceName} 
-    extends ${superServiceClass}<${entity}, ${my.entityIdClass}> 
-{
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}, ${my.entityIdClass}> {
 
 }
 </#if>

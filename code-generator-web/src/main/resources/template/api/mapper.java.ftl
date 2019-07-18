@@ -15,8 +15,7 @@ import ${superMapperClassPackage};
 interface ${table.mapperName} : ${superMapperClass}<${entity}, ${my.entityIdClass}>
 <#else>
 public interface ${table.mapperName} 
-    extends ${superMapperClass}<${entity}, ${my.entityIdClass}> 
-{
+    extends ${superMapperClass}<${entity}, ${my.entityIdClass}> {
 
 }
 </#if>

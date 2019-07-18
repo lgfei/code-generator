@@ -24,14 +24,13 @@ public final class BeanUtil {
     public static void copy(Object source, Object target) {
         BeanUtils.copyProperties(source, target);
     }
-    
+
     /**
-     * 拷贝实体集合，sourceList
-     * 只支持自定义实体集合拷贝 
-     * 应用场景：DTO <=> DO 等
+     * 拷贝实体集合，sourceList 只支持自定义实体集合拷贝 应用场景：DTO <=> DO 等
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void copyList(List sourceList, List targetList,Class clazz) throws InstantiationException, IllegalAccessException  {
+    public static void copyList(List sourceList, List targetList, Class clazz)
+            throws InstantiationException, IllegalAccessException {
         if (CollectionUtils.isEmpty(sourceList)) {
             return;
         }
@@ -41,14 +40,15 @@ public final class BeanUtil {
             targetList.add(target);
         }
     }
-    
+
     /**
      * Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
      *
      * @param map
      * @param obj
      */
-    public static void map2Bean(Map<String, Object> map, Object obj) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+    public static void map2Bean(Map<String, Object> map, Object obj)
+            throws IntrospectionException, InvocationTargetException, IllegalAccessException {
         BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
 
@@ -62,13 +62,14 @@ public final class BeanUtil {
             }
         }
     }
-    
+
     /**
      * Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
      *
      * @param obj
      */
-    public static Map<String, Object> bean2Map(Object obj) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+    public static Map<String, Object> bean2Map(Object obj)
+            throws IntrospectionException, InvocationTargetException, IllegalAccessException {
 
         if (obj == null) {
             return null;

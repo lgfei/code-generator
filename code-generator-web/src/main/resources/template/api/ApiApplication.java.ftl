@@ -18,10 +18,9 @@ import com.lgfei.betterme.framework.api.ApiApplication;
 @SpringBootApplication
 @ComponentScan("${my.parentPackage}.${package.ModuleName}")
 @MapperScan("${package.Mapper}")
-public class ${my.upperCaseModuleName}ApiApplication extends ApiApplication
-{
-    public static void main(String[] args)
-    {
+public class ${my.upperCaseModuleName}ApiApplication extends ApiApplication {
+    
+    public static void main(String[] args) {
         SpringApplication app = new SpringApplication(${my.upperCaseModuleName}ApiApplication.class);
         app.run(args);
         System.err.println("http://127.0.0.1:8080/${my.artifactId}-api/swagger-ui.html");
