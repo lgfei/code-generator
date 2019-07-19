@@ -5,6 +5,7 @@
 	  <groupId>com.lgfei</groupId>
 	  <artifactId>betterme-framework</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
+	  <relativePath>../betterme-framework</relativePath>
   </parent>
   
   <artifactId>${my.artifactId}</artifactId>

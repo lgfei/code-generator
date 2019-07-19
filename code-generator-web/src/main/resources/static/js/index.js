@@ -377,5 +377,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
       			console.log(e);
       		}
       	});
+    	// 阻止表单跳转
+    	return false;
       });
 }); 

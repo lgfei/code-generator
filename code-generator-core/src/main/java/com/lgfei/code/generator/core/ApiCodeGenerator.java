@@ -72,7 +72,7 @@ public class ApiCodeGenerator implements ICodeGenerator {
         String dbUserName = datasource.getUsername();// "betterme";
         String dbPassword = datasource.getPassword();// "Betterme#1234";
 
-        boolean isInit = "1".equals(paramVo.getIsInit()) ? true : false;// true
+        boolean isInit = "on".equals(paramVo.getIsInit()) ? true : false;// true
         String groupId = paramVo.getGroupId();// com.lgfei
         String artifactId = paramVo.getArtifactId();// betterme-admin
         String schemaName = paramVo.getSchemaName();// betterme_admin

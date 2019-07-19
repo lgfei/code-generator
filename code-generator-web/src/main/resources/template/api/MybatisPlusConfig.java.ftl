@@ -20,8 +20,7 @@ public class MybatisPlusConfig {
      * 分页插件
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor()
-    {
+    public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor page = new PaginationInterceptor();
         page.setDialectType("mysql");
         return page;
