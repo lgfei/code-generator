@@ -1,27 +1,43 @@
 package com.lgfei.code.generator.model.entity;
 
-public class UserDsRelation extends BaseEntity {
-
+public class UserDsRelation extends BaseEntity
+{
+    
     private static final long serialVersionUID = 1L;
-
+    
     private String userNo;
-
+    
     private String dsNo;
-
-    public String getUserNo() {
+    
+    private Integer allowNum;
+    
+    public String getUserNo()
+    {
         return userNo;
     }
-
-    public void setUserNo(String userNo) {
+    
+    public void setUserNo(String userNo)
+    {
         this.userNo = userNo;
     }
-
-    public String getDsNo() {
+    
+    public String getDsNo()
+    {
         return dsNo;
     }
-
-    public void setDsNo(String dsNo) {
+    
+    public void setDsNo(String dsNo)
+    {
         this.dsNo = dsNo;
     }
-
+    
+    public Integer getAllowNum()
+    {
+        return allowNum;
+    }
+    
+    public void setAllowNum(Integer allowNum)
+    {
+        this.allowNum = allowNum;
+    }
 }
