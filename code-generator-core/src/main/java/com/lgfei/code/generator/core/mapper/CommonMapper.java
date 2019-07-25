@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.lgfei.code.generator.model.dto.MysqlTableDTO;
+import com.lgfei.code.generator.common.dto.MysqlTableDTO;
 
 @Mapper
 public interface CommonMapper {

@@ -5,21 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lgfei.code.generator.core.service.IGenerateLogService;
-import com.lgfei.code.generator.model.entity.GenerateLog;
+import com.lgfei.code.generator.common.entity.LogGenerate;
+import com.lgfei.code.generator.core.service.ILogGenerateService;
 
 import io.swagger.annotations.Api;
 
 @Api(tags = { "生成日志接口" })
 @Controller
-@RequestMapping("generate-log")
-public class GenerateLogController extends BaseController<GenerateLog> {
+@RequestMapping("log-generate")
+public class LogGenerateController extends BaseController<LogGenerate> {
 
     @Autowired
-    private IGenerateLogService service;
+    private ILogGenerateService service;
 
     @Override
-    protected IService<GenerateLog> getService() {
+    protected IService<LogGenerate> getService() {
         return service;
     }
 

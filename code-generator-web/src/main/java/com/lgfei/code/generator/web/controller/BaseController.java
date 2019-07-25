@@ -10,9 +10,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lgfei.code.generator.model.vo.PageResponseVO;
-import com.lgfei.code.generator.model.vo.RequestVO;
-import com.lgfei.code.generator.model.vo.ResponseVO;
+import com.lgfei.code.generator.common.vo.PageResponseVO;
+import com.lgfei.code.generator.common.vo.RequestVO;
+import com.lgfei.code.generator.common.vo.ResponseVO;
 
 import io.swagger.annotations.ApiOperation;
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lgfei.code.generator.core.service.IDatasourceService;
-import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.common.entity.Datasource;
 
 import io.swagger.annotations.Api;
 

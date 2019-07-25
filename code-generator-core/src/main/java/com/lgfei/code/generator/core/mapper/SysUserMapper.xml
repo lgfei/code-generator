@@ -3,6 +3,6 @@
 <!-- 用户信息接口 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.SysUserMapper">
 	
-	<resultMap type="com.lgfei.code.generator.model.entity.SysUser" id="SysUserMap"></resultMap>
+	<resultMap type="com.lgfei.code.generator.common.entity.SysUser" id="SysUserMap"></resultMap>
 	
 </mapper>

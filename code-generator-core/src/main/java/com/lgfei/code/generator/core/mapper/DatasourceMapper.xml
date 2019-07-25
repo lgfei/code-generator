@@ -3,6 +3,6 @@
 <!-- 数据源信息接口 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.DatasourceMapper">
 	
-	<resultMap type="com.lgfei.code.generator.model.entity.Datasource" id="DatasourceMap"></resultMap>
+	<resultMap type="com.lgfei.code.generator.common.entity.Datasource" id="DatasourceMap"></resultMap>
 	
 </mapper>

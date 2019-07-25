@@ -3,7 +3,7 @@
 <!-- 公用接口 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.CommonMapper">
 	
-	<resultMap type="com.lgfei.code.generator.model.dto.MysqlTableDTO" id="MysqlTableDTO"></resultMap>
+	<resultMap type="com.lgfei.code.generator.common.dto.MysqlTableDTO" id="MysqlTableDTO"></resultMap>
 	
 	<select id="selectMysqlTables" parameterType="java.util.Map" resultMap="MysqlTableDTO">
 	SELECT

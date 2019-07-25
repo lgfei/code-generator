@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import org.springframework.util.StringUtils;
 
-import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.common.entity.Datasource;
 
 /**
  * JDBC处理工具类 <功能详细描述>

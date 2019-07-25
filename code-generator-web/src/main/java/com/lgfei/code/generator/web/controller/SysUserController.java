@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lgfei.code.generator.core.service.ISysUserService;
-import com.lgfei.code.generator.model.entity.SysUser;
+import com.lgfei.code.generator.common.entity.SysUser;
 
 import io.swagger.annotations.Api;
 

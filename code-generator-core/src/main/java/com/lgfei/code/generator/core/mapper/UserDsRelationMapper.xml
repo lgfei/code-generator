@@ -3,6 +3,6 @@
 <!-- 用户数据源关系接口 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.UserDsRelationMapper">
 	
-	<resultMap type="com.lgfei.code.generator.model.entity.UserDsRelation" id="UserDsRelationMap"></resultMap>
+	<resultMap type="com.lgfei.code.generator.common.entity.UserDsRelation" id="UserDsRelationMap"></resultMap>
 	
 </mapper>

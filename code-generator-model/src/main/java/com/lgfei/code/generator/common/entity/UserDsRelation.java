@@ -1,4 +1,4 @@
-package com.lgfei.code.generator.model.entity;
+package com.lgfei.code.generator.common.entity;
 
 public class UserDsRelation extends BaseEntity
 {

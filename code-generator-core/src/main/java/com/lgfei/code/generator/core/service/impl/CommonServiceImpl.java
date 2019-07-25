@@ -18,9 +18,9 @@ import com.lgfei.code.generator.core.mapper.CommonMapper;
 import com.lgfei.code.generator.core.service.ICommonService;
 import com.lgfei.code.generator.core.util.DBParams;
 import com.lgfei.code.generator.core.util.JdbcUtil;
-import com.lgfei.code.generator.model.dto.DatabaseDTO;
-import com.lgfei.code.generator.model.dto.MysqlTableDTO;
-import com.lgfei.code.generator.model.entity.Datasource;
+import com.lgfei.code.generator.common.dto.DatabaseDTO;
+import com.lgfei.code.generator.common.dto.MysqlTableDTO;
+import com.lgfei.code.generator.common.entity.Datasource;
 
 @Service
 public class CommonServiceImpl implements ICommonService {

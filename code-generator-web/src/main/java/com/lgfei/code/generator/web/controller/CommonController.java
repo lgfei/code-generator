@@ -16,10 +16,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lgfei.code.generator.core.ApiCodeGenerator;
 import com.lgfei.code.generator.core.service.ICommonService;
 import com.lgfei.code.generator.core.service.IDatasourceService;
-import com.lgfei.code.generator.model.dto.DatabaseDTO;
-import com.lgfei.code.generator.model.dto.MysqlTableDTO;
-import com.lgfei.code.generator.model.entity.Datasource;
-import com.lgfei.code.generator.model.vo.ApiGeneratorParamVO;
+import com.lgfei.code.generator.common.dto.DatabaseDTO;
+import com.lgfei.code.generator.common.dto.MysqlTableDTO;
+import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.common.vo.ApiGeneratorParamVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

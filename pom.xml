@@ -103,9 +103,9 @@
 	</dependencies>
 
 	<modules>
-		<module>code-generator-web</module>
 		<module>code-generator-core</module>
-		<module>code-generator-model</module>
+		<module>code-generator-common</module>
+		<module>code-generator-web</module>
 	</modules>
 
 	<distributionManagement>

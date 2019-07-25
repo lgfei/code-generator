@@ -1,4 +1,4 @@
-package com.lgfei.code.generator.model.dto;
+package com.lgfei.code.generator.common.dto;
 
 import java.io.Serializable;
 

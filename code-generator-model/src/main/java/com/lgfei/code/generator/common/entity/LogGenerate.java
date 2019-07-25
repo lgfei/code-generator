@@ -1,6 +1,6 @@
-package com.lgfei.code.generator.model.entity;
+package com.lgfei.code.generator.common.entity;
 
-public class GenerateLog extends BaseEntity {
+public class LogGenerate extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

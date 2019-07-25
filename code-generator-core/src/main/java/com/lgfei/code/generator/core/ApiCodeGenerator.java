@@ -26,8 +26,8 @@ import com.lgfei.code.generator.core.service.IDatasourceService;
 import com.lgfei.code.generator.core.util.FileOutConfigUtil;
 import com.lgfei.code.generator.core.util.FileUtil;
 import com.lgfei.code.generator.core.util.StringUtil;
-import com.lgfei.code.generator.model.entity.Datasource;
-import com.lgfei.code.generator.model.vo.ApiGeneratorParamVO;
+import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.common.vo.ApiGeneratorParamVO;
 
 /**
  * Api代码生成器 <功能详细描述>
