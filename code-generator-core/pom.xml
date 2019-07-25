@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
 	  <groupId>com.lgfei</groupId>
-	  <artifactId>code-generator-model</artifactId>
+	  <artifactId>code-generator-common</artifactId>
 	  <version>${project.version}</version>
 	</dependency>    
   </dependencies>

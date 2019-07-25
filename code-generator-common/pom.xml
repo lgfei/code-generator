@@ -8,8 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>code-generator-model</artifactId>
-  <name>code-generator-model</name>
+  <artifactId>code-generator-common</artifactId>
+  <name>code-generator-common</name>
   <url>http://maven.apache.org</url>
   
   <properties>
