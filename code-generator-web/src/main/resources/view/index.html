@@ -45,17 +45,17 @@
 				<div class="layui-tab" lay-allowClose="true" lay-filter="mainTab">
 					<ul class="layui-tab-title">
 						<li lay-id="1">首页</li>
-						<li lay-id="2">数据源管理</li>
-						<li class="layui-this" lay-id="3">用户管理</li>
+						<li class="layui-this" lay-id="2">数据源管理</li>
+						<li lay-id="3">用户管理</li>
 					</ul>
 					<div class="layui-tab-content">
 						<div class="layui-tab-item">
 							<span>首页</span>
 						</div>
-						<div class="layui-tab-item">
+						<div class="layui-tab-item layui-show">
 							<table id="tbDatasource" lay-filter="datasource"></table>
 						</div>
-						<div class="layui-tab-item layui-show">
+						<div class="layui-tab-item">
 							<table id="tbSysUser" lay-filter="sysUser"></table>
 						</div>
 					</div>

@@ -74,8 +74,8 @@ public final class FileOutConfigUtil {
 
     public static String getEntityPath(String projectPath, String groupId, String artifactId) {
         String parentPackage = getParentPath(groupId, artifactId);
-        StringBuilder path = new StringBuilder(projectPath).append('/').append(artifactId).append("-model")
-                .append("/src/main/java/").append(parentPackage).append("/model").append("/entity");
+        StringBuilder path = new StringBuilder(projectPath).append('/').append(artifactId).append("-common")
+                .append("/src/main/java/").append(parentPackage).append("/common").append("/entity");
         return path.toString();
     }
 
@@ -185,14 +185,14 @@ public final class FileOutConfigUtil {
         };
     }
 
-    public static FileOutConfig getModelPomFileOutConfig(String projectPath, String artifactId, String templatePath) {
+    public static FileOutConfig getCommonPomFileOutConfig(String projectPath, String artifactId, String templatePath) {
         if (StringUtils.isEmpty(templatePath)) {
-            templatePath = "/template/pom-model.xml.ftl";
+            templatePath = "/template/pom-common.xml.ftl";
         }
         return new FileOutConfig(templatePath) {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return new StringBuilder(projectPath).append('/').append(artifactId).append("-model")
+                return new StringBuilder(projectPath).append('/').append(artifactId).append("-common")
                         .append(File.separator).append("pom.xml").toString();
             }
         };

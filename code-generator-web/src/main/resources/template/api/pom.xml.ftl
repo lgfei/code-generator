@@ -28,7 +28,7 @@
   
   <modules>
     <module>${my.artifactId}-api</module>
+    <module>${my.artifactId}-common</module>
     <module>${my.artifactId}-core</module>
-    <module>${my.artifactId}-model</module>
   </modules>
 </project>

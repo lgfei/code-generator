@@ -142,7 +142,7 @@ public class ApiCodeGenerator implements ICodeGenerator {
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(FileOutConfigUtil.getMouldeName(artifactId));
         pc.setParent(FileOutConfigUtil.getParentPackage(groupId, artifactId));
-        pc.setEntity("model.entity");
+        pc.setEntity("common.entity");
         pc.setMapper("core.mapper");
         pc.setService("core.service");
         pc.setServiceImpl("core.service.impl");
@@ -175,7 +175,7 @@ public class ApiCodeGenerator implements ICodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         // entity
-        strategy.setSuperEntityClass("com.lgfei.betterme.framework.model.entity.BaseEntity");
+        strategy.setSuperEntityClass("com.lgfei.betterme.framework.common.entity.BaseEntity");
         strategy.setSuperEntityColumns("id", "status", "create_user", "create_time", "update_user", "update_time",
                 "remark");
         // mapper
@@ -216,9 +216,9 @@ public class ApiCodeGenerator implements ICodeGenerator {
             // 自定义core-pom的代码模板
             focList.add(FileOutConfigUtil.getCorePomFileOutConfig(projectPath, artifactId,
                     TEMPLATE_PATH + "/pom-core.xml.ftl"));
-            // 自定义model-pom的代码模板
-            focList.add(FileOutConfigUtil.getModelPomFileOutConfig(projectPath, artifactId,
-                    TEMPLATE_PATH + "/pom-model.xml.ftl"));
+            // 自定义common-pom的代码模板
+            focList.add(FileOutConfigUtil.getCommonPomFileOutConfig(projectPath, artifactId,
+                    TEMPLATE_PATH + "/pom-common.xml.ftl"));
             // 自定义ApiApplication的代码模板
             focList.add(FileOutConfigUtil.getApiApplicationFileOutConfig(projectPath, groupId, artifactId,
                     TEMPLATE_PATH + "/ApiApplication.java.ftl"));

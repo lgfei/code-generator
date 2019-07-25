@@ -21,10 +21,10 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	  
    	  // 数据源管理表格
    	  table.render({
-   	    elem: '#tbSysUser',
+   	    elem: '#tbDatasource',
    	    cellMinWidth: 100,
    	    height: 312,
-   	    url: AppSetting.rootUrl + '/sys-user/page/',
+   	    url: AppSetting.rootUrl + '/datasource/page/',
    	    page: true,
    	    toolbar: '#barDatasource',
    	    defaultToolbar: ['filter', 'exports'],

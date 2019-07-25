@@ -8,8 +8,8 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>${my.artifactId}-model</artifactId>
-  <name>${my.artifactId}-model</name>
+  <artifactId>${my.artifactId}-common</artifactId>
+  <name>${my.artifactId}-common</name>
   <url>http://maven.apache.org</url>
   
   <properties>

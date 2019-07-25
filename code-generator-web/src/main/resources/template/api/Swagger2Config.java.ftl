@@ -36,8 +36,8 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("${my.artifactId} APIs")
             .description("${my.artifactId} APIs")
-            .termsOfServiceUrl("http://${author}.com")
-            .contact(new Contact("${author}", "http://${author}.com", "email@xxx.com"))
+            .termsOfServiceUrl("https://${author}.github.io/")
+            .contact(new Contact("${author}", "https://${author}.github.io/", "email@xxx.com"))
             .version("1.0.0")
             .build();
     }

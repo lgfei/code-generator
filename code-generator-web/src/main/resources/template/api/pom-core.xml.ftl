@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>${my.groupId}</groupId>
-      <artifactId>${my.artifactId}-model</artifactId>
+      <artifactId>${my.artifactId}-common</artifactId>
       <version>${r'${framework-version}'}</version>
     </dependency>
   </dependencies>
