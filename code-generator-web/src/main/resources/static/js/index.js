@@ -221,7 +221,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
                      <div class="layui-inline">
                        <label class="layui-form-label">groupId<span style="color:red;">*</span></label>
                        <div class="layui-input-inline">
-                         <input type="text" name="groupId" lay-verify="required" placeholder="请输入groupId" autocomplete="off" class="layui-input"/>
+                         <input type="text" name="groupId" autocomplete="off" class="layui-input layui-bg-gray" value="com.lgfei" disabled="disabled"/>
                        </div>
                      </div>
                    </div>

@@ -35,7 +35,7 @@ public class ControllerAspect {
         LOG.info("init ControllerAspect...");
     }
     
-    @Pointcut("execution(public * ${my.parentPackage}.${package.ModuleName}.api.controller.*Controller.*(..))")
+    @Pointcut("execution(public * ${my.groupId}..api.controller.*Controller.*(..))")
     public void excudeAspect() {}
     
     @Before("excudeAspect()")
