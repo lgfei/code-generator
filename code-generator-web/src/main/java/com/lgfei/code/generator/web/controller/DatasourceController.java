@@ -1,26 +1,29 @@
 package com.lgfei.code.generator.web.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+ 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.lgfei.code.generator.core.service.IDatasourceService;
+import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.core.service.IDatasourceService;
 
 import io.swagger.annotations.Api;
-
-@Api(tags = { "数据源信息接口" })
-@Controller
-@RequestMapping("datasource")
-public class DatasourceController extends BaseController<Datasource> {
-
-    @Autowired
-    private IDatasourceService service;
-
+ 
+/**
+ * <p>
+ * 数据源信息表 前端控制器
+ * </p>
+ *
+ * @author lgfei
+ * @since 2019-07-29
+ */
+@Api(tags = {"数据源信息表"})
+@RestController
+@RequestMapping("/datasource")
+public class  DatasourceController extends BaseController<IDatasourceService, Datasource, Long> {
+    
     @Override
-    protected IService<Datasource> getService() {
-        return service;
-    }
-
+    protected Datasource newEntity() {
+        return new Datasource();
+	}
 }

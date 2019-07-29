@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<!-- 用户信息接口 -->
+<!-- 生成日志表 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.LogGenerateMapper">
-	
-	<resultMap type="com.lgfei.code.generator.common.entity.LogGenerate" id="LogGenerateMap"></resultMap>
 	
 </mapper>

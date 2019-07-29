@@ -1,13 +1,21 @@
 package com.lgfei.code.generator.core.service.impl;
 
-import org.springframework.stereotype.Service;
-
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lgfei.code.generator.common.entity.Datasource;
 import com.lgfei.code.generator.core.mapper.DatasourceMapper;
 import com.lgfei.code.generator.core.service.IDatasourceService;
-import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.betterme.framework.core.service.impl.BaseServiceImpl;
+import org.springframework.stereotype.Service;
 
+/**
+ * <p>
+ * 数据源信息表 服务实现类
+ * </p>
+ *
+ * @author lgfei
+ * @since 2019-07-29
+ */
 @Service
-public class DatasourceServiceImpl extends ServiceImpl<DatasourceMapper, Datasource> implements IDatasourceService {
+public class DatasourceServiceImpl extends BaseServiceImpl<DatasourceMapper, Datasource, Long> 
+    implements IDatasourceService {
 
 }

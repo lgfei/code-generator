@@ -1,13 +1,21 @@
 package com.lgfei.code.generator.core.service.impl;
 
-import org.springframework.stereotype.Service;
-
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.core.mapper.SysUserMapper;
 import com.lgfei.code.generator.core.service.ISysUserService;
-import com.lgfei.code.generator.common.entity.SysUser;
+import com.lgfei.betterme.framework.core.service.impl.BaseServiceImpl;
+import org.springframework.stereotype.Service;
 
+/**
+ * <p>
+ * 用户信息表 服务实现类
+ * </p>
+ *
+ * @author lgfei
+ * @since 2019-07-29
+ */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, Long> 
+    implements ISysUserService {
 
 }

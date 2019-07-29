@@ -228,6 +228,9 @@ public class ApiCodeGenerator implements ICodeGenerator {
             // 自定义Swagger2Config的代码模板
             focList.add(FileOutConfigUtil.getSwagger2ConfigFileOutConfig(projectPath, groupId, artifactId,
                     TEMPLATE_PATH + "/Swagger2Config.java.ftl"));
+            // 自定义ControllerAspect.java的代码模板
+            focList.add(FileOutConfigUtil.getControllerAspectFileOutConfig(projectPath, groupId, artifactId,
+                    TEMPLATE_PATH + "/ControllerAspect.java.ftl"));
             // 自定义application.properties的代码模板
             focList.add(FileOutConfigUtil.getApplicationPropertiesFileOutConfig(projectPath, artifactId,
                     TEMPLATE_PATH + "/application.properties.ftl"));

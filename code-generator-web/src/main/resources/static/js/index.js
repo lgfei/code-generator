@@ -24,7 +24,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	    elem: '#tbDatasource',
    	    cellMinWidth: 100,
    	    height: 312,
-   	    url: AppSetting.rootUrl + '/datasource/page/',
+   	    url: AppSetting.rootUrl + '/datasource/page.json',
    	    page: true,
    	    toolbar: '#barDatasource',
    	    defaultToolbar: ['filter', 'exports'],
@@ -380,4 +380,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
     	// 阻止表单跳转
     	return false;
       });
+      
+
 }); 

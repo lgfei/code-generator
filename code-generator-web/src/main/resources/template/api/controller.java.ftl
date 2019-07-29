@@ -1,7 +1,7 @@
 package ${package.Controller};
  
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
@@ -21,9 +21,9 @@ import ${superControllerClassPackage};
  * @since ${date}
  */
 @Api(tags = {"${table.comment!}"})
-@Controller
+@RestController
 @RequestMapping("/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
-public class  ${table.controllerName} extends ${superControllerClass}<${table.serviceName},${entity}, ${my.entityIdClass}> {
+public class  ${table.controllerName} extends ${superControllerClass}<${table.serviceName}, ${entity}, ${my.entityIdClass}> {
     
     @Override
     protected ${entity} newEntity() {

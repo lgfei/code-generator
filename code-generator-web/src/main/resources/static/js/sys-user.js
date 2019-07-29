@@ -12,7 +12,7 @@ layui.use(['layer','jquery','element','table'], function(){
       elem: '#tbSysUser',
       cellMinWidth: 100,
       height: 312,
-      url: AppSetting.rootUrl + '/sys-user/page/',
+      url: AppSetting.rootUrl + '/sys-user/page.json',
       page: true,
       toolbar: '#barSysUser',
       defaultToolbar: ['filter', 'exports'],

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
 public final class FileOutConfigUtil {
+    
     public static String getParentPackage(String groupId, String artifactId) {
         StringBuilder sb = new StringBuilder();
         // 处理groupId
@@ -113,40 +114,6 @@ public final class FileOutConfigUtil {
         return path.toString();
     }
 
-    public static FileOutConfig getManagerFileOutConfig(String projectPath, String groupId, String artifactId,
-            String templatePath) {
-        String parentPackage = getParentPath(groupId, artifactId);
-        if (StringUtils.isEmpty(templatePath)) {
-            templatePath = "/template/manager.java.ftl";
-        }
-        return new FileOutConfig(templatePath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return new StringBuilder(projectPath).append('/').append(artifactId).append("-core")
-                        .append("/src/main/java/").append(parentPackage).append("/core").append("/manager")
-                        .append(File.separator).append('I').append(tableInfo.getEntityName()).append("Manager.java")
-                        .toString();
-            }
-        };
-    }
-
-    public static FileOutConfig getManagerImplFileOutConfig(String projectPath, String groupId, String artifactId,
-            String templatePath) {
-        String parentPackage = getParentPath(groupId, artifactId);
-        if (StringUtils.isEmpty(templatePath)) {
-            templatePath = "/template/managerImpl.java.ftl";
-        }
-        return new FileOutConfig(templatePath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return new StringBuilder(projectPath).append('/').append(artifactId).append("-core")
-                        .append("/src/main/java/").append(parentPackage).append("/core").append("/manager")
-                        .append("/impl").append(File.separator).append(tableInfo.getEntityName())
-                        .append("ManagerImpl.java").toString();
-            }
-        };
-    }
-
     public static FileOutConfig getPomFileOutConfig(String projectPath, String templatePath) {
         if (StringUtils.isEmpty(templatePath)) {
             templatePath = "/template/pom.xml.ftl";
@@ -243,6 +210,22 @@ public final class FileOutConfigUtil {
                 return new StringBuilder(projectPath).append('/').append(artifactId).append("-api")
                         .append("/src/main/java/").append(parentPackage).append("/api/config").append(File.separator)
                         .append("Swagger2Config.java").toString();
+            }
+        };
+    }
+    
+    public static FileOutConfig getControllerAspectFileOutConfig(String projectPath, String groupId, String artifactId,
+            String templatePath) {
+        String parentPackage = getParentPath(groupId, artifactId);
+        if (StringUtils.isEmpty(templatePath)) {
+            templatePath = "/template/ControllerAspect.java.ftl";
+        }
+        return new FileOutConfig(templatePath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return new StringBuilder(projectPath).append('/').append(artifactId).append("-api")
+                        .append("/src/main/java/").append(parentPackage).append("/api/aspect").append(File.separator)
+                        .append("ControllerAspect.java").toString();
             }
         };
     }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<!-- 数据源信息接口 -->
+<!-- 数据源信息表 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.DatasourceMapper">
-	
-	<resultMap type="com.lgfei.code.generator.common.entity.Datasource" id="DatasourceMap"></resultMap>
 	
 </mapper>
