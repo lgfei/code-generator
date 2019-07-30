@@ -13,38 +13,17 @@
 	<div class="layui-container">
 		<div class="layui-row">
 			<div class="layui-col-md12">
-				<div class="layui-logo" lay-href="">
-					<h1 class="site-h1">Code Generator</h1>
+				<div class="layui-logo" lay-href="" style="background-color: #20222A;">
+					<h1 class="site-h1" style="color:white;">Code Generator</h1>
 				</div>
 			</div>
 		</div>
 
 		<div class="layui-row layui-col-space10">
-			<div class="layui-col-md2">
-				<ul class="layui-nav layui-nav-tree" lay-filter="test"
-					style="width: 100%; height: 100%">
-					<li class="layui-nav-item layui-nav-itemed"><a
-						href="javascript:;">主数据</span></a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="javascript:;">数据源管理</a>
-							</dd>
-						</dl></li>
-					<li class="layui-nav-item"><a href="javascript:;">设置</span></a>
-						<dl class="layui-nav-child">
-							<dd>
-								<a href="">基本资料</a>
-							</dd>
-							<dd>
-								<a href="">修改密码</a>
-							</dd>
-						</dl></li>
-				</ul>
-			</div>
-			<div class="layui-col-md10">
-				<div class="layui-tab" lay-allowClose="true" lay-filter="mainTab">
+			<div class="layui-col-md12">
+				<div class="layui-tab">
 					<ul class="layui-tab-title">
-						<li lay-id="1">首页</li>
+						<li lay-id="1"><i class="layui-icon layui-icon-home"></i></li>
 						<li class="layui-this" lay-id="2">数据源管理</li>
 						<li lay-id="3">用户管理</li>
 					</ul>
@@ -53,10 +32,10 @@
 							<span>首页</span>
 						</div>
 						<div class="layui-tab-item layui-show">
-							<table id="tbDatasource" lay-filter="datasource"></table>
+							<iframe src="datasource/index.htm" frameborder="0" style="width: 100%;height: 100%;"></iframe>
 						</div>
 						<div class="layui-tab-item">
-							<table id="tbSysUser" lay-filter="sysUser"></table>
+							<iframe src="sys-user/index.htm" frameborder="0" style="width: 100%;height: 100%;"></iframe>
 						</div>
 					</div>
 				</div>
@@ -65,22 +44,34 @@
 	</div>
 	<div class="layui-layer-move"></div>
 </body>
+
 <script src="http://lgfei.com/layui/layui.js"></script>
 <script src="js/lib/formSelects-v4.min.js"></script>
+<script src="js/common.js"></script>
 <script src="js/index.js"></script>
-<script src="js/sys-user.js"></script>
 
 <script type="text/javascript">
-  var AppSetting = AppSetting || {};
-  (function (AppSetting) { 
-	  AppSetting.rootUrl = '[[${rootUrl}]]';
-  })(AppSetting);
+var AppSetting = AppSetting || {};
+(function (AppSetting) { 
+    AppSetting.rootUrl = '[[${rootUrl}]]';
+ })(AppSetting);
+ 
+function resizeHeight(){
+	var frames = document.getElementsByTagName('iframe');
+	for(var i = 0; i < frames.length; i++){
+		var iframe = frames[i];
+	    var div = iframe.parentNode;
+	    try{
+	        var bHeight = iframe.contentWindow.document.body.scrollHeight;
+	        var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+	        var height = Math.max(bHeight, dHeight);
+	        div.style.height = height + 'px';
+	    }catch (ex){
+	        console.log(ex);
+	    }
+	}
+}
+window.setInterval("resizeHeight()", 500);
 </script>
 
-<script type="text/html" id="barDatasource">
-    <a class="layui-btn layui-btn-xs" lay-event="generate">生成代码</a>
-</script>
-<script type="text/html" id="barSysUser">
-    <a class="layui-btn layui-btn-xs" lay-event="generate">分配数据源</a>
-</script>
 </html>

@@ -24,7 +24,7 @@ public class CodeGeneratorWebApplication {
         SpringApplication app = new SpringApplication(CodeGeneratorWebApplication.class);
         app.run(args);
         System.err.println("API地址：http://127.0.0.1:8080/code-generator-web/swagger-ui.html");
-        System.err.println("首页地址：http://127.0.0.1:8080/code-generator-web/index");
+        System.err.println("首页地址：http://127.0.0.1:8080/code-generator-web/index.htm");
     }
 
     @Bean

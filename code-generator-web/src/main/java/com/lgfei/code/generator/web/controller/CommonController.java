@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags = { "通用接口" })
 @Controller
-@RequestMapping("common")
+@RequestMapping("")
 public class CommonController {
     @Autowired
     private ICommonService service;
@@ -37,26 +37,14 @@ public class CommonController {
     @Autowired
     private IDatasourceService datasourceService;
 
-    @ApiOperation("查询表（数据源来源于后台配置）")
-    @ResponseBody
-    @RequestMapping(value = "/selectMysqlTables", method = { RequestMethod.POST, RequestMethod.GET })
-    public List<MysqlTableDTO> selectMysqlTables(String tableSchema, String tableName) {
-        MysqlTableDTO vo = new MysqlTableDTO();
-        vo.setTableSchema(tableSchema);
-        vo.setTableName(tableName);
-        return service.selectMysqlTables(vo);
-    }
-
-    @ApiOperation("查询库（数据源来源于后台配置）")
-    @ResponseBody
-    @RequestMapping(value = "/showDatabases", method = { RequestMethod.POST, RequestMethod.GET })
-    public List<DatabaseDTO> showDatabases() {
-        return service.showDatabases();
+    @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
+    public String gotoIndexView() {
+        return "index";
     }
 
     @ApiOperation("查询库")
     @ResponseBody
-    @RequestMapping(value = "/getDatabase", method = { RequestMethod.POST, RequestMethod.GET })
+    @RequestMapping(value = "/getDatabase.json", method = { RequestMethod.POST, RequestMethod.GET })
     public List<DatabaseDTO> getDatabase(@RequestParam(value = "dsNo") String dsNo) {
         Datasource entity = new Datasource();
         entity.setDsNo(dsNo);
@@ -67,7 +55,7 @@ public class CommonController {
 
     @ApiOperation("查询表")
     @ResponseBody
-    @RequestMapping(value = "/getMysqlTables", method = { RequestMethod.POST, RequestMethod.GET })
+    @RequestMapping(value = "/getMysqlTables.json", method = { RequestMethod.POST, RequestMethod.GET })
     public List<MysqlTableDTO> getMysqlTables(@RequestParam(value = "dsNo") String dsNo,
             @RequestParam(value = "schemaName") String schemaName,
             @RequestParam(value = "tableNames", required = false) String tableNames) {
@@ -80,7 +68,7 @@ public class CommonController {
 
     @ApiOperation("生成Api代码")
     @ResponseBody
-    @RequestMapping(value = "/generateApiCode", method = { RequestMethod.POST, RequestMethod.GET })
+    @RequestMapping(value = "/generateApiCode.json", method = { RequestMethod.POST, RequestMethod.GET })
     public Map<String, Object> generateApiCode(ApiGeneratorParamVO paramVo) {
         Map<String, Object> rs = new HashMap<>();
         try {

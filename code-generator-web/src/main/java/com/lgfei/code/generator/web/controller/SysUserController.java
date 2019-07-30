@@ -1,14 +1,14 @@
 package com.lgfei.code.generator.web.controller;
  
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import io.swagger.annotations.Api;
-
+import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.core.service.ISysUserService;
 
-import com.lgfei.betterme.framework.api.controller.BaseController;
+import io.swagger.annotations.Api;
  
 /**
  * <p>
@@ -19,7 +19,7 @@ import com.lgfei.betterme.framework.api.controller.BaseController;
  * @since 2019-07-29
  */
 @Api(tags = {"用户信息表"})
-@RestController
+@Controller
 @RequestMapping("/sys-user")
 public class  SysUserController extends BaseController<ISysUserService,SysUser, Long> {
     
@@ -27,4 +27,9 @@ public class  SysUserController extends BaseController<ISysUserService,SysUser, 
     protected SysUser newEntity() {
         return new SysUser();
 	}
+
+    @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
+    public String gotoIndexView() {
+        return "sys-user/index";
+    }
 }
