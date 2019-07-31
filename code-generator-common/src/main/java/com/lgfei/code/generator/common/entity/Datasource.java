@@ -19,7 +19,7 @@ public class Datasource extends BaseEntity<Long>
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据源编码")
-    private String dsNo;
+    private String datasourceNo;
 
     @ApiModelProperty(value = "数据源名称")
     private String name;
@@ -48,12 +48,12 @@ public class Datasource extends BaseEntity<Long>
     @ApiModelProperty(value = "数据库用户密码")
     private String password;
 
-    public String getDsNo() {
-        return dsNo;
+    public String getDatasourceNo() {
+        return datasourceNo;
     }
 
-    public void setDsNo(String dsNo) {
-        this.dsNo = dsNo;
+    public void setDatasourceNo(String datasourceNo) {
+        this.datasourceNo = datasourceNo;
     }
     public String getName() {
         return name;
@@ -122,7 +122,7 @@ public class Datasource extends BaseEntity<Long>
     @Override
     public String toString() {
         return "Datasource{" +
-        "dsNo=" + dsNo +
+        "datasourceNo=" + datasourceNo +
         ", name=" + name +
         ", dbType=" + dbType +
         ", type=" + type +

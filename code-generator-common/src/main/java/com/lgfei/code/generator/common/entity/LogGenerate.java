@@ -25,7 +25,7 @@ public class LogGenerate extends BaseEntity<Long>
     private String name;
 
     @ApiModelProperty(value = "数据源编码")
-    private String dsNo;
+    private String datasourceNo;
 
     @ApiModelProperty(value = "用户编码")
     private String userNo;
@@ -47,12 +47,12 @@ public class LogGenerate extends BaseEntity<Long>
     public void setName(String name) {
         this.name = name;
     }
-    public String getDsNo() {
-        return dsNo;
+    public String getDatasourceNo() {
+        return datasourceNo;
     }
 
-    public void setDsNo(String dsNo) {
-        this.dsNo = dsNo;
+    public void setDatasourceNo(String datasourceNo) {
+        this.datasourceNo = datasourceNo;
     }
     public String getUserNo() {
         return userNo;
@@ -74,7 +74,7 @@ public class LogGenerate extends BaseEntity<Long>
         return "LogGenerate{" +
         "logNo=" + logNo +
         ", name=" + name +
-        ", dsNo=" + dsNo +
+        ", datasourceNo=" + datasourceNo +
         ", userNo=" + userNo +
         ", content=" + content +
         "}";

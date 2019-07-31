@@ -1,6 +1,6 @@
 package com.lgfei.code.generator.core.service;
 
-import com.lgfei.code.generator.common.entity.UserDsRelation;
+import com.lgfei.code.generator.common.entity.UserDatasource;
 import com.lgfei.betterme.framework.core.service.IBaseService;
 
 /**
@@ -9,8 +9,8 @@ import com.lgfei.betterme.framework.core.service.IBaseService;
  * </p>
  *
  * @author lgfei
- * @since 2019-07-29
+ * @since 2019-07-31
  */
-public interface IUserDsRelationService extends IBaseService<UserDsRelation, Long> {
+public interface IUserDatasourceService extends IBaseService<UserDatasource, Long> {
 
 }

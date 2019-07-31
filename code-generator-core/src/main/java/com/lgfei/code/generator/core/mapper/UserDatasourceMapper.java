@@ -1,6 +1,6 @@
 package com.lgfei.code.generator.core.mapper;
 
-import com.lgfei.code.generator.common.entity.UserDsRelation;
+import com.lgfei.code.generator.common.entity.UserDatasource;
 import com.lgfei.betterme.framework.core.mpper.IBaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.lgfei.betterme.framework.core.mpper.IBaseMapper;
  * </p>
  *
  * @author lgfei
- * @since 2019-07-29
+ * @since 2019-07-31
  */
-public interface UserDsRelationMapper extends IBaseMapper<UserDsRelation, Long> {
+public interface UserDatasourceMapper extends IBaseMapper<UserDatasource, Long> {
 
 }

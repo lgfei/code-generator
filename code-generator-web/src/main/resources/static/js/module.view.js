@@ -1,7 +1,8 @@
 /**
- * 用户管理
+ * 首页
+ * @returns
  */
-layui.use(['layer','jquery','element','table'], function(){
+layui.use(['layer','jquery','element','table','form'], function(){
 	var $ = layui.$;
     var layer = layui.layer;
     var element = layui.element;
@@ -9,20 +10,19 @@ layui.use(['layer','jquery','element','table'], function(){
  	
     // 用户管理表格
     table.render({
-      elem: '#tbSysUser',
+      elem: '#tbModule',
       cellMinWidth: 100,
       height: 312,
-      url: AppSetting.rootUrl + '/sys-user/page.json',
+      url: AppSetting.rootUrl + '/module/page.json',
       page: true,
-      toolbar: '#barSysUser',
+      toolbar: '#barModule',
       defaultToolbar: ['filter', 'exports'],
       cols: [
         [
     	  {field: 'ck', title: '', type: 'radio'},
-    	  {field: 'userNo', title: '用户编码', sort: true},
+    	  {field: 'moduleNo', title: '模块编码', sort: true},
     	  {field: 'name', title: '名称', sort: true},
-    	  {field: 'account', title: '帐号'},
-          {field: 'password', title: '密码'},
+    	  {field: 'url', title: '地址'},
           {field: 'createUser', title: '创建人'},
           {field: 'createTime', title: '创建时间', sort: true},
           {field: 'updateUser', title: '修改人'},
@@ -34,4 +34,4 @@ layui.use(['layer','jquery','element','table'], function(){
     
     // 隐藏第一个页签的关闭按钮
     $(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
-});
+}); 

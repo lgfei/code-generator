@@ -45,9 +45,9 @@ public class CommonController {
     @ApiOperation("查询库")
     @ResponseBody
     @RequestMapping(value = "/getDatabase.json", method = { RequestMethod.POST, RequestMethod.GET })
-    public List<DatabaseDTO> getDatabase(@RequestParam(value = "dsNo") String dsNo) {
+    public List<DatabaseDTO> getDatabase(@RequestParam(value = "datasourceNo") String datasourceNo) {
         Datasource entity = new Datasource();
-        entity.setDsNo(dsNo);
+        entity.setDatasourceNo(datasourceNo);
         Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
         Datasource ds = datasourceService.getOne(queryWrapper);
         return service.getDatabase(ds);
@@ -56,11 +56,11 @@ public class CommonController {
     @ApiOperation("查询表")
     @ResponseBody
     @RequestMapping(value = "/getMysqlTables.json", method = { RequestMethod.POST, RequestMethod.GET })
-    public List<MysqlTableDTO> getMysqlTables(@RequestParam(value = "dsNo") String dsNo,
+    public List<MysqlTableDTO> getMysqlTables(@RequestParam(value = "datasourceNo") String datasourceNo,
             @RequestParam(value = "schemaName") String schemaName,
             @RequestParam(value = "tableNames", required = false) String tableNames) {
         Datasource entity = new Datasource();
-        entity.setDsNo(dsNo);
+        entity.setDatasourceNo(datasourceNo);
         Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
         Datasource ds = datasourceService.getOne(queryWrapper);
         return service.getMysqlTables(ds, schemaName, tableNames);

@@ -4,15 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>User Manager</title>
+<title>Datasource Manager</title>
 <link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
 <link rel="stylesheet" href="../css/formSelects-v4.css">
 </head>
-<body>
-    <table id="tbSysUser" lay-filter="sysUser"></table>
+<body layadmin-themealias="default" class="layui-layout-body">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="layui-tab" lay-allowClose="true" lay-filter="tabMain">
+               <ul class="layui-tab-title">
+                   <li lay-id="1">用户列表</li>
+               </ul>
+               <div class="layui-tab-content">
+                   <div class="layui-tab-item layui-show">
+                       <table id="tbSysUser" lay-filter="sysUser"></table>
+                   </div>
+               </div>
+           </div>        
+        </div>
+    </div>
 </body>
 <script type="text/html" id="barSysUser">
-    <a class="layui-btn layui-btn-xs" lay-event="generate">分配数据源</a>
+    <a class="layui-btn layui-btn-xs" lay-event="btnAssignment">分配数据源</a>
 </script>
 
 <script src="http://lgfei.com/layui/layui.js"></script>

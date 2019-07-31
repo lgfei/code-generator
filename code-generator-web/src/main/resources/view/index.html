@@ -21,22 +21,30 @@
 
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md12">
-				<div class="layui-tab">
+				<div class="layui-tab" lay-filter="tabMain">
 					<ul class="layui-tab-title">
-						<li lay-id="1"><i class="layui-icon layui-icon-home"></i></li>
-						<li class="layui-this" lay-id="2">数据源管理</li>
+						<li class="layui-this" lay-id="1"><i class="layui-icon layui-icon-home"></i></li>
+						<li lay-id="2">数据源管理</li>
 						<li lay-id="3">用户管理</li>
+						<li lay-id="4">模块管理</li>
+						<li lay-id="5">操作按钮管理</li>
 					</ul>
 					<div class="layui-tab-content">
-						<div class="layui-tab-item">
+						<div class="layui-tab-item layui-show" id="tabContent1">
 							<span>首页</span>
 						</div>
-						<div class="layui-tab-item layui-show">
-							<iframe src="datasource/index.htm" frameborder="0" style="width: 100%;height: 100%;"></iframe>
+						<div class="layui-tab-item" id="tabContent2">
+							
 						</div>
-						<div class="layui-tab-item">
-							<iframe src="sys-user/index.htm" frameborder="0" style="width: 100%;height: 100%;"></iframe>
+						<div class="layui-tab-item" id="tabContent3">
+							
 						</div>
+						<div class="layui-tab-item" id="tabContent4">
+                            
+                        </div>
+                        <div class="layui-tab-item" id="tabContent5">
+                            
+                        </div>
 					</div>
 				</div>
 			</div>

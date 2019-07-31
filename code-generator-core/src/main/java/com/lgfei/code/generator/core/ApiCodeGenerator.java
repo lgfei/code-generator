@@ -50,7 +50,7 @@ public class ApiCodeGenerator implements ICodeGenerator
     private boolean check(ApiGeneratorParamVO paramVo)
     {
         Datasource entity = new Datasource();
-        entity.setDsNo(paramVo.getDsNo());
+        entity.setDatasourceNo(paramVo.getDatasourceNo());
         Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
         Datasource ds = datasourceService.getOne(queryWrapper);
         if (null == ds)

@@ -10,7 +10,8 @@ package com.lgfei.code.generator.common.vo;
  * @since [产品/模块版本]
  */
 public class ApiGeneratorParamVO {
-    private String dsNo;
+    
+    private String datasourceNo;
 
     private String isInit;
 
@@ -24,12 +25,12 @@ public class ApiGeneratorParamVO {
 
     private String projectPath;
 
-    public String getDsNo() {
-        return dsNo;
+    public String getDatasourceNo() {
+        return datasourceNo;
     }
 
-    public void setDsNo(String dsNo) {
-        this.dsNo = dsNo;
+    public void setDatasourceNo(String datasourceNo) {
+        this.datasourceNo = datasourceNo;
     }
 
     public String getIsInit() {

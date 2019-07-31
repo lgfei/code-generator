@@ -22,7 +22,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	    cols: [
    	      [
    	    	{field: 'ck', title: '', type: 'radio'},
-   	    	{field: 'dsNo', title: '编码', sort: true},
+   	    	{field: 'datasourceNo', title: '编码', sort: true},
    	        {field: 'name', title: '名称', sort: true},
    	        {field: 'dbType', title: '数据库类型'},
    	        {field: 'type', title: '数据源类型'},
@@ -57,7 +57,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
 	   		   <tbody>
 	   		     <tr>
 	   		       <td>数据源编码</td>
-	   		       <td>${data.dsNo}</td>
+	   		       <td>${data.datasourceNo}</td>
 	   		       <td>名称</td>
 	   		       <td>${data.name}</td>
 	   		     </tr>
@@ -94,14 +94,14 @@ layui.use(['layer','jquery','element','table','form'], function(){
       table.on('toolbar(datasource)', function(obj){
     	var checkStatus = table.checkStatus(obj.config.id);
     	var data = checkStatus.data[0];
-    	var dsNo = data.dsNo;
+    	var datasourceNo = data.datasourceNo;
     	
     	var layEvent = obj.event;
-        if(layEvent === 'generate'){ // 生成代码
-          var exist = $("li[lay-id='"+data.dsNo+"']").length;
+        if(layEvent === 'btnGenerate'){ // 生成代码
+          var exist = $("li[lay-id='"+data.datasourceNo+"']").length;
           if(exist === 0){
-       	    element.tabAdd('mainTab', {
-           	  id: data.dsNo,
+       	    element.tabAdd('tabMain', {
+           	  id: data.datasourceNo,
               title: data.name,
               content: `
               <form class="layui-form">
@@ -113,7 +113,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
             	  	  <div class="layui-inline">
             	  	    <label class="layui-form-label">数据源编码</label>
             	  	    <div class="layui-input-inline">
-                          <input type="text" name="dsNo" autocomplete="off" class="layui-input layui-bg-gray" value="${data.dsNo}" readonly="readonly"/>
+                          <input type="text" name="datasourceNo" autocomplete="off" class="layui-input layui-bg-gray" value="${data.datasourceNo}" readonly="readonly"/>
                         </div>
             	  	  </div>
             	  	</div>
@@ -282,7 +282,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
         		type: 'POST',
         		url: AppSetting.rootUrl + '/getDatabase.json',
         		async: false,
-        		data: {'dsNo':dsNo},
+        		data: {'datasourceNo':datasourceNo},
         		// dataType:'application/json',
         		success: function(resp){
         			//$.each(resp,function(i,item){
@@ -312,7 +312,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
            	    		type: 'POST', 
            	    		url: AppSetting.rootUrl + '/getMysqlTables.json', 
            	    		async: false, 
-           	    		data: {'dsNo': dsNo,'schemaName': val.value},
+           	    		data: {'datasourceNo': datasourceNo,'schemaName': val.value},
     				    //dataType:'application/json', 
            	    		success: function(resp){
            	    			//$('#selectTableNames').empty();
@@ -338,9 +338,9 @@ layui.use(['layer','jquery','element','table','form'], function(){
         	    return true;   
         	});
        	    
-       	    element.tabChange('mainTab', data.dsNo);
+       	    element.tabChange('tabMain', data.datasourceNo);
           }else{
-        	element.tabChange('mainTab', data.dsNo);
+        	element.tabChange('tabMain', data.datasourceNo);
           }
         }
       });
@@ -348,7 +348,7 @@ layui.use(['layer','jquery','element','table','form'], function(){
       //监听提交
       form.on('submit(formGenerate)', function(data){
     	  var params = {
-    			  'dsNo':data.field.dsNo,
+    			  'datasourceNo':data.field.datasourceNo,
     			  'isInit':data.field.isInit,
     			  'groupId':data.field.groupId,
     			  'artifactId':data.field.artifactId,
@@ -372,4 +372,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
     	return false;
       });
       
+      // 隐藏第一个页签的关闭按钮
+      $(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
 }); 

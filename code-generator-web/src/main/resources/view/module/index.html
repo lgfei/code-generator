@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Datasource Manager</title>
+<title>Module Manager</title>
 <link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
 <link rel="stylesheet" href="../css/formSelects-v4.css">
 </head>
@@ -13,25 +13,25 @@
         <div class="layui-col-md12">
             <div class="layui-tab" lay-allowClose="true" lay-filter="tabMain">
                <ul class="layui-tab-title">
-                   <li lay-id="1">数据源列表</li>
+                   <li lay-id="1">模块列表</li>
                </ul>
                <div class="layui-tab-content">
                    <div class="layui-tab-item layui-show">
-                       <table id="tbDatasource" lay-filter="datasource"></table>
+                       <table id="tbModule" lay-filter="module"></table>
                    </div>
                </div>
            </div>        
         </div>
     </div>
 </body>
-<script type="text/html" id="barDatasource">
-    <a class="layui-btn layui-btn-xs" lay-event="btnGenerate">生成代码</a>
+<script type="text/html" id="barModule">
+    <a class="layui-btn layui-btn-xs" lay-event="btnAdd">新增</a>
 </script>
 
 <script src="http://lgfei.com/layui/layui.js"></script>
 <script src="../js/lib/formSelects-v4.min.js"></script>
 <script src="../js/common.js"></script>
-<script src="../js/datasource.view.js"></script>
+<script src="../js/module.view.js"></script>
 
 <script type="text/javascript">
 var AppSetting = AppSetting || {};

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 
-import com.lgfei.code.generator.common.entity.UserDsRelation;
-import com.lgfei.code.generator.core.service.IUserDsRelationService;
+import com.lgfei.code.generator.common.entity.UserDatasource;
+import com.lgfei.code.generator.core.service.IUserDatasourceService;
 
 import com.lgfei.betterme.framework.api.controller.BaseController;
  
@@ -16,15 +16,15 @@ import com.lgfei.betterme.framework.api.controller.BaseController;
  * </p>
  *
  * @author lgfei
- * @since 2019-07-29
+ * @since 2019-07-31
  */
 @Api(tags = {"用户数据源关系表"})
 @RestController
-@RequestMapping("/user-ds-relation")
-public class  UserDsRelationController extends BaseController<IUserDsRelationService,UserDsRelation, Long> {
+@RequestMapping("/user-datasource")
+public class  UserDatasourceController extends BaseController<IUserDatasourceService, UserDatasource, Long> {
     
     @Override
-    protected UserDsRelation newEntity() {
-        return new UserDsRelation();
+    protected UserDatasource newEntity() {
+        return new UserDatasource();
 	}
 }

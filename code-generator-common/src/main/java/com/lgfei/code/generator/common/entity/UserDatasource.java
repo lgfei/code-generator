@@ -10,10 +10,10 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author lgfei
- * @since 2019-07-29
+ * @since 2019-07-31
  */
-@ApiModel(value="UserDsRelation对象", description="用户数据源关系表")
-public class UserDsRelation extends BaseEntity<Long>
+@ApiModel(value="UserDatasource对象", description="用户数据源关系表")
+public class UserDatasource extends BaseEntity<Long>
 {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class UserDsRelation extends BaseEntity<Long>
     private String userNo;
 
     @ApiModelProperty(value = "数据源编码")
-    private String dsNo;
+    private String datasourceNo;
 
     @ApiModelProperty(value = "允许生成的次数", example = "1")
     private Integer allowNum;
@@ -34,12 +34,12 @@ public class UserDsRelation extends BaseEntity<Long>
     public void setUserNo(String userNo) {
         this.userNo = userNo;
     }
-    public String getDsNo() {
-        return dsNo;
+    public String getDatasourceNo() {
+        return datasourceNo;
     }
 
-    public void setDsNo(String dsNo) {
-        this.dsNo = dsNo;
+    public void setDatasourceNo(String datasourceNo) {
+        this.datasourceNo = datasourceNo;
     }
     public Integer getAllowNum() {
         return allowNum;
@@ -51,9 +51,9 @@ public class UserDsRelation extends BaseEntity<Long>
 
     @Override
     public String toString() {
-        return "UserDsRelation{" +
+        return "UserDatasource{" +
         "userNo=" + userNo +
-        ", dsNo=" + dsNo +
+        ", datasourceNo=" + datasourceNo +
         ", allowNum=" + allowNum +
         "}";
     }
