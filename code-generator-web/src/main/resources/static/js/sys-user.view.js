@@ -18,16 +18,17 @@ layui.use(['layer','jquery','element','table'], function(){
       defaultToolbar: ['filter', 'exports'],
       cols: [
         [
-    	  {field: 'ck', title: '', type: 'radio'},
-    	  {field: 'userNo', title: '用户编码', sort: true},
-    	  {field: 'name', title: '名称', sort: true},
+    	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
+    	  {field: 'userNo', title: '用户编码', sort: true, fixed: 'left'},
+    	  {field: 'name', title: '名称', sort: true, fixed: 'left'},
     	  {field: 'account', title: '帐号'},
           {field: 'password', title: '密码'},
           {field: 'createUser', title: '创建人'},
           {field: 'createTime', title: '创建时间', sort: true},
           {field: 'updateUser', title: '修改人'},
           {field: 'updateTime', title: '修改时间', sort: true},
-          {field: 'remark', title: '备注'}
+          {field: 'remark', title: '备注'},
+ 	      {field: 'opt', title: '操作', toolbar: '#barSysUserCols', fixed: 'right', width: 200}
         ]
       ]
     }); 

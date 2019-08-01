@@ -19,15 +19,16 @@ layui.use(['layer','jquery','element','table','form'], function(){
       defaultToolbar: ['filter', 'exports'],
       cols: [
         [
-    	  {field: 'ck', title: '', type: 'radio'},
-    	  {field: 'moduleNo', title: '模块编码', sort: true},
-    	  {field: 'name', title: '名称', sort: true},
+    	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
+    	  {field: 'moduleNo', title: '模块编码', sort: true, fixed: 'left'},
+    	  {field: 'name', title: '名称', sort: true, fixed: 'left'},
     	  {field: 'url', title: '地址'},
           {field: 'createUser', title: '创建人'},
           {field: 'createTime', title: '创建时间', sort: true},
           {field: 'updateUser', title: '修改人'},
           {field: 'updateTime', title: '修改时间', sort: true},
-          {field: 'remark', title: '备注'}
+          {field: 'remark', title: '备注'},
+ 	      {field: 'opt', title: '操作', toolbar: '#barModuleCols', fixed: 'right'}
         ]
       ]
     }); 

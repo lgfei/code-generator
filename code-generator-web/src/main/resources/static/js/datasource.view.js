@@ -21,9 +21,9 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	    defaultToolbar: ['filter', 'exports'],
    	    cols: [
    	      [
-   	    	{field: 'ck', title: '', type: 'radio'},
-   	    	{field: 'datasourceNo', title: '编码', sort: true},
-   	        {field: 'name', title: '名称', sort: true},
+   	    	{field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
+   	    	{field: 'datasourceNo', title: '编码', sort: true, fixed: 'left'},
+   	        {field: 'name', title: '名称', sort: true, fixed: 'left'},
    	        {field: 'dbType', title: '数据库类型'},
    	        {field: 'type', title: '数据源类型'},
    	        {field: 'driver', title: '数据驱动'},
@@ -35,7 +35,8 @@ layui.use(['layer','jquery','element','table','form'], function(){
    	        {field: 'createTime', title: '创建时间', sort: true},
    	        {field: 'updateUser', title: '修改人'},
    	        {field: 'updateTime', title: '修改时间', sort: true},
-   	        {field: 'remark', title: '备注'}
+   	        {field: 'remark', title: '备注'},
+   	        {field: 'opt', title: '操作', toolbar: '#barDatasourceCols', fixed: 'right'}
    	      ]
    	    ]
    	  }); 
@@ -89,11 +90,16 @@ layui.use(['layer','jquery','element','table','form'], function(){
 	   		 </table>`
    		  });
       });
-   	  
-      // 监听工具条
+      
+      // 监听表格工具条
       table.on('toolbar(datasource)', function(obj){
-    	var checkStatus = table.checkStatus(obj.config.id);
-    	var data = checkStatus.data[0];
+    	  var checkStatus = table.checkStatus(obj.config.id);
+      	  var data = checkStatus.data;
+      });
+   	  
+      // 监听表格行工具条
+      table.on('tool(datasource)', function(obj){
+    	var data = obj.data;
     	var datasourceNo = data.datasourceNo;
     	
     	var layEvent = obj.event;
@@ -285,9 +291,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
         		data: {'datasourceNo':datasourceNo},
         		// dataType:'application/json',
         		success: function(resp){
-        			//$.each(resp,function(i,item){
-        			//	selectOps += `<option value="${item.dbName}">${item.dbName}</option>`;
-        			//});
         			var selectData = [];
         			$.each(resp,function(i,item){
         				let obj = {"name": item.dbDesc, "value": item.dbName};
@@ -315,12 +318,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
            	    		data: {'datasourceNo': datasourceNo,'schemaName': val.value},
     				    //dataType:'application/json', 
            	    		success: function(resp){
-           	    			//$('#selectTableNames').empty();
-           	    			//$('#selectTableNames').append(`<option value="">空</option>`);
-           	    			//$.each(resp,function(i,item){ 
-           	    			//	$('#selectTableNames').append(`<option value="${item.tableName}">${item.tableComment}</option`);
-           	    			//}); 
-           	    			//form.render('select');
            	    			var selectData = [];
            	    			$.each(resp,function(i,item){ 
                	    			let obj = {"name": item.tableComment, "value": item.tableName};
@@ -356,16 +353,25 @@ layui.use(['layer','jquery','element','table','form'], function(){
     			  'tableNames':data.field.tableNames,
     			  'projectPath':data.field.projectPath
     	  		};
+    	  var loadIndex;
     	  $.ajax({
       		type:'POST',
       		url: AppSetting.rootUrl + '/generateApiCode.json',
       		data:params,
       		dataType:"json",
+      		beforeSend: function(){
+      			// 打开加载框
+      			loadIndex = layer.load();
+      		},
       		success:function(resp){
-      			debugger
+      			layer.alert('生成完成！');
       		},
       		error: function(e){
       			console.log(e);
+      		},
+      		complete: function(){
+      			// 关闭加载框
+      			layer.close(loadIndex);
       		}
       	});
     	// 阻止表单跳转
