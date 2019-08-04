@@ -2,19 +2,20 @@
  * 数据源管理列表
  * @returns
  */
-layui.use(['layer','jquery','element','table','form'], function(){
+layui.define(['layer','jquery','element','table','form','common'], function(exports){
       var $ = layui.$;
       var layer = layui.layer;
       var element = layui.element;
    	  var table = layui.table;
    	  var form = layui.form;
    	  var formSelects = layui.formSelects;
-   	  
+   	  var common = layui.common;
+ 	
+   	  var AppSetting = common.AppSetting;
    	  // 数据源管理表格
    	  table.render({
    	    elem: '#tbDatasource',
    	    cellMinWidth: 100,
-   	    height: 312,
    	    url: AppSetting.rootUrl + '/datasource/page.json',
    	    page: true,
    	    toolbar: '#barDatasource',
@@ -380,4 +381,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
       
       // 隐藏第一个页签的关闭按钮
       $(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
+      
+      exports('datasource.view');
 }); 

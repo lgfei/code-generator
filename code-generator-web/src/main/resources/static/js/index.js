@@ -2,7 +2,7 @@
  * 首页
  * @returns
  */
-layui.use(['layer','jquery','element','table','form'], function(){
+layui.define(['layer','jquery','element','common'], function(exports){
 	 var $ = layui.$;
 	 var element = layui.element;
 	 
@@ -10,7 +10,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
 	  // 监听tab加载
 	  element.on('tab(tabMain)', function(data){
 		  var layId = data.elem.context.attributes['lay-id'].value;
-
 		  if(!loadedTabs.includes(layId)){
 			  if(layId === "2"){
 				  $("#tabContent2").html(`<iframe src="datasource/index.htm" frameborder="0" style="width: 100%;height: 100%;"></iframe>`);
@@ -24,4 +23,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
 			  loadedTabs.push(layId);
 		  }
 	  });
+	  
+	  exports('index');
 }); 

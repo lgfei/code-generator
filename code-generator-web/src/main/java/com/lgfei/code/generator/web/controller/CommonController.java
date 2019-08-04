@@ -41,6 +41,11 @@ public class CommonController {
     public String gotoIndexView() {
         return "index";
     }
+    
+    @RequestMapping(value = "/common.htm", method = RequestMethod.GET)
+    public String gotoCommonView() {
+        return "common";
+    }
 
     @ApiOperation("查询库")
     @ResponseBody

@@ -5,8 +5,8 @@
 <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Module Manager</title>
-<link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
-<link rel="stylesheet" href="../css/formSelects-v4.css">
+<!-- 引入公共页面 -->
+<link rel="import" href="../common.htm" id="commonPage"/>
 </head>
 <body layadmin-themealias="default" class="layui-layout-body">
     <div class="layui-row layui-col-space10">
@@ -33,16 +33,9 @@
     <a class="layui-btn layui-btn-xs" lay-event="btnAssignmentUser">分配用户</a>
 </script>
 
-<script src="http://lgfei.com/layui/layui.js"></script>
-<script src="../js/lib/formSelects-v4.min.js"></script>
-<script src="../js/common.js"></script>
-<script src="../js/module.view.js"></script>
-
 <script type="text/javascript">
-var AppSetting = AppSetting || {};
-(function (AppSetting) { 
-    AppSetting.rootUrl = '[[${rootUrl}]]';
- })(AppSetting);
+//页面入口
+layui.config({ base:'../js/'}).use(['module.view']);
 </script>
 
 </html>

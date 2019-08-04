@@ -5,8 +5,8 @@
 <meta name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Operation Manager</title>
-<link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
-<link rel="stylesheet" href="../css/formSelects-v4.css">
+<!-- 引入公共页面 -->
+<link rel="import" href="../common.htm" id="commonPage"/>
 </head>
 <body layadmin-themealias="default" class="layui-layout-body">
     <div class="layui-row layui-col-space10">
@@ -30,16 +30,9 @@
     <div class="layui-inline" title="删除" lay-event="btnDelete"><i class="layui-icon layui-icon-delete"></i></div>
 </script>
 
-<script src="http://lgfei.com/layui/layui.js"></script>
-<script src="../js/lib/formSelects-v4.min.js"></script>
-<script src="../js/common.js"></script>
-<script src="../js/operation.view.js"></script>
-
 <script type="text/javascript">
-var AppSetting = AppSetting || {};
-(function (AppSetting) { 
-    AppSetting.rootUrl = '[[${rootUrl}]]';
- })(AppSetting);
+//页面入口
+layui.config({ base:'../js/'}).use(['operation.view']);
 </script>
 
 </html>

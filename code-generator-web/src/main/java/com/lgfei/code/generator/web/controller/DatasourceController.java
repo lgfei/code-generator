@@ -1,14 +1,31 @@
 package com.lgfei.code.generator.web.controller;
  
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.common.entity.SysUser;
+import com.lgfei.code.generator.common.entity.UserDatasource;
 import com.lgfei.code.generator.core.service.IDatasourceService;
+import com.lgfei.code.generator.core.service.IUserDatasourceService;
+import com.lgfei.code.generator.core.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
  
 /**
  * <p>
@@ -23,6 +40,9 @@ import io.swagger.annotations.Api;
 @RequestMapping("/datasource")
 public class  DatasourceController extends BaseController<IDatasourceService, Datasource, Long> {
     
+    @Autowired
+    private IUserDatasourceService userDatasourceService;
+    
     @Override
     protected Datasource newEntity() {
         return new Datasource();
@@ -31,5 +51,47 @@ public class  DatasourceController extends BaseController<IDatasourceService, Da
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public String gotoIndexView() {
         return "datasource/index";
+    }
+    
+    @ApiOperation("用户分配数据源查询接口")
+    @ResponseBody
+    @RequestMapping(value = "/findDatasourceByUser.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public Map<String, List<Datasource>> findDatasourceByUser(@RequestParam(value = "userNo") String userNo){
+        Map<String,  List<Datasource>> respData = new HashMap<>(2);
+        
+        List<Datasource> itemsList = new LinkedList<>();
+        if(SecurityUtil.isSuperAdmin()) {
+            itemsList = getService().list();
+        }else {
+            SysUser currLoginUser = SecurityUtil.getCurrLoginUser();
+            itemsList = findDatasourceByUserNo(currLoginUser.getUserNo());
+        }
+        List<Datasource> selectedList = findDatasourceByUserNo(userNo);
+        
+        respData.put("selected", selectedList);
+        respData.put("items", itemsList);
+        
+        return respData;
+    }
+
+    private List<Datasource> findDatasourceByUserNo(String userNo) {
+        UserDatasource entity = new UserDatasource();
+        entity.setUserNo(userNo);
+        QueryWrapper<UserDatasource> qwUserDatasource = new QueryWrapper<>(entity);
+        List<UserDatasource> list = userDatasourceService.list(qwUserDatasource);
+        
+        List<Datasource> datasourceList = new LinkedList<>();
+        if(!CollectionUtils.isEmpty(list)) {
+            Set<String> datasourceNos = new HashSet<>();
+            list.forEach(item -> {
+                datasourceNos.add(item.getDatasourceNo());
+            });
+            QueryWrapper<Datasource> qwDatasource = new QueryWrapper<>();
+            qwDatasource.in("datasource_no", datasourceNos);
+            
+            datasourceList = getService().list(qwDatasource);
+        }
+        
+        return datasourceList;
     }
 }

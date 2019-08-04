@@ -2,12 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Code Generator</title>
-<link rel="stylesheet" href="http://lgfei.com/layui/css/layui.css">
-<link rel="stylesheet" href="css/formSelects-v4.css">
-<link rel="stylesheet" href="css/myStyle.css">
+<!-- 引入公共页面 -->
+<link rel="import" href="common.htm" id="commonPage"/>
 </head>
 
 <body layadmin-themealias="default" class="layui-layout-body">
@@ -35,16 +33,16 @@
 							<span>首页</span>
 						</div>
 						<div class="layui-tab-item" id="tabContent2">
-							
+							<span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
 						</div>
 						<div class="layui-tab-item" id="tabContent3">
-							
+							<span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
 						</div>
 						<div class="layui-tab-item" id="tabContent4">
-                            
+                            <span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
                         </div>
                         <div class="layui-tab-item" id="tabContent5">
-                            
+                            <span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
                         </div>
 					</div>
 				</div>
@@ -54,17 +52,7 @@
 	<div class="layui-layer-move"></div>
 </body>
 
-<script src="http://lgfei.com/layui/layui.js"></script>
-<script src="js/lib/formSelects-v4.min.js"></script>
-<script src="js/common.js"></script>
-<script src="js/index.js"></script>
-
 <script type="text/javascript">
-var AppSetting = AppSetting || {};
-(function (AppSetting) { 
-    AppSetting.rootUrl = '[[${rootUrl}]]';
- })(AppSetting);
- 
 function resizeHeight(){
 	var frames = document.getElementsByTagName('iframe');
 	for(var i = 0; i < frames.length; i++){
@@ -81,6 +69,9 @@ function resizeHeight(){
 	}
 }
 window.setInterval("resizeHeight()", 500);
+
+// 页面入口
+layui.config({ base:'js/'}).use(['index']);
 </script>
 
 </html>

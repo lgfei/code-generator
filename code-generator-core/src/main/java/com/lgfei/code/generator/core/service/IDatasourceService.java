@@ -13,4 +13,5 @@ import com.lgfei.betterme.framework.core.service.IBaseService;
  */
 public interface IDatasourceService extends IBaseService<Datasource, Long> {
 
+    
 }

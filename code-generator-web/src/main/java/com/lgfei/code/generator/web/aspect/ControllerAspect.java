@@ -23,7 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.lgfei.code.generator.common.vo.RequestVO;
+import com.lgfei.betterme.framework.common.vo.RequestVO;
 
 @Aspect
 @Component

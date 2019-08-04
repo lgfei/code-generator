@@ -2,17 +2,18 @@
  * 首页
  * @returns
  */
-layui.use(['layer','jquery','element','table','form'], function(){
+layui.define(['layer','jquery','element','table','form','common'], function(exports){
 	var $ = layui.$;
     var layer = layui.layer;
     var element = layui.element;
  	var table = layui.table;
+ 	var common = layui.common;
  	
+ 	var AppSetting = common.AppSetting;
     // 用户管理表格
     table.render({
       elem: '#tbModule',
       cellMinWidth: 100,
-      height: 312,
       url: AppSetting.rootUrl + '/module/page.json',
       page: true,
       toolbar: '#barModule',
@@ -35,4 +36,6 @@ layui.use(['layer','jquery','element','table','form'], function(){
     
     // 隐藏第一个页签的关闭按钮
     $(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');
+    
+    exports('module.view');
 }); 
