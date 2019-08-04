@@ -32,4 +32,6 @@ public class  OperationController extends BaseController<IOperationService, Oper
     public String gotoIndexView() {
         return "operation/index";
     }
+    
+    
 }

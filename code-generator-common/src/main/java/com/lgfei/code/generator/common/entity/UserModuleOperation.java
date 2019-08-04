@@ -24,8 +24,8 @@ public class UserModuleOperation extends BaseEntity<Long>
     @ApiModelProperty(value = "模块编码")
     private String moduleNo;
 
-    @ApiModelProperty(value = "按钮编码")
-    private String operationNo;
+    @ApiModelProperty(value = "按钮权限值(多个按逗号,隔开)")
+    private String operations;
 
     public String getUserNo() {
         return userNo;
@@ -41,12 +41,12 @@ public class UserModuleOperation extends BaseEntity<Long>
     public void setModuleNo(String moduleNo) {
         this.moduleNo = moduleNo;
     }
-    public String getOperationNo() {
-        return operationNo;
+    public String getOperations() {
+        return operations;
     }
 
-    public void setOperationNo(String operationNo) {
-        this.operationNo = operationNo;
+    public void setOperations(String operations) {
+        this.operations = operations;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class UserModuleOperation extends BaseEntity<Long>
         return "UserModuleOperation{" +
         "userNo=" + userNo +
         ", moduleNo=" + moduleNo +
-        ", operationNo=" + operationNo +
+        ", operations=" + operations +
         "}";
     }
 }

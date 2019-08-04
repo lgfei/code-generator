@@ -105,13 +105,14 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	
     	var layEvent = obj.event;
         if(layEvent === 'btnGenerate'){ // 生成代码
-          var exist = $("li[lay-id='"+data.datasourceNo+"']").length;
+          var layId = 'btnGenerate-'+datasourceNo;
+          var exist = $("li[lay-id='"+layId+"']").length;
           if(exist === 0){
        	    element.tabAdd('tabMain', {
-           	  id: data.datasourceNo,
-              title: data.name,
+           	  id: layId,
+              title: '生成代码('+datasourceNo+')',
               content: `
-              <form class="layui-form">
+              <form class="layui-form" lay-filter="formGenerate">
                 <fieldset class="layui-elem-field">
             	  <legend>数据源</legend>
             	  
@@ -276,21 +277,21 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
              <div class="layui-row">
                <div class="layui-form-item">
                  <div class="layui-input-block">
-                   <button class="layui-btn" lay-filter="formGenerate" lay-submit>生成</button>
+                   <button class="layui-btn" lay-filter="btnSubmitGenerate" lay-submit>生成</button>
                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                  </div>
                 </div>
               </div>
             </form>`});
        	    
-       	    form.render();
+       	    form.render(null, 'formGenerate');
        	    
         	$.ajax({
         		type: 'POST',
         		url: AppSetting.rootUrl + '/getDatabase.json',
         		async: false,
         		data: {'datasourceNo':datasourceNo},
-        		// dataType:'application/json',
+        		dataType:'json',
         		success: function(resp){
         			var selectData = [];
         			$.each(resp,function(i,item){
@@ -317,7 +318,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
            	    		url: AppSetting.rootUrl + '/getMysqlTables.json', 
            	    		async: false, 
            	    		data: {'datasourceNo': datasourceNo,'schemaName': val.value},
-    				    //dataType:'application/json', 
+           	    		dataType:'json', 
            	    		success: function(resp){
            	    			var selectData = [];
            	    			$.each(resp,function(i,item){ 
@@ -335,16 +336,14 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         		}
         	    return true;   
         	});
-       	    
-       	    element.tabChange('tabMain', data.datasourceNo);
-          }else{
-        	element.tabChange('tabMain', data.datasourceNo);
           }
+          // 切换到当前tab
+          element.tabChange('tabMain', layId);
         }
       });
       
       //监听提交
-      form.on('submit(formGenerate)', function(data){
+      form.on('submit(btnSubmitGenerate)', function(data){
     	  var params = {
     			  'datasourceNo':data.field.datasourceNo,
     			  'isInit':data.field.isInit,
@@ -358,8 +357,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	  $.ajax({
       		type:'POST',
       		url: AppSetting.rootUrl + '/generateApiCode.json',
-      		data:params,
-      		dataType:"json",
+      		data: params,
+      		dataType: "json",
       		beforeSend: function(){
       			// 打开加载框
       			loadIndex = layer.load();
