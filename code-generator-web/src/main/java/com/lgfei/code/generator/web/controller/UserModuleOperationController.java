@@ -1,9 +1,12 @@
 package com.lgfei.code.generator.web.controller;
- 
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +24,7 @@ import com.lgfei.code.generator.core.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
- 
+
 /**
  * <p>
  * 用户模块关系表 前端控制器
@@ -30,32 +33,57 @@ import io.swagger.annotations.ApiOperation;
  * @author lgfei
  * @since 2019-07-31
  */
-@Api(tags = {"用户模块关系表"})
+@Api(tags = { "用户模块关系表" })
 @Controller
 @RequestMapping("/user-module-operation")
-public class  UserModuleOperationController extends BaseController<IUserModuleOperationService, UserModuleOperation, Long> {
-    
+public class UserModuleOperationController
+        extends BaseController<IUserModuleOperationService, UserModuleOperation, Long> {
+
     @Override
     protected UserModuleOperation newEntity() {
         return new UserModuleOperation();
-	}
-    
+    }
+
     @ApiOperation("查询用户模块权限信息")
     @ResponseBody
     @RequestMapping(value = "/findUserModuleOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
     public List<LayuiTreeVO> findUserModuleOperations(@RequestParam("userNo") String userNo) {
+        if (StringUtils.isEmpty(userNo)) {
+            return null;
+        }
         UserModuleOperation entity = new UserModuleOperation();
         entity.setUserNo(SecurityUtil.SUPPER_ADMIN_USER_NO);
-        
+
         QueryWrapper<UserModuleOperation> qw = new QueryWrapper<>(entity);
         List<UserModuleOperation> list = getService().list(qw);
-        
+
+        UserModuleOperation entity2 = new UserModuleOperation();
+        entity2.setUserNo(userNo);
+        QueryWrapper<UserModuleOperation> qw2 = new QueryWrapper<>(entity2);
+        List<UserModuleOperation> list2 = getService().list(qw2);
+        Map<String, Map<String, Boolean>> map2 = new HashMap<>();
+        if (!CollectionUtils.isEmpty(list2)) {
+            list2.forEach(item -> {
+                String operationNos = item.getOperations();
+                String[] arr = operationNos.split(",");
+                Map<String, Boolean> childrenMap = new HashMap<>();
+                for (String operation : arr) {
+                    childrenMap.put(operation, true);
+                }
+                map2.put(item.getModuleNo(), childrenMap);
+            });
+        }
+
         List<LayuiTreeVO> respData = new LinkedList<>();
         list.forEach(item -> {
             LayuiTreeVO vo = new LayuiTreeVO();
             vo.setId(item.getModuleNo());
             vo.setTitle(item.getModuleNo());
             vo.setSpread(true);
+            if (map2.containsKey(item.getModuleNo())) {
+                vo.setChecked(true);
+            }
+            Map<String, Boolean> childrenMap = map2.get(item.getModuleNo());
             String operationNos = item.getOperations();
             String[] arr = operationNos.split(",");
             List<LayuiTreeVO> children = new LinkedList<>();
@@ -63,34 +91,37 @@ public class  UserModuleOperationController extends BaseController<IUserModuleOp
                 LayuiTreeVO subVo = new LayuiTreeVO();
                 subVo.setId(operation);
                 subVo.setTitle(operation);
+                if (null != childrenMap && childrenMap.containsKey(operation)) {
+                    // subVo.setChecked(true);
+                }
                 children.add(subVo);
             }
             vo.setChildren(children);
-            
+
             respData.add(vo);
         });
-        
+
         return respData;
     }
-    
+
     @ApiOperation("保存用户模块权限信息")
     @ResponseBody
     @RequestMapping(value = "/saveUserModuleOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
     public ListResponseVO<UserModuleOperation> saveUserModuleOperations(@RequestParam("rows") String rows) {
-        if(StringUtils.isEmpty(rows)) {
+        if (StringUtils.isEmpty(rows)) {
             return new ListResponseVO.Builder<UserModuleOperation>().illegal();
         }
-        
+
         List<UserModuleOperation> list = JSONArray.parseArray(rows, UserModuleOperation.class);
         String userNo = list.get(0).getUserNo();
-        
+
         UserModuleOperation entity = new UserModuleOperation();
         entity.setUserNo(userNo);
-        
+
         QueryWrapper<UserModuleOperation> qw = new QueryWrapper<>(entity);
         // 先删除
         boolean removeFlag = getService().remove(qw);
-        if(removeFlag) {
+        if (removeFlag) {
             // 重新插入
             getService().saveBatch(list);
         }

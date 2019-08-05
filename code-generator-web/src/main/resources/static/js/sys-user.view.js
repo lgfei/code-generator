@@ -215,7 +215,6 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     			
     			form.render(null, 'formAssignmentModule');
     			
-    			var treeData = [];
     			$.ajax({
             		type: 'POST',
             		url: AppSetting.rootUrl + '/user-module-operation/findUserModuleOperations.json',
@@ -223,31 +222,44 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             		data: {'userNo':userNo},
             		dataType:'json',
             		success: function(resp){
-            			treeData = resp;
+            			let treeData = [];
+            			let checkedIds = [];
+            			$.each(resp,function(i,node){
+            				let children = node.children;
+            				$.each(children,function(i,childNode){
+            					childId = node.id + '-' + childNode.id;
+            					childNode.id = childId;
+            					if(childNode.checked){
+            						checkedIds.push(childId);
+            					}
+            				});
+            				node.children = children;
+            				treeData.push(node);
+            			});
+            			// 加载树形数据
+            			tree.render({
+            		      elem: '#treeModuleOperation',
+            		      showCheckbox: true,
+            		      data: treeData,
+            		      id: 'idTreeModuleOperation'
+            		    });
+            			tree.setChecked('idTreeModuleOperation', checkedIds)
             		},
             		error: function(e){
             			console.log(e);
             		}
             	});
     			
-    			tree.render({
-      		      elem: '#treeModuleOperation',
-      		      showCheckbox: true,
-      		      data: treeData,
-      		      id: 'idTreeModuleOperation'
-      		    });
-    			
-    			
     	        //监听提交
     	        form.on('submit(btnSubmitAssignmentModule)', function(data){
-    	        	debugger 
     	        	var rows = [];
     	        	var checkData = tree.getChecked('idTreeModuleOperation');
     	        	$.each(checkData,function(i,item){
     	        		var operations = [];
     	        		var children = item.children;
     	        		$.each(children,function(j,child){
-    	        			operations.push(child.id);
+    	        			let operationVal = child.id.split('-')[1];
+    	        			operations.push(operationVal);
     	        		});
     	        		var operationsStr = '';
     	        		if(operations){
