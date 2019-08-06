@@ -29,10 +29,22 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
           {field: 'updateUser', title: '修改人'},
           {field: 'updateTime', title: '修改时间', sort: true},
           {field: 'remark', title: '备注'},
- 	      {field: 'opt', title: '操作', toolbar: '#barModuleCols', fixed: 'right'}
+ 	      {field: 'opt', title: '操作', toolbar: '#barModuleCols', fixed: 'right', width: 250}
         ]
       ]
     }); 
+    
+    // 监听表格工具条
+    table.on('toolbar(module)', function(obj){
+  	  var checkStatus = table.checkStatus(obj.config.id);
+    	  var data = checkStatus.data;
+    });
+    
+    // 监听表格行工具条
+    table.on('tool(datasource)', function(obj){
+    	var data = obj.data;
+    	var moduleNo = data.moduleNo;
+    });
     
     // 隐藏第一个页签的关闭按钮
     $(".layui-tab ul").children('li').first().children('.layui-tab-close').css("display",'none');

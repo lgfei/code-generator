@@ -32,10 +32,16 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
           {field: 'updateUser', title: '修改人'},
           {field: 'updateTime', title: '修改时间', sort: true},
           {field: 'remark', title: '备注'},
- 	      {field: 'opt', title: '操作', toolbar: '#barSysUserCols', fixed: 'right', width: 200}
+ 	      {field: 'opt', title: '操作', toolbar: '#barSysUserCols', fixed: 'right', width: 350}
         ]
       ]
     }); 
+    
+    // 监听表格工具条
+    table.on('toolbar(sysUser)', function(obj){
+    	var checkStatus = table.checkStatus(obj.config.id);
+    	var data = checkStatus.data;
+    });
     
     // 监听表格行工具条
     table.on('tool(sysUser)', function(obj){

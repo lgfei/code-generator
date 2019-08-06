@@ -37,61 +37,11 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	        {field: 'updateUser', title: '修改人'},
    	        {field: 'updateTime', title: '修改时间', sort: true},
    	        {field: 'remark', title: '备注'},
-   	        {field: 'opt', title: '操作', toolbar: '#barDatasourceCols', fixed: 'right'}
+   	        {field: 'opt', title: '操作', toolbar: '#barDatasourceCols', fixed: 'right', width: 250}
    	      ]
    	    ]
    	  }); 
    	  
-      // 监听行双击事件
-      table.on('rowDouble(datasource)', function(obj){
-    	  var data = obj.data;
-    	  layer.open({
-   		    type: 1,
-   		    area: ['700px', '300px'],
-   		    content: `
-   		    <table class="layui-table" lay-skin="row">
-   		      <colgroup>
-	   		     <col width="100">
-	   		     <col width="200">
-	   		     <col width="100">
-	   		     <col width="200">
-	   		   </colgroup>
-	   		   <tbody>
-	   		     <tr>
-	   		       <td>数据源编码</td>
-	   		       <td>${data.datasourceNo}</td>
-	   		       <td>名称</td>
-	   		       <td>${data.name}</td>
-	   		     </tr>
-	   		     <tr>
-	   		       <td>数据库类型</td>
-  		           <td>${data.dbType}</td>
-  		           <td>数据驱动</td>
-		           <td>${data.driver}</td>
-	   		     </tr>
-	   		     <tr>
-	   		       <td>IP</td>
-		           <td>${data.server}</td>
-		           <td>端口</td>
-		           <td>${data.port}</td>
-  		         </tr>
-  		         <tr>
-		           <td>用户名</td>
-	               <td>${data.username}</td>
-	               <td>密码</td>
-	               <td>${data.password}</td>
-		         </tr>
-		         <tr>
-		           <td>数据源类型</td>
-  		           <td>${data.type}</td>
-  		           <td></td>
-  		           <td></td>
-		         </tr>
-	   		   </tbody>
-	   		 </table>`
-   		  });
-      });
-      
       // 监听表格工具条
       table.on('toolbar(datasource)', function(obj){
     	  var checkStatus = table.checkStatus(obj.config.id);
@@ -104,7 +54,62 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	var datasourceNo = data.datasourceNo;
     	
     	var layEvent = obj.event;
-        if(layEvent === 'btnGenerate'){ // 生成代码
+    	// 查看
+    	if(layEvent === 'btnView'){
+    		var layId = 'btnView-'+datasourceNo;
+    		var exist = $("li[lay-id='"+layId+"']").length;
+    		if(exist === 0){
+    			element.tabAdd('tabMain', {
+    				id: layId,
+    				title: '查看('+datasourceNo+')',
+    				content: `
+	    			<table class="layui-table" lay-skin="row">
+		   		      <colgroup>
+			   		     <col width="100">
+			   		     <col width="200">
+			   		     <col width="100">
+			   		     <col width="200">
+			   		   </colgroup>
+			   		   <tbody>
+			   		     <tr>
+			   		       <td>数据源编码</td>
+			   		       <td>${data.datasourceNo}</td>
+			   		       <td>名称</td>
+			   		       <td>${data.name}</td>
+			   		     </tr>
+			   		     <tr>
+			   		       <td>数据库类型</td>
+		  		           <td>${data.dbType}</td>
+		  		           <td>数据驱动</td>
+				           <td>${data.driver}</td>
+			   		     </tr>
+			   		     <tr>
+			   		       <td>IP</td>
+				           <td>${data.server}</td>
+				           <td>端口</td>
+				           <td>${data.port}</td>
+		  		         </tr>
+		  		         <tr>
+				           <td>用户名</td>
+			               <td>${data.username}</td>
+			               <td>密码</td>
+			               <td>${data.password}</td>
+				         </tr>
+				         <tr>
+				           <td>数据源类型</td>
+		  		           <td>${data.type}</td>
+		  		           <td></td>
+		  		           <td></td>
+				         </tr>
+			   		   </tbody>
+			   		 </table>`
+    			});
+    		}
+    		// 切换到当前tab
+	        element.tabChange('tabMain', layId);
+    	}
+    	// 生成代码
+    	else if(layEvent === 'btnGenerate'){ 
           var layId = 'btnGenerate-'+datasourceNo;
           var exist = $("li[lay-id='"+layId+"']").length;
           if(exist === 0){

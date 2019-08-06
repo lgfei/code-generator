@@ -25,10 +25,12 @@
 </body>
 <script type="text/html" id="barSysUser">
     <div class="layui-inline" title="新增" lay-event="btnAdd"><i class="layui-icon layui-icon-add-1"></i></div>
-    <div class="layui-inline" title="编辑" lay-event="btnEdit"><i class="layui-icon layui-icon-edit"></i></div>
-    <div class="layui-inline" title="删除" lay-event="btnDelete"><i class="layui-icon layui-icon-delete"></i></div>
+    <div class="layui-inline" title="删除" lay-event="btnBatchDelete"><i class="layui-icon layui-icon-delete"></i></div>
 </script>
 <script type="text/html" id="barSysUserCols">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="btnView">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="btnEdit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="btnDelete">删除</a>
     <a class="layui-btn layui-btn-xs" lay-event="btnAssignmentDatasource">分配数据源</a>
     <a class="layui-btn layui-btn-xs" lay-event="btnAssignmentModule">分配模块权限</a>
 </script>
