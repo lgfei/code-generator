@@ -4,6 +4,9 @@ import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.core.mapper.SysUserMapper;
 import com.lgfei.code.generator.core.service.ISysUserService;
 import com.lgfei.betterme.framework.core.service.impl.BaseServiceImpl;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,5 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser, Long> 
     implements ISysUserService {
+
+    @Override
+    public List<SysUser> findModuleUsers(String moduleNo) {
+        return mapper.findModuleUsers(moduleNo);
+    }
 
 }

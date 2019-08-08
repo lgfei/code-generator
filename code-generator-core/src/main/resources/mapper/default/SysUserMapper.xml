@@ -3,4 +3,15 @@
 <!-- 用户信息表 -->
 <mapper namespace="com.lgfei.code.generator.core.mapper.SysUserMapper">
 	
+	<select id="findModuleUsers" resultType="com.lgfei.code.generator.common.entity.SysUser" parameterType="java.lang.String">
+		SELECT
+		    su.`name`,
+		    su.user_no
+		FROM
+		    user_module_operation umo
+		JOIN sys_user su ON su.user_no = umo.user_no
+		WHERE
+		    1 = 1
+		AND umo.module_no = #{moduleNo}	   
+	</select>
 </mapper>

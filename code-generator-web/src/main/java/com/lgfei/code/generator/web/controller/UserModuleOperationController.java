@@ -19,8 +19,8 @@ import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.betterme.framework.common.vo.ListResponseVO;
 import com.lgfei.code.generator.common.entity.UserModuleOperation;
 import com.lgfei.code.generator.common.vo.LayuiTreeVO;
+import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.IUserModuleOperationService;
-import com.lgfei.code.generator.core.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +52,7 @@ public class UserModuleOperationController
             return null;
         }
         UserModuleOperation entity = new UserModuleOperation();
-        entity.setUserNo(SecurityUtil.SUPPER_ADMIN_USER_NO);
+        entity.setUserNo(Authentication.SUPPER_ADMIN_USER_NO);
 
         QueryWrapper<UserModuleOperation> qw = new QueryWrapper<>(entity);
         List<UserModuleOperation> list = getService().list(qw);

@@ -1,14 +1,20 @@
 package com.lgfei.code.generator.web.controller;
  
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.Operation;
+import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.IOperationService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
  
 /**
  * <p>
@@ -33,5 +39,10 @@ public class  OperationController extends BaseController<IOperationService, Oper
         return "operation/index";
     }
     
-    
+    @ApiOperation("模块分配用户按钮查询接口")
+    @ResponseBody
+    @RequestMapping(value = "/findModuleOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<Operation> findModuleOperations(@RequestParam(value = "moduleNo") String moduleNo){
+        return service.findUserModuleOpertions(Authentication.SUPPER_ADMIN_USER_NO, moduleNo);
+    }
 }

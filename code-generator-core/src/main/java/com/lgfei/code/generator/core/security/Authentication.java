@@ -1,8 +1,8 @@
-package com.lgfei.code.generator.core.util;
+package com.lgfei.code.generator.core.security;
 
 import com.lgfei.code.generator.common.entity.SysUser;
 
-public final class SecurityUtil {
+public final class Authentication {
     
     public static final String SUPPER_ADMIN_USER_NO = "U00001";
     

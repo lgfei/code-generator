@@ -1,6 +1,9 @@
 package com.lgfei.code.generator.core.service;
 
 import com.lgfei.code.generator.common.entity.SysUser;
+
+import java.util.List;
+
 import com.lgfei.betterme.framework.core.service.IBaseService;
 
 /**
@@ -13,4 +16,5 @@ import com.lgfei.betterme.framework.core.service.IBaseService;
  */
 public interface ISysUserService extends IBaseService<SysUser, Long> {
 
+    List<SysUser> findModuleUsers(String moduleNo);
 }

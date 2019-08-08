@@ -20,9 +20,9 @@ import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.Module;
 import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.common.entity.UserModuleOperation;
+import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.IModuleService;
 import com.lgfei.code.generator.core.service.IUserModuleOperationService;
-import com.lgfei.code.generator.core.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,10 +60,10 @@ public class  ModuleController extends BaseController<IModuleService,Module, Lon
         Map<String,  List<Module>> respData = new HashMap<>(2);
         
         List<Module> itemsList = new LinkedList<>();
-        if(SecurityUtil.isSuperAdmin()) {
+        if(Authentication.isSuperAdmin()) {
             itemsList = getService().list();
         }else {
-            SysUser currLoginUser = SecurityUtil.getCurrLoginUser();
+            SysUser currLoginUser = Authentication.getCurrLoginUser();
             itemsList = findModuleByUserNo(currLoginUser.getUserNo());
         }
         List<Module> selectedList = findModuleByUserNo(userNo);

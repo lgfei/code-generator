@@ -58,7 +58,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     			  id: layId,
 	              title: '分配数据源('+userNo+')',
 	              content: `
-	              <form class="layui-form" lay-filter="formAssignmentDatasource" style="padding:10px;">
+	              <form class="layui-form" lay-filter="formAssignmentDatasource">
 					  <div class="layui-row">
 					  	<div class="layui-col-md6">
 					  		<div class="layui-form-item">

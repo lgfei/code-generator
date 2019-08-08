@@ -20,9 +20,9 @@ import com.lgfei.betterme.framework.api.controller.BaseController;
 import com.lgfei.code.generator.common.entity.Datasource;
 import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.common.entity.UserDatasource;
+import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.IDatasourceService;
 import com.lgfei.code.generator.core.service.IUserDatasourceService;
-import com.lgfei.code.generator.core.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,10 +60,10 @@ public class  DatasourceController extends BaseController<IDatasourceService, Da
         Map<String,  List<Datasource>> respData = new HashMap<>(2);
         
         List<Datasource> itemsList = new LinkedList<>();
-        if(SecurityUtil.isSuperAdmin()) {
+        if(Authentication.isSuperAdmin()) {
             itemsList = getService().list();
         }else {
-            SysUser currLoginUser = SecurityUtil.getCurrLoginUser();
+            SysUser currLoginUser = Authentication.getCurrLoginUser();
             itemsList = findDatasourceByUserNo(currLoginUser.getUserNo());
         }
         List<Datasource> selectedList = findDatasourceByUserNo(userNo);
