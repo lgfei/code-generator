@@ -23,8 +23,8 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
       cols: [
         [
     	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-    	  {field: 'userNo', title: '用户编码', sort: true, fixed: 'left'},
-    	  {field: 'name', title: '名称', sort: true, fixed: 'left'},
+    	  {field: 'userNo', title: '用户编码', fixed: 'left'},
+    	  {field: 'name', title: '名称', fixed: 'left'},
     	  {field: 'account', title: '帐号'},
           {field: 'password', title: '密码'},
           {field: 'createUser', title: '创建人'},
@@ -49,16 +49,17 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     	var userNo = data.userNo;
     	
     	var layEvent = obj.event;
+    	var layId = 'main_list';
     	// 分配数据源
     	if(layEvent === 'btnAssignmentDatasource'){ 
-    		var layId = 'btnAssignmentDatasource-' + userNo;
+    		layId = 'btnAssignmentDatasource_' + userNo;
     		var exist = $("li[lay-id='"+layId+"']").length;
     		if(exist === 0){
     			element.tabAdd('tabMain', {
     			  id: layId,
 	              title: '分配数据源('+userNo+')',
 	              content: `
-	              <form class="layui-form" lay-filter="formAssignmentDatasource">
+	              <form class="layui-form" lay-filter="${layId}_formAssignmentDatasource">
 					  <div class="layui-row">
 					  	<div class="layui-col-md6">
 					  		<div class="layui-form-item">
@@ -83,7 +84,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 					  		<div class="layui-form-item">
 			                    <label class="layui-form-label">数据源</label>
 			                    <div class="layui-input-block">
-			                      <select name="datasourceNos" xm-select="datasourceNos" xm-select-direction="down"></select>
+			                      <select name="datasourceNos" xm-select="${layId}_datasourceNos" xm-select-direction="down"></select>
 			                    </div>
 			                </div>
 					  	</div>
@@ -92,7 +93,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 	                  <div class="layui-row">
 	                  	<div class="layui-form-item">
 		                  <div class="layui-input-block">
-		                    <button class="layui-btn" lay-filter="btnSubmitAssignmentDatasource" lay-submit>保存</button>
+		                    <button class="layui-btn" lay-filter="${layId}_btnSubmitAssignmentDatasource" lay-submit>保存</button>
 		                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
 		                  </div>
 		                </div>
@@ -100,7 +101,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 				  </form>`
     			});
     			
-        		form.render(null, 'formAssignmentDatasource');
+        		form.render(null, layId+'_formAssignmentDatasource');
         		
         		$.ajax({
             		type: 'POST',
@@ -114,7 +115,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             				let obj = {"name": item.name, "value": item.datasourceNo};
            	    			selectData.push(obj);
             			});
-            			formSelects.data('datasourceNos', 'local', {
+            			formSelects.data(layId+'_datasourceNos', 'local', {
             			    arr: selectData
             			});
             			
@@ -122,7 +123,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             			$.each(resp['selected'],function(i,item){
             				selectedItems.push(item.datasourceNo);
             			});
-            			formSelects.value('datasourceNos', selectedItems);
+            			formSelects.value(layId+'_datasourceNos', selectedItems);
             		},
             		error: function(e){
             			console.log(e);
@@ -130,16 +131,16 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             	});
         		
     	        //监听提交
-    	        form.on('submit(btnSubmitAssignmentDatasource)', function(data){
+    	        form.on('submit('+layId+'_btnSubmitAssignmentDatasource)', function(data){
     	        	var datasourceNos = [];
-  				  	var selectedList = formSelects.value('datasourceNos');
+  				  	var selectedList = formSelects.value(layId+'_datasourceNos');
   				  	$.each(selectedList,function(i,item){
   					  datasourceNos.push(item.value);
         			});
     	        	var loadIndex;
     	        	$.ajax({
     	        		type: 'POST',
-    	        		url: AppSetting.rootUrl + '/user-datasource/assignmentDatasource.json',
+    	        		url: AppSetting.rootUrl + '/user-datasource/saveUserDatasources.json',
     	        		async: false,
     	        		data: {'userNo':userNo,'datasourceNos':datasourceNos.join(',')},
     	        		dataType:'json',
@@ -164,20 +165,18 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     	        	return false;
     	        });
     		}
-    		// 切换到当前tab
-            element.tabChange('tabMain', layId);
     	}
     	
     	// 分配模块权限
     	if(layEvent === 'btnAssignmentModule'){ 
-    		var layId = 'btnAssignmentModule-' + userNo;
+    		layId = 'btnAssignmentModule_' + userNo;
     		var exist = $("li[lay-id='"+layId+"']").length;
     		if(exist === 0){
     			element.tabAdd('tabMain', {
       			  id: layId,
   	              title: '分配模块权限('+userNo+')',
   	              content: `
-  	              <form class="layui-form" lay-filter="formAssignmentModule">
+  	              <form class="layui-form" lay-filter="${layId}_formAssignmentModule">
 					  <div class="layui-row">
 					  	<div class="layui-col-md6">
 					  		<div class="layui-form-item">
@@ -202,7 +201,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 					  		<div class="layui-form-item">
 			                    <label class="layui-form-label">模块权限</label>
 			                    <div class="layui-input-block">
-			                      <div id="treeModuleOperation"></div>
+			                      <div id="${layId}_treeModuleOperation"></div>
 			                    </div>
 			                </div>
 					  	</div>
@@ -211,7 +210,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 	                  <div class="layui-row">
 	                  	<div class="layui-form-item">
 		                  <div class="layui-input-block">
-		                    <button class="layui-btn" lay-filter="btnSubmitAssignmentModule" lay-submit>保存</button>
+		                    <button class="layui-btn" lay-filter="${layId}_btnSubmitAssignmentModule" lay-submit>保存</button>
 		                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
 		                  </div>
 		                </div>
@@ -219,7 +218,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 				  </form>`
     			});
     			
-    			form.render(null, 'formAssignmentModule');
+    			form.render(null, layId+'_formAssignmentModule');
     			
     			$.ajax({
             		type: 'POST',
@@ -244,12 +243,12 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             			});
             			// 加载树形数据
             			tree.render({
-            		      elem: '#treeModuleOperation',
+            		      elem: '#'+layId+'_treeModuleOperation',
             		      showCheckbox: true,
             		      data: treeData,
-            		      id: 'idTreeModuleOperation'
+            		      id: layId+'_idTreeModuleOperation'
             		    });
-            			tree.setChecked('idTreeModuleOperation', checkedIds)
+            			tree.setChecked(layId+'_idTreeModuleOperation', checkedIds)
             		},
             		error: function(e){
             			console.log(e);
@@ -257,9 +256,9 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
             	});
     			
     	        //监听提交
-    	        form.on('submit(btnSubmitAssignmentModule)', function(data){
+    	        form.on('submit('+layId+'_btnSubmitAssignmentModule)', function(data){
     	        	var rows = [];
-    	        	var checkData = tree.getChecked('idTreeModuleOperation');
+    	        	var checkData = tree.getChecked(layId+'_idTreeModuleOperation');
     	        	$.each(checkData,function(i,item){
     	        		var operations = [];
     	        		var children = item.children;
@@ -301,9 +300,9 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
 	    	      return false;
     	        });
     		}
-    		// 切换到当前tab
-            element.tabChange('tabMain', layId);
     	}
+    	// 切换到当前tab
+        element.tabChange('tabMain', layId);
     });
     
     // 隐藏第一个页签的关闭按钮

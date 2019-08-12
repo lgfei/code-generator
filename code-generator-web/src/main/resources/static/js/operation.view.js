@@ -21,8 +21,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
       cols: [
         [
     	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-    	  {field: 'operationNo', title: '按钮编码', sort: true, fixed: 'left'},
-    	  {field: 'name', title: '名称', sort: true, fixed: 'left'},
+    	  {field: 'operationNo', title: '按钮编码', fixed: 'left'},
+    	  {field: 'name', title: '名称', fixed: 'left'},
     	  {field: 'value', title: '权限值'},
           {field: 'createUser', title: '创建人'},
           {field: 'createTime', title: '创建时间', sort: true},

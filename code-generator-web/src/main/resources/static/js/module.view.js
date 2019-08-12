@@ -23,8 +23,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
       cols: [
         [
     	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-    	  {field: 'moduleNo', title: '模块编码', sort: true, fixed: 'left'},
-    	  {field: 'name', title: '名称', sort: true, fixed: 'left'},
+    	  {field: 'moduleNo', title: '模块编码', fixed: 'left'},
+    	  {field: 'name', title: '名称', fixed: 'left'},
     	  {field: 'url', title: '地址'},
           {field: 'createUser', title: '创建人'},
           {field: 'createTime', title: '创建时间', sort: true},
@@ -48,16 +48,17 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	var moduleNo = data.moduleNo;
     	
     	var layEvent = obj.event;
+    	var layId = 'main_list';
     	// 查看
     	if(layEvent === 'btnAssignmentUser'){
-    		var layId = 'btnAssignmentUser-'+moduleNo;
+    		layId = 'btnAssignmentUser_'+moduleNo;
     		var exist = $("li[lay-id='"+layId+"']").length;
     		if(exist === 0){
     			element.tabAdd('tabMain', {
     				id: layId,
     				title: '分配用户('+moduleNo+')',
     				content: `
-    				<form class="layui-form" lay-filter="formAssignmentUser">
+    				<form class="layui-form" lay-filter="${layId}_formAssignmentUser">
     					<div class="layui-row">
 						  	<div class="layui-col-md6">
 						  		<div class="layui-form-item">
@@ -82,7 +83,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 						  		<div class="layui-form-item">
 				                    <label class="layui-form-label">用户</label>
 				                    <div class="layui-input-block">
-				                      <select name="userNos" xm-select="userNos" xm-select-direction="down"></select>
+				                      <select name="userNos" xm-select="${layId}_userNos" xm-select-direction="down"></select>
 				                    </div>
 				                </div>
 						  	</div>    						
@@ -93,15 +94,24 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 						  		<div class="layui-form-item">
 				                    <label class="layui-form-label">功能权限</label>
 				                    <div class="layui-input-block">
-				                      <select name="operations" xm-select="operations" xm-select-direction="down"></select>
+				                      <select name="operations" xm-select="${layId}_operations" xm-select-direction="down"></select>
 				                    </div>
 				                </div>
 						  	</div>    						
     					</div>
+    					
+    					<div class="layui-row">
+	                  		<div class="layui-form-item">
+		                  		<div class="layui-input-block">
+		                    		<button class="layui-btn" lay-filter="${layId}_btnSubmitAssignmentUser" lay-submit>保存</button>
+		                    		<button class="layui-btn layui-btn-primary" type="reset">重置</button>
+		                  		</div>
+		                	</div>
+    					</div>
     				</form>`
     			});
     			
-    			form.render(null, 'formAssignmentUser');
+    			form.render(null, layId+'_formAssignmentUser');
     			
         		$.ajax({
             		type: 'POST',
@@ -115,7 +125,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
             				let obj = {"name": item.name, "value": item.userNo};
            	    			selectData.push(obj);
             			});
-            			formSelects.data('userNos', 'local', {
+            			formSelects.data(layId+'_userNos', 'local', {
             			    arr: selectData
             			});
             			
@@ -123,7 +133,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
             			$.each(resp['selected'],function(i,item){
             				selectedItems.push(item.userNo);
             			});
-            			formSelects.value('userNos', selectedItems);
+            			formSelects.value(layId+'_userNos', selectedItems);
             		},
             		error: function(e){
             			console.log(e);
@@ -144,19 +154,45 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
            	    			selectData.push(obj);
            	    			selectedItems.push(item.value);
             			});
-            			formSelects.data('operations', 'local', {
+            			formSelects.data(layId+'_operations', 'local', {
             			    arr: selectData
             			});
-            			formSelects.value('operations', selectedItems);
+            			formSelects.value(layId+'_operations', selectedItems);
             		},
             		error: function(e){
             			console.log(e);
             		}
-            	});  
+            	}); 
+        		
+        		//监听提交
+    	        form.on('submit('+layId+'_btnSubmitAssignmentUser)', function(data){
+    	        	var params = {
+    	        			'entity':{
+    	        				'moduleNo': data.field.moduleNo,
+        	        			'userNo': data.field.userNos,
+        	        			'operations': data.field.operations
+    	        			}
+    	        	}
+            		$.ajax({
+                		type: 'POST',
+                		url: AppSetting.rootUrl + '/user-module-operation/saveModuleUserOperations.json',
+                		async: false,
+                		data: params,
+                		dataType:'json',
+                		success: function(resp){
+                			debugger
+                		},
+                		error: function(e){
+                			console.log(e);
+                		}
+                	});    	        	
+    	        	// 阻止表单跳转
+  	    	      	return false;
+    	        });
     		}
-    		// 切换到当前tab
-	        element.tabChange('tabMain', layId);
     	}
+    	// 切换到当前tab
+        element.tabChange('tabMain', layId);
     });
     
     // 隐藏第一个页签的关闭按钮

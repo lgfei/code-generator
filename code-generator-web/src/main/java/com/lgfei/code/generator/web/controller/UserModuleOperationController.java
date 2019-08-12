@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.google.common.collect.Lists;
 import com.lgfei.betterme.framework.api.controller.BaseController;
+import com.lgfei.betterme.framework.common.vo.BatchRequestVO;
 import com.lgfei.betterme.framework.common.vo.ListResponseVO;
+import com.lgfei.betterme.framework.common.vo.RequestVO;
 import com.lgfei.code.generator.common.entity.UserModuleOperation;
 import com.lgfei.code.generator.common.vo.LayuiTreeVO;
 import com.lgfei.code.generator.core.security.Authentication;
@@ -36,8 +40,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = { "用户模块关系表" })
 @Controller
 @RequestMapping("/user-module-operation")
-public class UserModuleOperationController
-        extends BaseController<IUserModuleOperationService, UserModuleOperation, Long> {
+public class UserModuleOperationController  extends BaseController<IUserModuleOperationService, UserModuleOperation, Long> {
 
     @Override
     protected UserModuleOperation newEntity() {
@@ -126,5 +129,47 @@ public class UserModuleOperationController
             getService().saveBatch(list);
         }
         return new ListResponseVO.Builder<UserModuleOperation>().ok();
+    }
+    
+    @ApiOperation("保存模块用户权限信息")
+    @ResponseBody
+    @RequestMapping(value = "/saveModuleUserOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public ListResponseVO<UserModuleOperation> saveModuleUserOperations(RequestVO<UserModuleOperation> reqData) {
+        boolean isPass = preHandle(reqData);
+        if(!isPass) {
+            return new ListResponseVO.Builder<UserModuleOperation>().illegal();
+        }
+        UserModuleOperation entity = reqData.getEntity();
+        String usreNosStr = entity.getUserNo();
+        if(StringUtils.isEmpty(usreNosStr)) {
+            return new ListResponseVO.Builder<UserModuleOperation>().illegal();
+        }
+        UpdateWrapper<UserModuleOperation> uwRemove = new UpdateWrapper<>();
+        uwRemove.eq("module_no", entity.getModuleNo());
+        
+        String[] userNosArr = usreNosStr.split(",");
+        List<UserModuleOperation> inserted = Lists.newLinkedList();
+        List<String> userNosRemove = Lists.newLinkedList();
+        for (String userNo : userNosArr) {
+            userNosRemove.add(userNo);
+            UserModuleOperation umo = new UserModuleOperation();
+            umo.setModuleNo(entity.getModuleNo());
+            umo.setUserNo(userNo);
+            umo.setOperations(entity.getOperations());
+            inserted.add(umo);
+        }
+        uwRemove.in("user_no", userNosRemove);
+        // 删除
+        getService().remove(uwRemove);
+        
+        BatchRequestVO<UserModuleOperation> batchReqData = new BatchRequestVO<>();
+        batchReqData.setInserted(inserted);
+        // 重新插入
+        super.batchSave(batchReqData);
+        
+        ListResponseVO<UserModuleOperation> respData = new ListResponseVO.Builder<UserModuleOperation>().ok();
+        respData.setData(inserted);
+        
+        return respData;
     }
 }

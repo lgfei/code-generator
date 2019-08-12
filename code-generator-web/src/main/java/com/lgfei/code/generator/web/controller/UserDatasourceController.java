@@ -34,10 +34,10 @@ public class  UserDatasourceController extends BaseController<IUserDatasourceSer
         return new UserDatasource();
 	}
     
-    @ApiOperation("为用户分配数据源")
+    @ApiOperation("保存用户数据源配置")
     @ResponseBody
-    @RequestMapping(value = "/assignmentDatasource.json", method = { RequestMethod.POST, RequestMethod.GET })
-    public ResponseVO<UserDatasource> assignmentDatasource(@RequestParam("userNo")String userNo, 
+    @RequestMapping(value = "/saveUserDatasources.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public ResponseVO<UserDatasource> saveUserDatasources(@RequestParam("userNo")String userNo, 
             @RequestParam("datasourceNos")String datasourceNos){
         if(StringUtils.isEmpty(userNo)) {
             return new ResponseVO.Builder<UserDatasource>().illegal();

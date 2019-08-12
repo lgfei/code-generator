@@ -23,8 +23,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	    cols: [
    	      [
    	    	{field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-   	    	{field: 'datasourceNo', title: '编码', sort: true, fixed: 'left'},
-   	        {field: 'name', title: '名称', sort: true, fixed: 'left'},
+   	    	{field: 'datasourceNo', title: '编码', fixed: 'left'},
+   	        {field: 'name', title: '名称', fixed: 'left'},
    	        {field: 'dbType', title: '数据库类型'},
    	        {field: 'type', title: '数据源类型'},
    	        {field: 'driver', title: '数据驱动'},
@@ -54,9 +54,10 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	var datasourceNo = data.datasourceNo;
     	
     	var layEvent = obj.event;
+    	var layId = "main_list";
     	// 查看
     	if(layEvent === 'btnView'){
-    		var layId = 'btnView-'+datasourceNo;
+    		layId = 'btnView_'+datasourceNo;
     		var exist = $("li[lay-id='"+layId+"']").length;
     		if(exist === 0){
     			element.tabAdd('tabMain', {
@@ -105,19 +106,17 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 			   		 </table>`
     			});
     		}
-    		// 切换到当前tab
-	        element.tabChange('tabMain', layId);
     	}
     	// 生成代码
-    	else if(layEvent === 'btnGenerate'){ 
-          var layId = 'btnGenerate-'+datasourceNo;
+    	if(layEvent === 'btnGenerate'){ 
+          layId = 'btnGenerate_'+datasourceNo;
           var exist = $("li[lay-id='"+layId+"']").length;
           if(exist === 0){
        	    element.tabAdd('tabMain', {
            	  id: layId,
               title: '生成代码('+datasourceNo+')',
               content: `
-              <form class="layui-form" lay-filter="formGenerate">
+              <form class="layui-form" lay-filter="${layId}_formGenerate">
                 <fieldset class="layui-elem-field">
             	  <legend>数据源</legend>
             	  
@@ -246,7 +245,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                      <div class="layui-form-item">
                        <label class="layui-form-label">tableSchema<span style="color:red;">*</span></label>
                        <div class="layui-input-block">
-                         <select name="schemaName" lay-verify="required" xm-select="schemaName" xm-select-radio></select>
+                         <select name="schemaName" lay-verify="required" xm-select="${layId}_schemaName" xm-select-radio></select>
                        </div>
                      </div>
                    </div>
@@ -259,7 +258,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                   <div class="layui-form-item">
                     <label class="layui-form-label">tableNames<span style="color:red;">*</span></label>
                     <div class="layui-input-block">
-                      <select name="tableNames" lay-verify="required" xm-select="tableNames"></select>
+                      <select name="tableNames" lay-verify="required" xm-select="${layId}_tableNames"></select>
                     </div>
                  </div>
                </div>  
@@ -282,14 +281,14 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
              <div class="layui-row">
                <div class="layui-form-item">
                  <div class="layui-input-block">
-                   <button class="layui-btn" lay-filter="btnSubmitGenerate" lay-submit>生成</button>
+                   <button class="layui-btn" lay-filter="${layId}_btnSubmitGenerate" lay-submit>生成</button>
                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                  </div>
                 </div>
               </div>
             </form>`});
        	    
-       	    form.render(null, 'formGenerate');
+       	    form.render(null, layId+'_formGenerate');
        	    
         	$.ajax({
         		type: 'POST',
@@ -303,7 +302,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         				let obj = {"name": item.dbDesc, "value": item.dbName};
        	    			selectData.push(obj);
         			});
-        			formSelects.data('schemaName', 'local', {
+        			formSelects.data(layId+'_schemaName', 'local', {
         			    arr: selectData
         			});
         		},
@@ -312,7 +311,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         		}
         	});      	    
        	    
-        	formSelects.on('schemaName', function(id, vals, val, isAdd, isDisabled){
+        	formSelects.on(layId+'_schemaName', function(id, vals, val, isAdd, isDisabled){
         		if(!isAdd){
         			formSelects.data('tableNames', 'local', {
    	    			    arr: []
@@ -330,7 +329,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                	    			let obj = {"name": item.tableComment, "value": item.tableName};
                	    			selectData.push(obj);
            	    			}); 
-           	    			formSelects.data('tableNames', 'local', {
+           	    			formSelects.data(layId+'_tableNames', 'local', {
            	    			    arr: selectData
            	    			});
            	    		}, 
@@ -342,45 +341,45 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         	    return true;   
         	});
           }
-          // 切换到当前tab
-          element.tabChange('tabMain', layId);
+          
+          //监听提交
+          form.on('submit('+layId+'_btnSubmitGenerate)', function(data){
+        	  var params = {
+        			  'datasourceNo':data.field.datasourceNo,
+        			  'isInit':data.field.isInit,
+        			  'groupId':data.field.groupId,
+        			  'artifactId':data.field.artifactId,
+        			  'schemaName':data.field.schemaName,
+        			  'tableNames':data.field.tableNames,
+        			  'projectPath':data.field.projectPath
+        	  		};
+        	  var loadIndex;
+        	  $.ajax({
+          		type:'POST',
+          		url: AppSetting.rootUrl + '/generateApiCode.json',
+          		data: params,
+          		dataType: "json",
+          		beforeSend: function(){
+          			// 打开加载框
+          			loadIndex = layer.load();
+          		},
+          		success:function(resp){
+          			layer.alert('生成完成！');
+          		},
+          		error: function(e){
+          			console.log(e);
+          		},
+          		complete: function(){
+          			// 关闭加载框
+          			layer.close(loadIndex);
+          		}
+          	});
+        	// 阻止表单跳转
+        	return false;
+          });
         }
-      });
-      
-      //监听提交
-      form.on('submit(btnSubmitGenerate)', function(data){
-    	  var params = {
-    			  'datasourceNo':data.field.datasourceNo,
-    			  'isInit':data.field.isInit,
-    			  'groupId':data.field.groupId,
-    			  'artifactId':data.field.artifactId,
-    			  'schemaName':data.field.schemaName,
-    			  'tableNames':data.field.tableNames,
-    			  'projectPath':data.field.projectPath
-    	  		};
-    	  var loadIndex;
-    	  $.ajax({
-      		type:'POST',
-      		url: AppSetting.rootUrl + '/generateApiCode.json',
-      		data: params,
-      		dataType: "json",
-      		beforeSend: function(){
-      			// 打开加载框
-      			loadIndex = layer.load();
-      		},
-      		success:function(resp){
-      			layer.alert('生成完成！');
-      		},
-      		error: function(e){
-      			console.log(e);
-      		},
-      		complete: function(){
-      			// 关闭加载框
-      			layer.close(loadIndex);
-      		}
-      	});
-    	// 阻止表单跳转
-    	return false;
+    	// 切换到当前tab
+        element.tabChange('tabMain', layId);
       });
       
       // 隐藏第一个页签的关闭按钮
