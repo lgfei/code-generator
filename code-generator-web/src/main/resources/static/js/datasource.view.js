@@ -17,6 +17,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	    elem: '#tbDatasource',
    	    cellMinWidth: 100,
    	    url: AppSetting.rootUrl + '/datasource/page.json',
+   	    method: 'post',
+   	    contentType: 'application/json;charset-UTF-8',
    	    page: true,
    	    toolbar: '#barDatasource',
    	    defaultToolbar: ['filter', 'exports'],
@@ -290,26 +292,16 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
        	    
        	    form.render(null, layId+'_formGenerate');
        	    
-        	$.ajax({
-        		type: 'POST',
-        		url: AppSetting.rootUrl + '/getDatabase.json',
-        		async: false,
-        		data: {'datasourceNo':datasourceNo},
-        		dataType:'json',
-        		success: function(resp){
-        			var selectData = [];
-        			$.each(resp,function(i,item){
-        				let obj = {"name": item.dbDesc, "value": item.dbName};
-       	    			selectData.push(obj);
-        			});
-        			formSelects.data(layId+'_schemaName', 'local', {
-        			    arr: selectData
-        			});
-        		},
-        		error: function(e){
-        			console.log(e);
-        		}
-        	});      	    
+       	   common.mySyncAjax('POST',AppSetting.rootUrl + '/getDatabase.json',{'datasourceNo':datasourceNo}).then(function(resp){
+	   			var selectData = [];
+	   			$.each(resp,function(i,item){
+	   				let obj = {"name": item.dbDesc, "value": item.dbName};
+	  	    			selectData.push(obj);
+	   			});
+	   			formSelects.data(layId+'_schemaName', 'local', {
+	   			    arr: selectData
+	   			});
+       	   });
        	    
         	formSelects.on(layId+'_schemaName', function(id, vals, val, isAdd, isDisabled){
         		if(!isAdd){
@@ -317,26 +309,16 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	    			    arr: []
    	    			});
         		}else{
-           	    	$.ajax({ 
-           	    		type: 'POST', 
-           	    		url: AppSetting.rootUrl + '/getMysqlTables.json', 
-           	    		async: false, 
-           	    		data: {'datasourceNo': datasourceNo,'schemaName': val.value},
-           	    		dataType:'json', 
-           	    		success: function(resp){
-           	    			var selectData = [];
-           	    			$.each(resp,function(i,item){ 
-               	    			let obj = {"name": item.tableComment, "value": item.tableName};
-               	    			selectData.push(obj);
-           	    			}); 
-           	    			formSelects.data(layId+'_tableNames', 'local', {
-           	    			    arr: selectData
-           	    			});
-           	    		}, 
-           	    		error: function(e){ 
-           	    			console.log(e); 
-           	    		} 
-           	    	});        			
+           	    	common.mySyncAjax('POST',AppSetting.rootUrl + '/getMysqlTables.json',{'datasourceNo': datasourceNo,'schemaName': val.value}).then(function(resp){
+           	    		var selectData = [];
+       	    			$.each(resp,function(i,item){ 
+           	    			let obj = {"name": item.tableComment, "value": item.tableName};
+           	    			selectData.push(obj);
+       	    			}); 
+       	    			formSelects.data(layId+'_tableNames', 'local', {
+       	    			    arr: selectData
+       	    			});
+           	    	});
         		}
         	    return true;   
         	});
@@ -353,27 +335,9 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         			  'tableNames':data.field.tableNames,
         			  'projectPath':data.field.projectPath
         	  		};
-        	  var loadIndex;
-        	  $.ajax({
-          		type:'POST',
-          		url: AppSetting.rootUrl + '/generateApiCode.json',
-          		data: params,
-          		dataType: "json",
-          		beforeSend: function(){
-          			// 打开加载框
-          			loadIndex = layer.load();
-          		},
-          		success:function(resp){
-          			layer.alert('生成完成！');
-          		},
-          		error: function(e){
-          			console.log(e);
-          		},
-          		complete: function(){
-          			// 关闭加载框
-          			layer.close(loadIndex);
-          		}
-          	});
+        	  common.myAsyncAjax('POST',AppSetting.rootUrl + '/generateApiCode.json',params).then(function(resp){
+        		  layer.alert('生成完成！');
+        	  });
         	// 阻止表单跳转
         	return false;
           });

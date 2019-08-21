@@ -17,6 +17,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
       elem: '#tbModule',
       cellMinWidth: 100,
       url: AppSetting.rootUrl + '/module/page.json',
+      method: 'post',
+ 	  contentType: 'application/json;charset-UTF-8',
       page: true,
       toolbar: '#barModule',
       defaultToolbar: ['filter', 'exports'],
@@ -113,79 +115,47 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     			
     			form.render(null, layId+'_formAssignmentUser');
     			
-        		$.ajax({
-            		type: 'POST',
-            		url: AppSetting.rootUrl + '/sys-user/findModuleUsers.json',
-            		async: false,
-            		data: {'moduleNo': moduleNo},
-            		dataType:'json',
-            		success: function(resp){
-            			var selectData = [];
-            			$.each(resp['items'],function(i,item){
-            				let obj = {"name": item.name, "value": item.userNo};
-           	    			selectData.push(obj);
-            			});
-            			formSelects.data(layId+'_userNos', 'local', {
-            			    arr: selectData
-            			});
-            			
-            			var selectedItems = [];
-            			$.each(resp['selected'],function(i,item){
-            				selectedItems.push(item.userNo);
-            			});
-            			formSelects.value(layId+'_userNos', selectedItems);
-            		},
-            		error: function(e){
-            			console.log(e);
-            		}
-            	});
+        		common.mySyncAjax('POST',AppSetting.rootUrl + '/sys-user/findModuleUsers.json',{'moduleNo': moduleNo}).then(function(resp){
+        			var selectData = [];
+        			$.each(resp['items'],function(i,item){
+        				let obj = {"name": item.name, "value": item.userNo};
+       	    			selectData.push(obj);
+        			});
+        			formSelects.data(layId+'_userNos', 'local', {
+        			    arr: selectData
+        			});
+        			
+        			var selectedItems = [];
+        			$.each(resp['selected'],function(i,item){
+        				selectedItems.push(item.userNo);
+        			});
+        			formSelects.value(layId+'_userNos', selectedItems);
+        		});
         		
-        		$.ajax({
-            		type: 'POST',
-            		url: AppSetting.rootUrl + '/operation/findModuleOperations.json',
-            		async: false,
-            		data: {'moduleNo': moduleNo},
-            		dataType:'json',
-            		success: function(resp){
-            			var selectData = [];
-            			var selectedItems = [];
-            			$.each(resp,function(i,item){
-            				let obj = {"name": item.name, "value": item.value};
-           	    			selectData.push(obj);
-           	    			selectedItems.push(item.value);
-            			});
-            			formSelects.data(layId+'_operations', 'local', {
-            			    arr: selectData
-            			});
-            			formSelects.value(layId+'_operations', selectedItems);
-            		},
-            		error: function(e){
-            			console.log(e);
-            		}
-            	}); 
+        		common.mySyncAjax('POST',AppSetting.rootUrl + '/operation/findModuleOperations.json',{'moduleNo': moduleNo}).then(function(resp){
+        			var selectData = [];
+        			var selectedItems = [];
+        			$.each(resp,function(i,item){
+        				let obj = {"name": item.name, "value": item.value};
+       	    			selectData.push(obj);
+       	    			selectedItems.push(item.value);
+        			});
+        			formSelects.data(layId+'_operations', 'local', {
+        			    arr: selectData
+        			});
+        			formSelects.value(layId+'_operations', selectedItems);
+        		});
         		
         		//监听提交
     	        form.on('submit('+layId+'_btnSubmitAssignmentUser)', function(data){
-    	        	var params = {
-    	        			'entity':{
+    	        	var entity = {
     	        				'moduleNo': data.field.moduleNo,
-        	        			'userNo': data.field.userNos,
-        	        			'operations': data.field.operations
-    	        			}
+            	        		'userNo': data.field.userNos,
+            	        		'operations': data.field.operations
     	        	}
-            		$.ajax({
-                		type: 'POST',
-                		url: AppSetting.rootUrl + '/user-module-operation/saveModuleUserOperations.json',
-                		async: false,
-                		data: params,
-                		dataType:'json',
-                		success: function(resp){
-                			debugger
-                		},
-                		error: function(e){
-                			console.log(e);
-                		}
-                	});    	        	
+    	        	common.mySyncAjaxWithEntity('POST',AppSetting.rootUrl + '/user-module-operation/saveModuleUserOperations.json',{"entity":entity}).then(function(resp){
+    	        		debugger
+    	        	});    	        	
     	        	// 阻止表单跳转
   	    	      	return false;
     	        });

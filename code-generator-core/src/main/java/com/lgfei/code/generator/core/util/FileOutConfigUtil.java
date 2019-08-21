@@ -213,22 +213,6 @@ public final class FileOutConfigUtil {
             }
         };
     }
-    
-    public static FileOutConfig getControllerAspectFileOutConfig(String projectPath, String groupId, String artifactId,
-            String templatePath) {
-        String parentPackage = getParentPath(groupId, artifactId);
-        if (StringUtils.isEmpty(templatePath)) {
-            templatePath = "/template/ControllerAspect.java.ftl";
-        }
-        return new FileOutConfig(templatePath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return new StringBuilder(projectPath).append('/').append(artifactId).append("-api")
-                        .append("/src/main/java/").append(parentPackage).append("/api/aspect").append(File.separator)
-                        .append("ControllerAspect.java").toString();
-            }
-        };
-    }
 
     public static FileOutConfig getApplicationPropertiesFileOutConfig(String projectPath, String artifactId,
             String templatePath) {

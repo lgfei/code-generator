@@ -15,6 +15,8 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
       elem: '#tbOperation',
       cellMinWidth: 100,
       url: AppSetting.rootUrl + '/operation/page.json',
+      method: 'post',
+ 	  contentType: 'application/json;charset-UTF-8',
       page: true,
       toolbar: '#barOperation',
       defaultToolbar: ['filter', 'exports'],

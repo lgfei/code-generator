@@ -17,6 +17,8 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
       elem: '#tbSysUser',
       cellMinWidth: 100,
       url: AppSetting.rootUrl + '/sys-user/page.json',
+      method: 'post',
+ 	  contentType: 'application/json;charset-UTF-8',
       page: true,
       toolbar: '#barSysUser',
       defaultToolbar: ['filter', 'exports'],
@@ -103,64 +105,35 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     			
         		form.render(null, layId+'_formAssignmentDatasource');
         		
-        		$.ajax({
-            		type: 'POST',
-            		url: AppSetting.rootUrl + '/datasource/findDatasourceByUser.json',
-            		async: false,
-            		data: {'userNo':userNo},
-            		dataType:'json',
-            		success: function(resp){
-            			var selectData = [];
-            			$.each(resp['items'],function(i,item){
-            				let obj = {"name": item.name, "value": item.datasourceNo};
-           	    			selectData.push(obj);
-            			});
-            			formSelects.data(layId+'_datasourceNos', 'local', {
-            			    arr: selectData
-            			});
-            			
-            			var selectedItems = [];
-            			$.each(resp['selected'],function(i,item){
-            				selectedItems.push(item.datasourceNo);
-            			});
-            			formSelects.value(layId+'_datasourceNos', selectedItems);
-            		},
-            		error: function(e){
-            			console.log(e);
-            		}
-            	});
+        		common.mySyncAjax('POST',AppSetting.rootUrl + '/datasource/findDatasourceByUser.json',{'userNo':userNo}).then(function(resp){
+        			var selectData = [];
+        			$.each(resp['items'],function(i,item){
+        				let obj = {"name": item.name, "value": item.datasourceNo};
+       	    			selectData.push(obj);
+        			});
+        			formSelects.data(layId+'_datasourceNos', 'local', {
+        			    arr: selectData
+        			});
+        			
+        			var selectedItems = [];
+        			$.each(resp['selected'],function(i,item){
+        				selectedItems.push(item.datasourceNo);
+        			});
+        			formSelects.value(layId+'_datasourceNos', selectedItems);
+        		});
         		
     	        //监听提交
     	        form.on('submit('+layId+'_btnSubmitAssignmentDatasource)', function(data){
     	        	var datasourceNos = [];
   				  	var selectedList = formSelects.value(layId+'_datasourceNos');
   				  	$.each(selectedList,function(i,item){
-  					  datasourceNos.push(item.value);
+  				  		datasourceNos.push(item.value);
         			});
-    	        	var loadIndex;
-    	        	$.ajax({
-    	        		type: 'POST',
-    	        		url: AppSetting.rootUrl + '/user-datasource/saveUserDatasources.json',
-    	        		async: false,
-    	        		data: {'userNo':userNo,'datasourceNos':datasourceNos.join(',')},
-    	        		dataType:'json',
-    	        		beforeSend: function(){
-    	        			// 打开加载框
-    	        			loadIndex = layer.load();
-    	        		},
-    	        		success: function(resp){
-    	        			if(resp.code === "0"){
-    	        				layer.alert('保存成功！');
-    	        			}
-    	        		},
-    	        		error: function(e){
-    	        			console.log(e);
-    	        		},
-    	        		complete: function(){
-    	        			// 关闭加载框
-    	        			layer.close(loadIndex);
-    	        		}
-    	        	});
+    	        	common.mySyncAjax('POST',AppSetting.rootUrl + '/user-datasource/saveUserDatasources.json',{'userNo':userNo,'datasourceNos':datasourceNos.join(',')}).then(function(resp){
+    	        		if(resp.code === "0"){
+	        				layer.alert('保存成功！');
+	        			}
+    	        	}); 
     	        	// 阻止表单跳转
     	        	return false;
     	        });

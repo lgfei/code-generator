@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,7 +135,7 @@ public class UserModuleOperationController  extends BaseController<IUserModuleOp
     @ApiOperation("保存模块用户权限信息")
     @ResponseBody
     @RequestMapping(value = "/saveModuleUserOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
-    public ListResponseVO<UserModuleOperation> saveModuleUserOperations(RequestVO<UserModuleOperation> reqData) {
+    public ListResponseVO<UserModuleOperation> saveModuleUserOperations(@RequestBody(required=false) RequestVO<UserModuleOperation> reqData) {
         boolean isPass = preHandle(reqData);
         if(!isPass) {
             return new ListResponseVO.Builder<UserModuleOperation>().illegal();
