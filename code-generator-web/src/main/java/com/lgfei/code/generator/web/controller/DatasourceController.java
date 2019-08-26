@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.common.entity.UserDatasource;
 import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.IDatasourceService;
+import com.lgfei.code.generator.core.service.ISysCodeRuleService;
 import com.lgfei.code.generator.core.service.IUserDatasourceService;
 
 import io.swagger.annotations.Api;
@@ -43,14 +45,34 @@ public class  DatasourceController extends BaseController<IDatasourceService, Da
     @Autowired
     private IUserDatasourceService userDatasourceService;
     
+    @Autowired
+    private ISysCodeRuleService sysCodeRuleService;
+    
     @Override
     protected Datasource newEntity() {
         return new Datasource();
 	}
     
+    @Override
+    protected Datasource fillNo(Datasource entity) {
+        if(null == entity || !StringUtils.isEmpty(entity.getDatasourceNo())) {
+            return entity;
+        }
+        String nextNo = sysCodeRuleService.getNextNo("datasource", "datasource_no");
+        if(!StringUtils.isEmpty(nextNo)) {
+            entity.setDatasourceNo(nextNo);
+        }
+        return entity;
+    }
+    
     @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
     public String gotoIndexView() {
         return "datasource/index";
+    }
+    
+    @RequestMapping(value = "/add.htm", method = RequestMethod.GET)
+    public String gotoAddView() {
+        return "datasource/add";
     }
     
     @ApiOperation("用户分配数据源查询接口")
@@ -94,4 +116,5 @@ public class  DatasourceController extends BaseController<IDatasourceService, Da
         
         return datasourceList;
     }
+
 }
