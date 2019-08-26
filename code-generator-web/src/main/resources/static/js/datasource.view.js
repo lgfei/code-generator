@@ -25,7 +25,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	    cols: [
    	      [
    	    	{field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-   	    	{field: 'id', title: 'ID', hidden: true},
+   	    	{field: 'id', title: 'ID', hide: true, fixed: 'left'},
    	    	{field: 'datasourceNo', title: '编码', fixed: 'left'},
    	        {field: 'name', title: '名称', fixed: 'left'},
    	        {field: 'dbType', title: '数据库类型'},
@@ -47,8 +47,6 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
    	  
     // 监听表格工具条
     table.on('toolbar(datasource)', function(obj){
-    	var checkStatus = table.checkStatus(obj.config.id);
-      	
       	var layEvent = obj.event;
       	// 刷新
     	if(layEvent === 'btnRefresh'){
@@ -66,6 +64,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     	// 批量删除
     	if(layEvent === 'btnBatchDelete'){
     		layer.confirm('确定要删除吗?', function(index){
+    			var checkStatus = table.checkStatus(obj.config.id);
     			var entityList = checkStatus.data;
         		common.mySyncAjaxWithEntity('POST',AppSetting.rootUrl + '/datasource/removeList.json',{'entityList': entityList}).then(function(resp){
             		if(resp.code === "0"){
