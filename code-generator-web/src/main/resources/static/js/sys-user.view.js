@@ -14,44 +14,192 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
  	var AppSetting = common.AppSetting;
     // 用户管理表格
     table.render({
-      elem: '#tbSysUser',
-      cellMinWidth: 100,
-      url: AppSetting.rootUrl + '/sys-user/page.json',
-      method: 'post',
- 	  contentType: 'application/json;charset-UTF-8',
-      page: true,
-      toolbar: '#barSysUser',
-      defaultToolbar: ['filter', 'exports'],
-      cols: [
-        [
-    	  {field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
-    	  {field: 'userNo', title: '用户编码', fixed: 'left'},
-    	  {field: 'name', title: '名称', fixed: 'left'},
-    	  {field: 'account', title: '帐号'},
-          {field: 'password', title: '密码'},
-          {field: 'createUser', title: '创建人'},
-          {field: 'createTime', title: '创建时间', sort: true},
-          {field: 'updateUser', title: '修改人'},
-          {field: 'updateTime', title: '修改时间', sort: true},
-          {field: 'remark', title: '备注'},
- 	      {field: 'opt', title: '操作', toolbar: '#barSysUserCols', fixed: 'right', width: 350}
+    	elem: '#tbSysUser',
+        cellMinWidth: 100,
+        url: AppSetting.rootUrl + '/sys-user/page.json',
+        method: 'post',
+ 	    contentType: 'application/json;charset-UTF-8',
+        page: true,
+        toolbar: '#barSysUser',
+        defaultToolbar: ['filter', 'exports'],
+        cols: [
+        	[
+        		{field: 'ck', title: '', type: 'checkbox', fixed: 'left'},
+        		{field: 'id', title: 'ID', hide: true, fixed: 'left'},
+        		{field: 'userNo', title: '用户编码', fixed: 'left'},
+        		{field: 'name', title: '名称', fixed: 'left'},
+        		{field: 'account', title: '帐号'},
+        		{field: 'password', title: '密码', hide: true},
+        		{field: 'createUser', title: '创建人'},
+        		{field: 'createTime', title: '创建时间', sort: true},
+        		{field: 'updateUser', title: '修改人'},
+        		{field: 'updateTime', title: '修改时间', sort: true},
+        		{field: 'remark', title: '备注'},
+        		{field: 'opt', title: '操作', toolbar: '#barSysUserCols', fixed: 'right', width: 350}
+        	]
         ]
-      ]
     }); 
     
     // 监听表格工具条
     table.on('toolbar(sysUser)', function(obj){
-    	var checkStatus = table.checkStatus(obj.config.id);
-    	var data = checkStatus.data;
+    	var layEvent = obj.event;
+      	// 刷新
+    	if(layEvent === 'btnRefresh'){
+    		table.reload('tbSysUser');
+    	}
+    	// 新增
+    	if(layEvent === 'btnAdd'){
+    		layer.open({
+    			title: '新增',
+    			type: 2,
+    			area: ['600px','250px'],
+    			content: [AppSetting.rootUrl + '/sys-user/add.htm','no']
+			});
+    	}
+    	// 批量删除
+    	if(layEvent === 'btnBatchDelete'){
+    		layer.confirm('确定要删除吗?', function(index){
+    			var checkStatus = table.checkStatus(obj.config.id);
+    			var entityList = checkStatus.data;
+        		common.mySyncAjaxWithEntity('POST',AppSetting.rootUrl + '/sys-user/removeList.json',{'entityList': entityList}).then(function(resp){
+            		if(resp.code === "0"){
+            			table.reload('tbSysUser');
+            			layer.msg('删除成功！');
+            		}
+            	});
+    		    layer.close(index);
+			});
+    	}
     });
     
     // 监听表格行工具条
     table.on('tool(sysUser)', function(obj){
     	var data = obj.data;
+    	var dataId = data.id;
     	var userNo = data.userNo;
     	
     	var layEvent = obj.event;
     	var layId = 'main_list';
+    	// 查看
+    	if(layEvent === 'btnView'){
+    		layId = 'btnView_'+userNo;
+    		var exist = $("li[lay-id='"+layId+"']").length;
+    		if(exist === 0){
+    			element.tabAdd('tabMain', {
+    				id: layId,
+    				title: '查看('+userNo+')',
+    				content: `
+	    			<table class="layui-table" lay-skin="row">
+    					<colgroup>
+			   		    	<col width="100">
+			   		     	<col width="200">
+			   		     	<col width="100">
+			   		     	<col width="200">
+    					</colgroup>
+			   		   	<tbody>
+			   		    	<tr>
+			   		       		<td>用户编码</td>
+			   		       		<td>${data.userNo}</td>
+			   		       		<td>账号</td>
+			   		       		<td>${data.account}</td>
+			   		     	</tr>
+			   		     	<tr>
+			   		       		<td>用户名</td>
+			   		       		<td>${data.name}</td>
+			   		       		<td></td>
+			   		       		<td></td>
+			   		     	</tr>
+			   		   	</tbody>
+					</table>`
+    			});
+    		}
+    	}
+    	// 编辑
+    	if(layEvent === 'btnEdit'){
+    		layId = 'btnEdit_'+userNo;
+    		var exist = $("li[lay-id='"+layId+"']").length;
+    		if(exist === 0){
+    			element.tabAdd('tabMain', {
+    				id: layId,
+    				title: '编辑('+userNo+')',
+    				content: `
+    				<form class="layui-form" lay-filter="${layId}_formEdit">
+    					<div class="layui-row">
+    						<div class="layui-col-md4">
+    							<div class="layui-inline">
+    								<label class="layui-form-label">用户编码<span style="color:red;">*</span></label>
+    								<div class="layui-input-inline">
+                            			<input type="text" name="userNo" value="${data.userNo}" lay-verify="required" autocomplete="off" class="layui-input layui-bg-gray" readonly="readonly"/>
+                          			</div>
+    							</div>
+    						</div>
+    						<div class="layui-col-md4">
+        	  	        		<div class="layui-inline">
+        	  	          			<label class="layui-form-label">账号<span style="color:red;">*</span></label>
+        	  	          			<div class="layui-input-inline">
+                						<input type="text" name="account" lay-verify="required" autocomplete="off" class="layui-input"/>
+                          			</div>
+        	  	        		</div>
+        	  	      		</div>
+        	  	      		<div class="layui-col-md4">
+        	  	        		<div class="layui-inline">
+        	  	          			<label class="layui-form-label">用户名<span style="color:red;">*</span></label>
+        	  	          			<div class="layui-input-inline">
+                						<input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
+                          			</div>
+        	  	        		</div>
+        	  	      		</div>
+    					</div>
+    					
+    					<br/>
+                		
+                    	<div class="layui-row">
+                    		<div class="layui-form-item">
+                    			<div class="layui-input-block">
+                    				<button class="layui-btn" lay-filter="${layId}_btnSubmitEdit" lay-submit>保存</button>
+                    				<button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                    			</div>
+                    		</div>
+                    	</div>
+    				</form>`
+    			});
+    			// 初始渲染
+    			form.render(null, layId+'_formEdit');
+    			form.val(layId+'_formEdit', data);
+    			
+    			//监听保存
+                form.on('submit('+layId+'_btnSubmitEdit)', function(data){
+                	var entity = {
+	        				'id': dataId,
+	        				'account': data.field.account,
+        	        		'name': data.field.name
+                		}
+                	common.mySyncAjaxWithEntity('POST',AppSetting.rootUrl + '/sys-user/update.json',{'entity': entity}).then(function(resp){
+                		if(resp.code === "0"){
+                			table.reload('tbSysUser');
+                			layer.msg('保存成功！');
+                		}
+                	});
+                	// 阻止表单跳转
+                	return false;
+                });
+    		}
+    	}
+    	// 删除
+    	if(layEvent === 'btnDelete'){
+    		layer.confirm('确定要删除吗?', function(index){
+    			var entity = {
+        				'id': dataId
+            		}
+        		common.mySyncAjaxWithEntity('POST',AppSetting.rootUrl + '/sys-user/remove.json',{'entity': entity}).then(function(resp){
+            		if(resp.code === "0"){
+            			table.reload('tbSysUser');
+            			layer.msg('删除成功！');
+            		}
+            	});
+    		    layer.close(index);
+			});
+    	}
     	// 分配数据源
     	if(layEvent === 'btnAssignmentDatasource'){ 
     		layId = 'btnAssignmentDatasource_' + userNo;

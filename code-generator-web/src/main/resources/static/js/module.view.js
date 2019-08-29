@@ -51,7 +51,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     		layer.open({
     			title: '新增',
     			type: 2,
-    			area: ['600px','400px'],
+    			area: ['600px','250px'],
     			content: [AppSetting.rootUrl + '/module/add.htm','no']
 			});
     	}
