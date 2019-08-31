@@ -136,7 +136,7 @@ public class UserModuleOperationController  extends BaseController<IUserModuleOp
     @ResponseBody
     @RequestMapping(value = "/saveModuleUserOperations.json", method = { RequestMethod.POST, RequestMethod.GET })
     public ListResponseVO<UserModuleOperation> saveModuleUserOperations(@RequestBody(required=false) RequestVO<UserModuleOperation> reqData) {
-        boolean isPass = preHandle(reqData);
+        boolean isPass = checkParams(reqData);
         if(!isPass) {
             return new ListResponseVO.Builder<UserModuleOperation>().illegal();
         }

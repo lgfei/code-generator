@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lgfei.betterme.framework.api.controller.BaseController;
+import com.lgfei.betterme.framework.common.vo.IRequestVO;
 import com.lgfei.code.generator.common.entity.SysUser;
 import com.lgfei.code.generator.core.security.Authentication;
 import com.lgfei.code.generator.core.service.ISysCodeRuleService;
@@ -63,6 +65,18 @@ public class SysUserController extends BaseController<ISysUserService, SysUser, 
             entity.setUserNo(nextNo);
         }
         return entity;
+    }
+    
+
+    @Override
+    protected Wrapper<SysUser> preHandle(IRequestVO reqData, String methodType) {
+        Wrapper<SysUser> wrapper = super.preHandle(reqData, methodType);
+        if(wrapper instanceof QueryWrapper) {
+            QueryWrapper<SysUser> queryWrapper = (QueryWrapper<SysUser>) wrapper;
+            queryWrapper.ne("user_no", Authentication.SUPPER_ADMIN_USER_NO);
+            return queryWrapper;
+        }
+        return wrapper;
     }
 
     @ApiOperation("模块分配用户查询接口")
