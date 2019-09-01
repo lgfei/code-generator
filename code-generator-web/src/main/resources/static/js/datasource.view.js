@@ -152,7 +152,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     				    <div class="layui-row">
     				        <div class="layui-col-md4">
     				        	<div class="layui-inline">
-        	  	          			<label class="layui-form-label">数据源编码<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>数据源编码</label>
         	  	          			<div class="layui-input-inline">
                             			<input type="text" name="datasourceNo" value="${data.datasourceNo}" lay-verify="required" autocomplete="off" class="layui-input layui-bg-gray" readonly="readonly"/>
                           			</div>
@@ -160,7 +160,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     				        </div>
     				        <div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">名称<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>名称</label>
         	  	          			<div class="layui-input-inline">
                 						<input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
                           			</div>
@@ -168,7 +168,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         	  	      		</div>
         	  	      		<div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">数据库类型<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>数据库类型</label>
         	  	          			<div class="layui-input-inline">
                             			<select name="dbType" lay-verify="required">
     										<option value="mysql">mysql</option>
@@ -184,7 +184,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 	        	    	<div class="layui-row">
 	        	  	  		<div class="layui-col-md4">
 	        	  	    		<div class="layui-inline">
-	        	  	      			<label class="layui-form-label">数据库驱动<span style="color:red;">*</span></label>
+	        	  	      			<label class="layui-form-label"><span style="color:red;">*</span>数据库驱动</label>
 	        	  	      			<div class="layui-input-inline">
 	                        			<input type="text" name="driver" lay-verify="required" autocomplete="off" class="layui-input"/>
 	                      			</div>
@@ -192,7 +192,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 	        	  	  		</div>
 	        	  	  		<div class="layui-col-md4">
 	        	  	    		<div class="layui-inline">
-	        	  	      			<label class="layui-form-label">IP<span style="color:red;">*</span></label>
+	        	  	      			<label class="layui-form-label"><span style="color:red;">*</span>IP</label>
 	        	  	      			<div class="layui-input-inline">
 	                        			<input type="text" name="server" lay-verify="required" autocomplete="off" class="layui-input"/>
 	                      			</div>
@@ -200,7 +200,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 	        	  	  		</div>
 	        	  	  		<div class="layui-col-md4">
 	        	  	    		<div class="layui-inline">
-	        	  	      			<label class="layui-form-label">端口<span style="color:red;">*</span></label>
+	        	  	      			<label class="layui-form-label"><span style="color:red;">*</span>端口</label>
 	        	  	      			<div class="layui-input-inline">
 	                        			<input type="text" name="port" lay-verify="required|number" autocomplete="off" class="layui-input"/>
 	                      			</div>
@@ -213,7 +213,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 	        	    	<div class="layui-row">
 	        	  	  		<div class="layui-col-md4">
 	        	  	    		<div class="layui-inline">
-	        	  	      			<label class="layui-form-label">用户名<span style="color:red;">*</span></label>
+	        	  	      			<label class="layui-form-label"><span style="color:red;">*</span>用户名</label>
 	        	  	      			<div class="layui-input-inline">
 	                        			<input type="text" name="username" lay-verify="required" autocomplete="off" class="layui-input"/>
 	                      			</div>
@@ -229,7 +229,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 	        	  	  		</div>
 	        	  	  		<div class="layui-col-md4">
 	        	  	    		<div class="layui-inline">
-	        	  	      			<label class="layui-form-label">数据源类型<span style="color:red;">*</span></label>
+	        	  	      			<label class="layui-form-label"><span style="color:red;">*</span>数据源类型</label>
 	        	  	      			<div class="layui-input-inline">
 	                        			<input type="text" name="type" lay-verify="required" autocomplete="off" class="layui-input"/>
 	                      			</div>
@@ -394,29 +394,42 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
 		           
                     	<fieldset class="layui-elem-field">
                     		<legend>数据表</legend>
-		           	
-		           	  		<div class="layui-row">
-		                		<div class="layui-col-md3">
-		                  			<div class="layui-inline">
+                    		
+                    		<div class="layui-row">
+		                 		<div class="layui-col-md12">
+		                   			<div class="layui-form-item">
 		                     			<label class="layui-form-label">isInit</label>
-		                     			<div class="layui-input-inline">
+		                     			<div class="layui-input-block">
 		                       				<input type="checkbox" name="isInit" lay-skin="switch"/>
 		                     			</div>
 		                   			</div>
-		                 		</div>  
+		                 		</div>
+                    		</div> 
+		           
+                    		<br/>
+		           	
+		           	  		<div class="layui-row">
 		                 		<div class="layui-col-md4">
 		                   			<div class="layui-inline">
-		                     			<label class="layui-form-label">groupId<span style="color:red;">*</span></label>
+		                     			<label class="layui-form-label"><span style="color:red;">*</span>groupId</label>
                     					<div class="layui-input-inline">
 		                       				<input type="text" name="groupId" autocomplete="off" class="layui-input layui-bg-gray" value="com.lgfei" disabled="disabled"/>
 		                     			</div>
 		                   			</div>
 		                 		</div>
-		                 		<div class="layui-col-md5">
+		                 		<div class="layui-col-md4">
 		                   			<div class="layui-inline">
-		                     			<label class="layui-form-label">artifactId<span style="color:red;">*</span></label>
+		                     			<label class="layui-form-label"><span style="color:red;">*</span>artifactId</label>
 		                      			<div class="layui-input-inline">
 		                       				<input type="text" name="artifactId" lay-verify="required" placeholder="请输入artifactId" autocomplete="off" class="layui-input"/>
+		                     			</div>
+		                   			</div>
+		                 		</div>
+		                 		<div class="layui-col-md4">
+		                  			<div class="layui-inline">
+		                     			<label class="layui-form-label"><span style="color:red;">*</span>version</label>
+		                     			<div class="layui-input-inline">
+		                       				<input type="text" name="frameworkVersion" autocomplete="off" class="layui-input layui-bg-gray" value="1.0.0-SNAPSHOT" disabled="disabled"/>
 		                     			</div>
 		                   			</div>
 		                 		</div>
@@ -427,7 +440,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                     		<div class="layui-row">
 		                 		<div class="layui-col-md12">
 		                   			<div class="layui-form-item">
-		                     			<label class="layui-form-label">tableSchema<span style="color:red;">*</span></label>
+		                     			<label class="layui-form-label"><span style="color:red;">*</span>tableSchema</label>
 		                     			<div class="layui-input-block">
 		                       				<select name="schemaName" lay-verify="required" xm-select="${layId}_schemaName" xm-select-radio></select>
 		                     			</div>
@@ -440,7 +453,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                     		<div class="layui-row">
                     			<div class="layui-col-md12">
 		                			<div class="layui-form-item">
-		                  				<label class="layui-form-label">tableNames<span style="color:red;">*</span></label>
+		                  				<label class="layui-form-label"><span style="color:red;">*</span>tableNames</label>
 		                  				<div class="layui-input-block">
 		                    				<select name="tableNames" lay-verify="required" xm-select="${layId}_tableNames"></select>
 		                  				</div>
@@ -453,7 +466,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
                     		<div class="layui-row">
                     			<div class="layui-col-md12">
                     				<div class="layui-form-item">
-		                 				<label class="layui-form-label">projectPath<span style="color:red;">*</span></label>
+		                 				<label class="layui-form-label"><span style="color:red;">*</span>projectPath</label>
 		                 				<div class="layui-input-block">
 		                   					<input type="text" name="projectPath" lay-verify="required" placeholder="请输入projectPath" autocomplete="off" class="layui-input"/>
 		                 				</div>
@@ -512,13 +525,14 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
             //监听提交
             form.on('submit('+layId+'_btnSubmitGenerate)', function(data){
             	var params = {
-            			'datasourceNo':data.field.datasourceNo,
-            			'isInit':data.field.isInit,
-            			'groupId':data.field.groupId,
-            			'artifactId':data.field.artifactId,
-            			'schemaName':data.field.schemaName,
-            			'tableNames':data.field.tableNames,
-            			'projectPath':data.field.projectPath
+            			'datasourceNo': data.field.datasourceNo,
+            			'isInit': data.field.isInit,
+            			'groupId': data.field.groupId,
+            			'artifactId': data.field.artifactId,
+            			'frameworkVersion': data.field.frameworkVersion,
+            			'schemaName': data.field.schemaName,
+            			'tableNames': data.field.tableNames,
+            			'projectPath': data.field.projectPath
         	  		};
             	common.myAsyncAjax('POST',AppSetting.rootUrl + '/generateApiCode.json',params).then(function(resp){
             		layer.msg('生成完成！');

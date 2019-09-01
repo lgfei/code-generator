@@ -127,7 +127,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     					<div class="layui-row">
     						<div class="layui-col-md4">
     							<div class="layui-inline">
-    								<label class="layui-form-label">用户编码<span style="color:red;">*</span></label>
+    								<label class="layui-form-label"><span style="color:red;">*</span>用户编码</label>
     								<div class="layui-input-inline">
                             			<input type="text" name="userNo" value="${data.userNo}" lay-verify="required" autocomplete="off" class="layui-input layui-bg-gray" readonly="readonly"/>
                           			</div>
@@ -135,7 +135,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
     						</div>
     						<div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">账号<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>账号</label>
         	  	          			<div class="layui-input-inline">
                 						<input type="text" name="account" lay-verify="required" autocomplete="off" class="layui-input"/>
                           			</div>
@@ -143,7 +143,7 @@ layui.define(['layer','jquery','element','table','form','tree','common'], functi
         	  	      		</div>
         	  	      		<div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">用户名<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>用户名</label>
         	  	          			<div class="layui-input-inline">
                 						<input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
                           			</div>

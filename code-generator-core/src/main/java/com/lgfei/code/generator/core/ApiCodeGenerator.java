@@ -80,6 +80,7 @@ public class ApiCodeGenerator implements ICodeGenerator
         boolean isInit = "on".equals(paramVo.getIsInit()) ? true : false;// true
         String groupId = paramVo.getGroupId();// com.lgfei
         String artifactId = paramVo.getArtifactId();// betterme-admin
+        String frameworkVersion = paramVo.getFrameworkVersion();// 1.0.0-SNAPSHOT
         String schemaName = paramVo.getSchemaName();// betterme_admin
         String tableNames = paramVo.getTableNames();// operation_log,user
         String projectPath = paramVo.getProjectPath();// E:\\Test\\code_generator
@@ -87,6 +88,7 @@ public class ApiCodeGenerator implements ICodeGenerator
         Map<String, String> myConfig = new HashMap<>();
         myConfig.put("groupId", groupId);
         myConfig.put("artifactId", artifactId);
+        myConfig.put("frameworkVersion", frameworkVersion);
         myConfig.put("parentPackage", FileOutConfigUtil.getParentPackage(groupId, artifactId));
         // myConfig.put("superManagerClass", "IBaseManager");
         // myConfig.put("superManagerClassPackage",

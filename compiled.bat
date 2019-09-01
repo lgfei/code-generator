@@ -5,13 +5,13 @@ color 1f
 :menu
 echo   ________________________________________________________________
 echo  ^|                                                                ^|
-echo  ^|                     Maven  -  æ§åˆ¶é¢æ¿                         ^|
+echo  ^|                     Maven  -  ¿ØÖÆÃæ°å                         ^|
 echo  ^|                                                                ^|
 echo  ^|  0 - clean-package             1 - mvn install                 ^|
 echo  ^|  2 - mvn deploy                                                ^|
 echo  ^|________________________________________________________________^|
 :input
-set /p input=-^> è¯·é€‰æ‹©: 
+set /p input=-^> ÇëÑ¡Ôñ: 
 
 if "%input%"== "0" goto clean-package
 if "%input%"== "1" goto install
@@ -19,18 +19,18 @@ if "%input%"== "2" goto deploy
 goto end
 
 :clean-package
-echo  # æ¶ˆé™¤ç¼–è¯‘å¹¶æ‰“åŒ… #
+echo  # Ïû³ı±àÒë²¢´ò°ü #
 mvn clean package -U -Dmaven.test.skip=true &&pause&&cls&& call compile.bat
 
 :install
-echo  # å®‰è£…æœ¬åœ°ä»“åº“ #
+echo  # °²×°±¾µØ²Ö¿â #
 mvn install -Dmaven.test.skip=true &&pause&&cls&& call compile.bat
 
 :deploy
-echo  # å‘å¸ƒ #
+echo  # ·¢²¼ #
 mvn deploy -Dmaven.test.skip=true &&pause&&cls&& call compile.bat
 
 :end
-echo ç»“æŸ
+echo ½áÊø
 prompt
 popd

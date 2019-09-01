@@ -18,6 +18,8 @@ public class ApiGeneratorParamVO {
     private String groupId;
 
     private String artifactId;
+    
+    private String frameworkVersion;
 
     private String schemaName;
 
@@ -55,6 +57,14 @@ public class ApiGeneratorParamVO {
 
     public void setArtifactId(String artifactId) {
         this.artifactId = artifactId;
+    }
+
+    public String getFrameworkVersion() {
+        return frameworkVersion;
+    }
+
+    public void setFrameworkVersion(String frameworkVersion) {
+        this.frameworkVersion = frameworkVersion;
     }
 
     public String getTableNames() {

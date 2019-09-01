@@ -1,22 +1,23 @@
-<?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>${my.groupId}</groupId>
-    <artifactId>${my.artifactId}</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>${my.groupId}</groupId>
+        <artifactId>${my.artifactId}</artifactId>
+        <version>${my.frameworkVersion}</version>
+    </parent>
   
-  <artifactId>${my.artifactId}-common</artifactId>
-  <name>${my.artifactId}-common</name>
-  <url>http://maven.apache.org</url>
+    <artifactId>${my.artifactId}-common</artifactId>
+    <name>${my.artifactId}-common</name>
   
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
   
-  <dependencies>
-  </dependencies>
+    <dependencies>
+        
+    </dependencies>
   
 </project>

@@ -126,7 +126,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     					<div class="layui-row">
     						<div class="layui-col-md4">
     							<div class="layui-inline">
-    								<label class="layui-form-label">模块编码<span style="color:red;">*</span></label>
+    								<label class="layui-form-label"><span style="color:red;">*</span>模块编码</label>
     								<div class="layui-input-inline">
                             			<input type="text" name="moduleNo" value="${data.moduleNo}" lay-verify="required" autocomplete="off" class="layui-input layui-bg-gray" readonly="readonly"/>
                           			</div>
@@ -134,7 +134,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
     						</div>
     						<div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">名称<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>名称</label>
         	  	          			<div class="layui-input-inline">
                 						<input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
                           			</div>
@@ -142,7 +142,7 @@ layui.define(['layer','jquery','element','table','form','common'], function(expo
         	  	      		</div>
         	  	      		<div class="layui-col-md4">
         	  	        		<div class="layui-inline">
-        	  	          			<label class="layui-form-label">URL<span style="color:red;">*</span></label>
+        	  	          			<label class="layui-form-label"><span style="color:red;">*</span>URL</label>
         	  	          			<div class="layui-input-inline">
                 						<input type="text" name="url" lay-verify="required" autocomplete="off" class="layui-input"/>
                           			</div>
