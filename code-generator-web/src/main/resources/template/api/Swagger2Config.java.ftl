@@ -22,12 +22,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-public class Swagger2Config
-{
+public class Swagger2Config {
     
     @Bean
-    public Docket createRestApi()
-    {
+    public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
             .select()
             .apis(RequestHandlerSelectors.basePackage("${my.parentPackage}.${package.ModuleName}.api"))
@@ -35,12 +33,11 @@ public class Swagger2Config
             .build();
     }
     
-    private ApiInfo apiInfo()
-    {
+    private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("${my.artifactId} APIs")
             .description("${my.artifactId} APIs")
-            .termsOfServiceUrl("http://${author}.com")
-            .contact(new Contact("${author}", "http://${author}.com", "email@xxx.com"))
+            .termsOfServiceUrl("https://${author}.github.io/")
+            .contact(new Contact("${author}", "https://${author}.github.io/", "email@xxx.com"))
             .version("1.0.0")
             .build();
     }

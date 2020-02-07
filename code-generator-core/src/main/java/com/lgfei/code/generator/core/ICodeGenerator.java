@@ -1,12 +1,9 @@
 package com.lgfei.code.generator.core;
 
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.common.vo.ApiGeneratorParamVO;
 
-public interface ICodeGenerator
-{
+public interface ICodeGenerator {
     String TEMPLATE_PATH = "/template/api";
-    
-    boolean check(ParamVO paramVO);
-    
-    void generate(ParamVO paramVO);
+
+    void generate(ApiGeneratorParamVO paramVo);
 }

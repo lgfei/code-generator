@@ -14,9 +14,7 @@ import ${superMapperClassPackage};
 <#if kotlin>
 interface ${table.mapperName} : ${superMapperClass}<${entity}, ${my.entityIdClass}>
 <#else>
-public interface ${table.mapperName} 
-    extends ${superMapperClass}<${entity}, ${my.entityIdClass}> 
-{
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}, ${my.entityIdClass}> {
 
 }
 </#if>

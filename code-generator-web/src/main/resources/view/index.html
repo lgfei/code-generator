@@ -1,56 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Code Generator</title>
+<!-- 引入公共页面 -->
+<link rel="import" href="common.htm" id="commonPage"/>
+</head>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-select CSS-->
-    <link href="css/bootstrap-select.min.css" rel="stylesheet"/>
-
-    <title>Code Generator</title>
-  </head>
-  <body>
-    <div class="container-fluid">
-    	<h4 align="center">欢迎使用代码生成工具</h4>
-    	<hr/>
-    	<div class="row">
-    		<div class="col-md-2">
-				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="javascript:createTab('api-code-generator','api-code-generator','api-code-generator',1)">api-code-generator</a></li>
-					<li class="disabled"><a href="#">Disabled link</a></li>
-				</ul>				   		
-    		</div>
-            <div class="col-md-10">
-                <ul class="nav nav-tabs" role="tablist">
-		        </ul>
-		        <div class="tab-content" style="width:100%;">
-		        </div>
+<body layadmin-themealias="default" class="layui-layout-body">
+	<div class="layui-container">
+		<div class="layui-row">
+			<div class="layui-col-md12">
+				<div class="layui-logo" lay-href="" style="background-color: #20222A;">
+					<h1 class="site-h1" style="color:white;">Code Generator</h1>
+				</div>
 			</div>
-    	</div>
-	</div>
+		</div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-    <!-- bootstrap-select JS-->
-    <script src="js/lib/bootstrap-select/bootstrap-select.min.js"></script>
-    <script src="js/lib/bootstrap-select/defaults-zh_CN.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script>
-	    $(function(){
-			var item = {'id':'main','name':'Home','url':'main','closable':false};
-			closableTab.addTab(item);
-			createTab('api-code-generator','api-code-generator','api-code-generator',1);
-		});
-		function createTab(id,name,url,closable){
-			var item = {'id':id,'name':name,'url':url,'closable':closable==1?true:false};
-			closableTab.addTab(item);
-		}    
-    </script>
-  </body>
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md12">
+				<div class="layui-tab" lay-filter="tabMain">
+					<ul class="layui-tab-title">
+						<li class="layui-this" lay-id="1"><i class="layui-icon layui-icon-home"></i></li>
+						<li lay-id="2">数据源管理</li>
+						<li lay-id="3">用户管理</li>
+						<li lay-id="4">模块管理</li>
+						<li lay-id="5">操作按钮管理</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show" id="tabContent1">
+							<span>首页</span>
+						</div>
+						<div class="layui-tab-item" id="tabContent2">
+							<span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
+						</div>
+						<div class="layui-tab-item" id="tabContent3">
+							<span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
+						</div>
+						<div class="layui-tab-item" id="tabContent4">
+                            <span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
+                        </div>
+                        <div class="layui-tab-item" id="tabContent5">
+                            <span class="layui-text">没有该模块权限，<a href="#">申请权限</a></span>
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-layer-move"></div>
+</body>
+
+<script type="text/javascript">
+function resizeHeight(){
+	var frames = document.getElementsByTagName('iframe');
+	for(var i = 0; i < frames.length; i++){
+		var iframe = frames[i];
+	    var div = iframe.parentNode;
+	    try{
+	        var bHeight = iframe.contentWindow.document.body.scrollHeight;
+	        var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+	        var height = Math.max(bHeight, dHeight);
+	        div.style.height = height + 'px';
+	    }catch (ex){
+	        console.log(ex);
+	    }
+	}
+}
+window.setInterval("resizeHeight()", 500);
+
+// 页面入口
+layui.config({ base:'js/'}).use(['index']);
+</script>
+
 </html>

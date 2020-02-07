@@ -20,10 +20,8 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 
 }
 <#else>
-public class ${table.serviceImplName} 
-    extends ${superServiceImplClass}<${table.mapperName}, ${entity}, ${my.entityIdClass}> 
-    implements ${table.serviceName} 
-{
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}, ${my.entityIdClass}> 
+    implements ${table.serviceName} {
 
 }
 </#if>

@@ -19,33 +19,27 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @ConfigurationProperties
 @ComponentScan("com.lgfei.code.generator")
 @MapperScan("com.lgfei.code.generator.core.mapper")
-public class CodeGeneratorWebApplication
-{
-    public static void main(String[] args)
-    {
+public class CodeGeneratorWebApplication {
+    public static void main(String[] args) {
         SpringApplication app = new SpringApplication(CodeGeneratorWebApplication.class);
         app.run(args);
         System.err.println("API地址：http://127.0.0.1:8080/code-generator-web/swagger-ui.html");
-        System.err.println("首页地址：http://127.0.0.1:8080/code-generator-web/index");
+        System.err.println("首页地址：http://127.0.0.1:8080/code-generator-web/index.htm");
     }
-    
+
     @Bean
     @ConfigurationProperties(prefix = "spring.thymeleaf.variables")
-    protected Properties getThymeleafVariables()
-    {
+    protected Properties getThymeleafVariables() {
         return new Properties();
     }
-    
+
     @Resource
-    protected void configureThymeleafStaticVars(ThymeleafViewResolver viewResolver)
-    {
-        if (viewResolver != null)
-        {
+    protected void configureThymeleafStaticVars(ThymeleafViewResolver viewResolver) {
+        if (viewResolver != null) {
             Map<String, Object> vars = new HashMap<>();
             Properties properties = getThymeleafVariables();
             Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
-            for (Map.Entry<Object, Object> entry : entrySet)
-            {
+            for (Map.Entry<Object, Object> entry : entrySet) {
                 vars.put(String.valueOf(entry.getKey()), entry.getValue());
             }
             viewResolver.setStaticVariables(vars);

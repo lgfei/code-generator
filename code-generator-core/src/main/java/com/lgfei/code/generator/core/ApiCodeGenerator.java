@@ -7,8 +7,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
@@ -19,66 +22,86 @@ import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.common.vo.ApiGeneratorParamVO;
+import com.lgfei.code.generator.core.service.IDatasourceService;
 import com.lgfei.code.generator.core.util.FileOutConfigUtil;
 import com.lgfei.code.generator.core.util.FileUtil;
 import com.lgfei.code.generator.core.util.StringUtil;
-import com.lgfei.code.generator.model.ParamVO;
 
 /**
- * Api代码生成器
- * <功能详细描述>
+ * Api代码生成器 <功能详细描述>
  * 
- * @author  lgfei
- * @version  [版本号, 2019年4月14日]
- * @see  [相关类/方法]
- * @since  [产品/模块版本]
+ * @author lgfei
+ * @version [版本号, 2019年4月14日]
+ * @see [相关类/方法]
+ * @since [产品/模块版本]
  */
 @Service
 public class ApiCodeGenerator implements ICodeGenerator
 {
     private static Logger logger = LoggerFactory.getLogger(ApiCodeGenerator.class);
     
-    @Override
-    public boolean check(ParamVO paramVO)
+    private Datasource datasource;
+    
+    @Autowired
+    private IDatasourceService datasourceService;
+    
+    private boolean check(ApiGeneratorParamVO paramVo)
     {
+        Datasource entity = new Datasource();
+        entity.setDatasourceNo(paramVo.getDatasourceNo());
+        Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
+        Datasource ds = datasourceService.getOne(queryWrapper);
+        if (null == ds)
+        {
+            return false;
+        }
+        this.datasource = ds;
         return true;
     }
     
     @Override
-    public void generate(ParamVO paramVO)
+    public void generate(ApiGeneratorParamVO paramVo)
     {
-        boolean isPass = check(paramVO);
+        boolean isPass = check(paramVo);
         if (!isPass)
         {
             logger.warn("无效参数");
             return;
         }
         // 组装参数
-        String projectPath = paramVO.getProjectPath();// E:\\Test\\code_generator
-        String groupId = paramVO.getGroupId();//com.lgfei
-        String artifactId = paramVO.getArtifactId();//betterme-admin
-        boolean isInit = paramVO.getIsInit() == 1 ? true : false;// true
-        String dbServer = paramVO.getDbServer();//"47.106.134.165";
-        String dbPort = paramVO.getDbPort();// "3306";
-        String dbName = paramVO.getDbName();// "betterme_admin";
-        String dbUserName = paramVO.getDbUserName();// "betterme";
-        String dbPassword = paramVO.getDbPassword();// "Betterme#1234";
-        String tableNames = paramVO.getTableNames();// operation_log,user
+        String dbDriver = datasource.getDriver();// "com.mysql.jdbc.Driver"
+        String dbServer = datasource.getServer();// "47.106.134.165";
+        String dbPort = String.valueOf(datasource.getPort());// "3306";
+        String dbUserName = datasource.getUsername();// "betterme";
+        String dbPassword = datasource.getPassword();// "Betterme#1234";
+        
+        boolean isInit = "on".equals(paramVo.getIsInit()) ? true : false;// true
+        String groupId = paramVo.getGroupId();// com.lgfei
+        String artifactId = paramVo.getArtifactId();// betterme-admin
+        String frameworkVersion = paramVo.getFrameworkVersion();// 1.0.0-SNAPSHOT
+        String schemaName = paramVo.getSchemaName();// betterme_admin
+        String tableNames = paramVo.getTableNames();// operation_log,user
+        String projectPath = paramVo.getProjectPath();// E:\\Test\\code_generator
         
         Map<String, String> myConfig = new HashMap<>();
         myConfig.put("groupId", groupId);
         myConfig.put("artifactId", artifactId);
+        myConfig.put("frameworkVersion", frameworkVersion);
         myConfig.put("parentPackage", FileOutConfigUtil.getParentPackage(groupId, artifactId));
-        myConfig.put("superManagerClass", "IBaseManager");
-        myConfig.put("superManagerClassPackage", "com.lgfei.betterme.framework.core.manager.IBaseManager");
-        myConfig.put("superManagerImplClass", "BaseManagerImpl");
-        myConfig.put("superManagerImplClassPackage", "com.lgfei.betterme.framework.core.manager.impl.BaseManagerImpl");
+        // myConfig.put("superManagerClass", "IBaseManager");
+        // myConfig.put("superManagerClassPackage",
+        // "com.lgfei.betterme.framework.core.manager.IBaseManager");
+        // myConfig.put("superManagerImplClass", "BaseManagerImpl");
+        // myConfig.put("superManagerImplClassPackage",
+        // "com.lgfei.betterme.framework.core.manager.impl.BaseManagerImpl");
         myConfig.put("entityIdClass", "Long");
         myConfig.put("upperCaseModuleName",
             StringUtil.toUpperCaseFirstOne(FileOutConfigUtil.getMouldeName(artifactId)));
         myConfig.put("dbServer", dbServer);
         myConfig.put("dbPort", dbPort);
-        myConfig.put("dbName", dbName);
+        myConfig.put("dbName", schemaName);
         myConfig.put("dbUserName", dbUserName);
         myConfig.put("dbPassword", dbPassword);
         
@@ -114,7 +137,7 @@ public class ApiCodeGenerator implements ICodeGenerator
         
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        //gc.setOutputDir(projectPath + "/src/main/java");
+        // gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("lgfei");
         gc.setOpen(false);
         gc.setSwagger2(true);// 实体属性 Swagger2 注解
@@ -125,11 +148,11 @@ public class ApiCodeGenerator implements ICodeGenerator
             .append(':')
             .append(dbPort)
             .append('/')
-            .append(dbName)
+            .append(schemaName)
             .append("?useUnicode=true&useSSL=false&characterEncoding=utf8")
             .toString());
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
+        dsc.setDriverName(dbDriver);
         dsc.setUsername(dbUserName);
         dsc.setPassword(dbPassword);
         
@@ -137,7 +160,7 @@ public class ApiCodeGenerator implements ICodeGenerator
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(FileOutConfigUtil.getMouldeName(artifactId));
         pc.setParent(FileOutConfigUtil.getParentPackage(groupId, artifactId));
-        pc.setEntity("model.entity");
+        pc.setEntity("common.entity");
         pc.setMapper("core.mapper");
         pc.setService("core.service");
         pc.setServiceImpl("core.service.impl");
@@ -155,7 +178,7 @@ public class ApiCodeGenerator implements ICodeGenerator
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
         // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+        // 指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
         templateConfig.setEntity(TEMPLATE_PATH + "/entity.java");
         templateConfig.setMapper(TEMPLATE_PATH + "/mapper.java");
         templateConfig.setXml(TEMPLATE_PATH + "/mapper.xml");
@@ -170,9 +193,9 @@ public class ApiCodeGenerator implements ICodeGenerator
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         // entity
-        strategy.setSuperEntityClass("com.lgfei.betterme.framework.model.entity.BaseEntity");
+        strategy.setSuperEntityClass("com.lgfei.betterme.framework.common.entity.BaseEntity");
         strategy.setSuperEntityColumns("id",
-            "status",
+            "enable_flag",
             "create_user",
             "create_time",
             "update_user",
@@ -180,7 +203,7 @@ public class ApiCodeGenerator implements ICodeGenerator
             "remark");
         // mapper
         strategy.setSuperMapperClass("com.lgfei.betterme.framework.core.mpper.IBaseMapper");
-        //strategy.setEntityLombokModel(true);
+        // strategy.setEntityLombokModel(true);
         // service
         strategy.setSuperServiceClass("com.lgfei.betterme.framework.core.service.IBaseService");
         strategy.setSuperServiceImplClass("com.lgfei.betterme.framework.core.service.impl.BaseServiceImpl");
@@ -200,12 +223,6 @@ public class ApiCodeGenerator implements ICodeGenerator
         };
         // 自定义输出配置(自定义配置会被优先输出)
         List<FileOutConfig> focList = new ArrayList<>();
-        // 自定义manager的代码模板
-        focList.add(FileOutConfigUtil
-            .getManagerFileOutConfig(projectPath, groupId, artifactId, TEMPLATE_PATH + "/manager.java.ftl"));
-        // 自定义managerImpl的代码模板
-        focList.add(FileOutConfigUtil
-            .getManagerImplFileOutConfig(projectPath, groupId, artifactId, TEMPLATE_PATH + "/managerImpl.java.ftl"));
         // 初始化项目
         if (isInit)
         {
@@ -217,9 +234,9 @@ public class ApiCodeGenerator implements ICodeGenerator
             // 自定义core-pom的代码模板
             focList.add(FileOutConfigUtil
                 .getCorePomFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/pom-core.xml.ftl"));
-            // 自定义model-pom的代码模板
+            // 自定义common-pom的代码模板
             focList.add(FileOutConfigUtil
-                .getModelPomFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/pom-model.xml.ftl"));
+                .getCommonPomFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/pom-common.xml.ftl"));
             // 自定义ApiApplication的代码模板
             focList.add(FileOutConfigUtil.getApiApplicationFileOutConfig(projectPath,
                 groupId,
@@ -243,9 +260,6 @@ public class ApiCodeGenerator implements ICodeGenerator
             focList.add(FileOutConfigUtil.getApplicationDevPropertiesFileOutConfig(projectPath,
                 artifactId,
                 TEMPLATE_PATH + "/application-dev.properties.ftl"));
-            // 自定义mybatis-config.xml的代码模板
-            // focList.add(FileOutConfigUtil
-            //     .getMybatisConfigXmlFileOutConfig(projectPath, artifactId, TEMPLATE_PATH + "/mybatis-config.xml.ftl"));
         }
         cfg.setFileOutConfigList(focList);
         

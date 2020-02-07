@@ -8,61 +8,79 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lgfei.code.generator.core.ApiCodeGenerator;
-import com.lgfei.code.generator.core.manager.ICommonManager;
-import com.lgfei.code.generator.model.DatabaseInfo;
-import com.lgfei.code.generator.model.MysqlTableInfo;
-import com.lgfei.code.generator.model.ParamVO;
+import com.lgfei.code.generator.core.service.ICommonService;
+import com.lgfei.code.generator.core.service.IDatasourceService;
+import com.lgfei.code.generator.common.dto.DatabaseDTO;
+import com.lgfei.code.generator.common.dto.MysqlTableDTO;
+import com.lgfei.code.generator.common.entity.Datasource;
+import com.lgfei.code.generator.common.vo.ApiGeneratorParamVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = {"通用接口"})
+@Api(tags = { "通用接口" })
 @Controller
-@RequestMapping("common")
-public class CommonController
-{
+@RequestMapping("")
+public class CommonController {
     @Autowired
-    private ICommonManager manager;
-    
+    private ICommonService service;
+
     @Autowired
     private ApiCodeGenerator apiCodeGenerator;
-    
-    @ApiOperation("查询表")
-    @ResponseBody
-    @RequestMapping(value = "/selectMysqlTables", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<MysqlTableInfo> selectMysqlTables(String tableSchema, String tableName)
-    {
-        MysqlTableInfo vo = new MysqlTableInfo();
-        vo.setTableSchema(tableSchema);
-        vo.setTableName(tableName);
-        return manager.selectMysqlTables(vo);
+
+    @Autowired
+    private IDatasourceService datasourceService;
+
+    @RequestMapping(value = "/index.htm", method = RequestMethod.GET)
+    public String gotoIndexView() {
+        return "index";
     }
     
+    @RequestMapping(value = "/common.htm", method = RequestMethod.GET)
+    public String gotoCommonView() {
+        return "common";
+    }
+
     @ApiOperation("查询库")
     @ResponseBody
-    @RequestMapping(value = "/showDatabases", method = {RequestMethod.POST, RequestMethod.GET})
-    public List<DatabaseInfo> showDatabases()
-    {
-        return manager.showDatabases();
+    @RequestMapping(value = "/getDatabase.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<DatabaseDTO> getDatabase(@RequestParam(value = "datasourceNo") String datasourceNo) {
+        Datasource entity = new Datasource();
+        entity.setDatasourceNo(datasourceNo);
+        Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
+        Datasource ds = datasourceService.getOne(queryWrapper);
+        return service.getDatabase(ds);
     }
-    
+
+    @ApiOperation("查询表")
+    @ResponseBody
+    @RequestMapping(value = "/getMysqlTables.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public List<MysqlTableDTO> getMysqlTables(@RequestParam(value = "datasourceNo") String datasourceNo,
+            @RequestParam(value = "schemaName") String schemaName,
+            @RequestParam(value = "tableNames", required = false) String tableNames) {
+        Datasource entity = new Datasource();
+        entity.setDatasourceNo(datasourceNo);
+        Wrapper<Datasource> queryWrapper = new QueryWrapper<>(entity);
+        Datasource ds = datasourceService.getOne(queryWrapper);
+        return service.getMysqlTables(ds, schemaName, tableNames);
+    }
+
     @ApiOperation("生成Api代码")
     @ResponseBody
-    @RequestMapping(value = "/generateApiCode", method = {RequestMethod.POST, RequestMethod.GET})
-    public Map<String, Object> generateApiCode(ParamVO paramVO)
-    {
+    @RequestMapping(value = "/generateApiCode.json", method = { RequestMethod.POST, RequestMethod.GET })
+    public Map<String, Object> generateApiCode(ApiGeneratorParamVO paramVo) {
         Map<String, Object> rs = new HashMap<>();
-        try
-        {
-            apiCodeGenerator.generate(paramVO);
+        try {
+            apiCodeGenerator.generate(paramVo);
             rs.put("rsCode", 0);
             rs.put("rsMsg", "Success");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             rs.put("rsCode", "-1");
             rs.put("rsMsg", e.getMessage());
         }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Datasource Manager</title>
+<!-- 引入公共页面 -->
+<link rel="import" href="../common.htm" id="commonPage"/>
+</head>
+<body layadmin-themealias="default" class="layui-layout-body">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="layui-tab" lay-allowClose="true" lay-filter="tabMain">
+               <ul class="layui-tab-title">
+                   <li lay-id="main_list">用户列表</li>
+               </ul>
+               <div class="layui-tab-content">
+                   <div class="layui-tab-item layui-show">
+                       <table id="tbSysUser" lay-filter="sysUser"></table>
+                   </div>
+               </div>
+           </div>        
+        </div>
+    </div>
+</body>
+<script type="text/html" id="barSysUser">
+    <div class="layui-inline" title="刷新" lay-event="btnRefresh"><i class="layui-icon layui-icon-refresh-1"></i></div>
+    <div class="layui-inline" title="新增" lay-event="btnAdd"><i class="layui-icon layui-icon-add-1"></i></div>
+    <div class="layui-inline" title="删除" lay-event="btnBatchDelete"><i class="layui-icon layui-icon-delete"></i></div>
+</script>
+<script type="text/html" id="barSysUserCols">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="btnView">查看</a>
+    <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="btnEdit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="btnDelete">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="btnAssignmentDatasource">分配数据源</a>
+    <a class="layui-btn layui-btn-xs" lay-event="btnAssignmentModule">分配模块权限</a>
+</script>
+
+<script type="text/javascript">
+//页面入口
+layui.config({ base:'../js/'}).use(['sys-user.view']);
+</script>
+
+</html>

@@ -14,15 +14,13 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
  * @since 2019-04-07
  */
 @Configuration
-public class MybatisPlusConfig
-{
-    
+public class MybatisPlusConfig {
+
     /**
      * 分页插件
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor()
-    {
+    public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor page = new PaginationInterceptor();
         page.setDialectType("mysql");
         return page;

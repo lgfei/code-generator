@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Add User</title>
+<!-- 引入公共页面 -->
+<link rel="import" href="../common.htm" id="commonPage"/>
+</head>
+<body layadmin-themealias="default" class="layui-layout-body">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+	        <form class="layui-form" lay-filter="formAdd">
+	            <br/>
+	            
+	            <div class="layui-row">
+	                <div class="layui-inline">
+	                    <label class="layui-form-label">用户编码</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="userNo" autocomplete="off" class="layui-input layui-bg-gray" readonly="readonly"/>
+	                    </div>
+	                </div>  
+	                <div class="layui-inline">
+	                    <label class="layui-form-label"><span style="color:red;">*</span>账号</label>
+	                    <div class="layui-input-inline">
+	                        <input type="text" name="account" lay-verify="required" autocomplete="off" class="layui-input"/>
+	                    </div>
+	                </div>
+	            </div>   
+                
+                <br/>
+                
+                <div class="layui-row">
+                    <div class="layui-inline">
+                        <label class="layui-form-label"><span style="color:red;">*</span>用户名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"/>
+                        </div>
+                    </div>
+                </div>   
+                
+                <br/>
+                
+                <div class="layui-row">
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-filter="btnSubmitAdd" lay-submit>保存</button>
+                            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                        </div>
+                    </div>
+                </div>
+	        </form>        
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+<!-- 页面入口 -->
+layui.config({ base:'../js/'}).use(['sys-user.view.add']);
+</script>
+
+</html>

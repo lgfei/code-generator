@@ -7,4 +7,4 @@ spring.profiles.active=default,dev
 logging.level.${my.parentPackage}.${package.ModuleName}.core.mapper=DEBUG
 
 ## 项目个性配置
-project.model-package=${my.parentPackage}.${package.ModuleName}.model
+project.model-package=${my.parentPackage}.${package.ModuleName}.common
